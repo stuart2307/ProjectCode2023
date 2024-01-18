@@ -1,15 +1,9 @@
 
-import java.util.*;
+public class Seller extends RegisteredUser 
+    {
+        public Seller() 
+            {
+                
+            }
 
-/**
- * 
- */
-public class Seller extends RegisteredUser {
-
-    /**
-     * Default constructor
-     */
-    public Seller() {
     }
-
-}

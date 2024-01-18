@@ -1,15 +1,7 @@
+public class Buyer extends RegisteredUser 
+    {
+        public Buyer() 
+            {
 
-import java.util.*;
-
-/**
- * 
- */
-public class Buyer extends RegisteredUser {
-
-    /**
-     * Default constructor
-     */
-    public Buyer() {
+            }
     }
-
-}

@@ -1,70 +1,71 @@
+public class LoginSignUp 
+    {
 
-import java.util.*;
+        public LoginSignUp() 
+            {
+                
+            }
 
-/**
- * 
- */
-public class LoginSignUp {
+        /**
+         * @param username 
+         * @param password
+         */
+        public void CheckUser(void username, void password) 
+            {
 
-    /**
-     * Default constructor
-     */
-    public LoginSignUp() {
+            }
+
+        /**
+         * @param email
+         */
+        public void DoesAccountExist(void email)    
+            {
+
+            }
+
+        /**
+         * @param user
+         */
+        public void Login(void user)
+            {
+
+            }
+
+        /**
+         * @param username 
+         * @param email
+         */
+        public void confirmUniqueDetails(void username, void email) 
+            {
+
+            }
+
+        /**
+         * @param type
+         */
+        public void rerequestDetails(void type) 
+            {
+
+            }
+
+        /**
+         * 
+         */
+        public void requestMoreDetails()   
+            {
+
+            }
+
+        /**
+         * @param username 
+         * @param password 
+         * @param email 
+         * @param address 
+         * @param phone
+         */
+        public void createAccount(void username, void password, void email, void address, void phone) 
+            {
+
+            }
+
     }
-
-    /**
-     * @param username 
-     * @param password
-     */
-    public void CheckUser(void username, void password) {
-        // TODO implement here
-    }
-
-    /**
-     * @param email
-     */
-    public void DoesAccountExist(void email) {
-        // TODO implement here
-    }
-
-    /**
-     * @param user
-     */
-    public void Login(void user) {
-        // TODO implement here
-    }
-
-    /**
-     * @param username 
-     * @param email
-     */
-    public void confirmUniqueDetails(void username, void email) {
-        // TODO implement here
-    }
-
-    /**
-     * @param type
-     */
-    public void rerequestDetails(void type) {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void requestMoreDetails() {
-        // TODO implement here
-    }
-
-    /**
-     * @param username 
-     * @param password 
-     * @param email 
-     * @param address 
-     * @param phone
-     */
-    public void createAccount(void username, void password, void email, void address, void phone) {
-        // TODO implement here
-    }
-
-}

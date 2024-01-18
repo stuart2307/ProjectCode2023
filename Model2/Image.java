@@ -1,15 +1,9 @@
+public class Image 
+    {
 
-import java.util.*;
+        public Image() 
+            {
+                
+            }
 
-/**
- * 
- */
-public class Image {
-
-    /**
-     * Default constructor
-     */
-    public Image() {
     }
-
-}

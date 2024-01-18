@@ -1,30 +1,11 @@
-
-import java.util.*;
-
-/**
- * 
- */
-public class Message {
-
-    /**
-     * Default constructor
-     */
-    public Message() {
+public class Message 
+    {
+        private int senderID;
+        private int receiverID;
+        private String messageContents;
+        
+        public Message() 
+            {
+            
+            }
     }
-
-    /**
-     * 
-     */
-    private int senderID;
-
-    /**
-     * 
-     */
-    private int receiverID;
-
-    /**
-     * 
-     */
-    private String messageContents;
-
-}

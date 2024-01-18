@@ -1,98 +1,64 @@
+public class Advertisement 
+{
 
-import java.util.*;
-
-/**
- * 
- */
-public class Advertisement {
-
-    /**
-     * Default constructor
-     */
-    public Advertisement() {
-    }
-
-    /**
-     * 
-     */
     private VehicleDetails vehicle;
-
-    /**
-     * 
-     */
     private Image vehicleImage;
-
-    /**
-     * 
-     */
     private SellerDetails seller;
+    private String description;   
 
-    /**
-     * 
-     */
-    private String description;
+    public Advertisement() 
+        {
+            
+        }
 
-    /**
-     * 
-     */
-    public void EnterDetails() {
-        // TODO implement here
-    }
+    public void EnterDetails() 
+        {
 
-    /**
-     * 
-     */
-    public void EnterImage() {
-        // TODO implement here
-    }
+        }
 
-    /**
-     * 
-     */
-    public void GetSellerID() {
-        // TODO implement here
-    }
+    public void EnterImage() 
+        {
 
-    /**
-     * 
-     */
-    public void SendID() {
-        // TODO implement here
-    }
+        }
 
-    /**
-     * 
-     */
-    public void RequestDetails() {
-        // TODO implement here
-    }
+    public void GetSellerID() 
+        {
+            
+        }
+
+    public void SendID() 
+        {
+            
+        }
+
+    public void RequestDetails() 
+        {
+    
+        }
 
     /**
      * @param details
      */
-    public void CreateDetails(void details) {
-        // TODO implement here
-    }
+    public void CreateDetails(void details) 
+        {
 
-    /**
-     * 
-     */
-    public void RequestImages() {
-        // TODO implement here
-    }
+        }
 
-    /**
-     * 
-     */
-    public void CreateImage() {
-        // TODO implement here
-    }
+    public void RequestImages() 
+        {
+
+        }
+
+    public void CreateImage() 
+        {
+
+        }
 
     /**
      * @param Advertisement
      */
-    public void Display(void Advertisement) {
-        // TODO implement here
-    }
+    public void Display(void Advertisement) 
+        {
 
+        }
 }

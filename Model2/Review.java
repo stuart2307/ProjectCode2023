@@ -1,58 +1,37 @@
+public class Review 
+    {
 
-import java.util.*;
+        
+        private String Review;
+        private int StarCount;
+        private int AuthorID;
 
-/**
- * 
- */
-public class Review {
+        public Review() 
+            {
+                
+            }
 
-    /**
-     * Default constructor
-     */
-    public Review() {
+        public void review() 
+            {
+
+            }
+
+        public void requestStarRating() 
+            {
+
+            }
+
+        public void requestDescription() 
+            {
+
+            }
+
+        /**
+         * @param review
+         */
+        public void postReview(void review) 
+            {
+
+            }
+
     }
-
-    /**
-     * 
-     */
-    private String Review;
-
-    /**
-     * 
-     */
-    private int StarCount;
-
-    /**
-     * 
-     */
-    private int AuthorID;
-
-    /**
-     * 
-     */
-    public void review() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void requestStarRating() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void requestDescription() {
-        // TODO implement here
-    }
-
-    /**
-     * @param review
-     */
-    public void postReview(void review) {
-        // TODO implement here
-    }
-
-}

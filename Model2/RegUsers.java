@@ -1,55 +1,39 @@
+public class RegUsers 
+    {
 
-import java.util.*;
+        public RegUsers() 
+            {
+                
+            }
 
-/**
- * 
- */
-public class RegUsers {
+        private RegisteredUser RegUsers;
 
-    /**
-     * Default constructor
-     */
-    public RegUsers() {
+        public void UserNotFound() 
+            {
+
+            }
+
+        public void UserExists() 
+            {
+
+            }
+
+        /**
+         * @param user
+         */
+        public void ReturnUser(void user)
+            {
+
+            }
+
+        public void usernameOrEmailInUse()
+            {
+
+            }
+
+        public void DetailsNotInUse() 
+            {
+
+            }
+
     }
-
-    /**
-     * 
-     */
-    private RegisteredUsers RegUsers;
-
-    /**
-     * 
-     */
-    public void UserNotFound() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void UserExists() {
-        // TODO implement here
-    }
-
-    /**
-     * @param user
-     */
-    public void ReturnUser(void user) {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void usernameOrEmailInUse() {
-        // TODO implement here
-    }
-
-    /**
-     * 
-     */
-    public void DetailsNotInUse() {
-        // TODO implement here
-    }
-
-}
