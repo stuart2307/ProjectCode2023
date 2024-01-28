@@ -43,52 +43,75 @@ public class DatabaseManager {
         }
     }
 
-    public ResultSet executeQuery(String query, Object... parameters) 
+    public int createEntry(String table, String parameters)
+        {
+            try
+            {
+                //Create a prepared statement using the supplied parameters
+                PreparedStatement preparedStatement = connection.prepareStatement("insert into " + table + " values ()" + parameters + ");");
+                //return the number of rows affected
+                return preparedStatement.executeUpdate();
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+                //Handle exceptions appropriately
+                return -1;
+            }
+        }
+
+    public ResultSet executeQuery(String parameters, String table) 
     {
         try 
         {
-            // Create a prepared statement
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            //Create a prepared statement
+            PreparedStatement preparedStatement = connection.prepareStatement("");
 
-            // Set parameters, if any
-            for (int i = 0; i < parameters.length; i++) 
-            {
-                preparedStatement.setObject(i + 1, parameters[i]);
-            }
-
-            // Execute the query and return the result set
+            //Execute the query and return the result set
             return preparedStatement.executeQuery();
         } 
         
         catch (SQLException e) 
         {
             e.printStackTrace();
-            // Handle exceptions appropriately in a real application
+            //Handle exceptions appropriately
             return null;
         }
     }
 
-    public int executeUpdate(String query, Object... parameters) 
+    public int executeUpdate(String table, String parameters) 
     {
         try 
         {
-            // Create a prepared statement
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            //Create a prepared statement
+            PreparedStatement preparedStatement = connection.prepareStatement("update " + table + " " + parameters);
 
-            // Set parameters, if any
-            for (int i = 0; i < parameters.length; i++) 
-            {
-                preparedStatement.setObject(i + 1, parameters[i]);
-            }
-
-            // Execute the update query and return the number of affected rows
+            //Execute the update and return the number of affected rows
             return preparedStatement.executeUpdate();
         } 
 
         catch (SQLException failedConnection) 
         {
             failedConnection.printStackTrace();
-            // Handle exceptions appropriately in a real application
+            //Handle exceptions appropriately
+            return -1;
+        }
+    }
+
+public int deleteEntry(String table, String parameters)
+    {
+        try
+        {
+            //Create a prepared statement
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from " + table + " where " + parameters);
+
+            //Execute the deletion, and return the number of affected rows
+            return preparedStatement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+            //Handle exceptions appropriately
             return -1;
         }
     }
