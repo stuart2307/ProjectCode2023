@@ -48,7 +48,7 @@ public class DatabaseManager {
             try
             {
                 //Create a prepared statement using the supplied parameters
-                PreparedStatement preparedStatement = connection.prepareStatement("insert into " + table + " values ()" + parameters + ");");
+                PreparedStatement preparedStatement = connection.prepareStatement("insert into " + table + " values (" + parameters + ");");
                 //return the number of rows affected
                 return preparedStatement.executeUpdate();
             }
@@ -65,7 +65,7 @@ public class DatabaseManager {
         try 
         {
             //Create a prepared statement
-            PreparedStatement preparedStatement = connection.prepareStatement("");
+            PreparedStatement preparedStatement = connection.prepareStatement("select ");
 
             //Execute the query and return the result set
             return preparedStatement.executeQuery();
