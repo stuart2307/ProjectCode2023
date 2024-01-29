@@ -15,7 +15,7 @@ public class DatabaseManager {
     {
         try 
         {
-            // Establish the connection
+            //Establish the connection
 
             connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
         } 
