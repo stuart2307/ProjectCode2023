@@ -21,7 +21,7 @@ public class RegUsers
         /**
          * @param user
          */
-        public void ReturnUser(User user)
+        public void ReturnUser(void user)
             {
 
             }

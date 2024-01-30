@@ -10,7 +10,7 @@ public class User
          * @param username 
          * @param password
          */
-        public void login(String username, String password) 
+        public void login(void username, void password) 
             {
 
             }
@@ -18,7 +18,7 @@ public class User
         /**
          * @param email
          */
-        public void signUp(String email) 
+        public void signUp(void email) 
             {
 
             }
@@ -30,7 +30,7 @@ public class User
          * @param password 
          * @param phone
          */
-        public void ProvideDetails(String username, String name, Address address, String password, String phone)//String username, String password, String email, Address address, String phone
+        public void ProvideDetails(void username, void name, void address, void password, void phone)
             {
 
             }
@@ -43,7 +43,7 @@ public class User
         /**
          * @param keyword
          */
-        public void Search(String keyword)
+        public void Search(void keyword)
             {
 
             }
@@ -51,7 +51,7 @@ public class User
         /**
          * @param VehicleDetails
          */
-        public void Filter(String VehicleDetails) 
+        public void Filter(void VehicleDetails) 
             {
 
             }
@@ -66,7 +66,7 @@ public class User
          * @param password 
          * @param email
          */
-        public void register(String username, String password, String email) 
+        public void register(void username, void password, void email) 
             {
 
             }
@@ -77,7 +77,7 @@ public class User
          * @param confPass 
          * @param confEmail
          */
-        public void provideDetails(Address address, String phone, String confPass, String confEmail) 
+        public void provideDetails(void address, void phone, void confPass, void confEmail) 
             {
 
             }

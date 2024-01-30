@@ -18,7 +18,7 @@ public class Search
          * @param keyword 
          * @param vehicleDetails
          */
-        public void ApplySearch(String keyword, String vehicleDetails) 
+        public void ApplySearch(void keyword, void vehicleDetails) 
             {
 
             }

@@ -2,7 +2,7 @@ public class CurrentSession
 {
 
     private int SessionID;
-    private int CurrentUserID;
+    private void CurrentUserID;
     
     public CurrentSession() 
         {

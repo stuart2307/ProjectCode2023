@@ -39,7 +39,7 @@ public class Advertisement
     /**
      * @param details
      */
-    public void CreateDetails(String details) 
+    public void CreateDetails(void details) 
         {
 
         }
@@ -57,7 +57,7 @@ public class Advertisement
     /**
      * @param Advertisement
      */
-    public void Display(Advertisement Advertisement) 
+    public void Display(void Advertisement) 
         {
 
         }

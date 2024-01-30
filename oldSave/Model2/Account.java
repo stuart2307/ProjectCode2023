@@ -23,7 +23,7 @@ public class Account extends User
     /**
      * @param String user
      */
-    public void openChat(String user) 
+    public void openChat(void String user) 
         {
 
         }

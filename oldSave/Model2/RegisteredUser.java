@@ -13,7 +13,7 @@ public class RegisteredUser extends User
          * @param password 
          * @param phone
          */
-        public void CreateUser(String username, String name, String address, String password, int phone) 
+        public void CreateUser(void username, void name, void address, void password, void phone) 
             {
                 
             }
@@ -22,7 +22,7 @@ public class RegisteredUser extends User
          * @param username 
          * @param password
          */
-        public void CheckUser(String username, String password) 
+        public void CheckUser(void username, void password) 
             {
 
             }
@@ -36,7 +36,7 @@ public class RegisteredUser extends User
          * @param buyerID 
          * @param sellerID
          */
-        public void CreateChat(int buyerID, int sellerID) 
+        public void CreateChat(void buyerID, void sellerID) 
             {
                 
             }
@@ -45,7 +45,7 @@ public class RegisteredUser extends User
          * @param text 
          * @param buyerID
          */
-        public void CreateMessage(String text, int buyerID) 
+        public void CreateMessage(void text, void buyerID) 
             {
 
             }
@@ -53,7 +53,7 @@ public class RegisteredUser extends User
         /**
          * @param message
          */
-        public void Send(String message) 
+        public void Send(void message) 
             {
 
             }
@@ -61,7 +61,7 @@ public class RegisteredUser extends User
         /**
          * @param chatLog
          */
-        public void View(ChatLog chatLog) 
+        public void View(void chatLog) 
             {
 
             }
@@ -74,7 +74,7 @@ public class RegisteredUser extends User
         /**
          * @param details
          */
-        public void EnterDetails(String details) 
+        public void EnterDetails(void details) 
             {
 
             }
@@ -82,7 +82,7 @@ public class RegisteredUser extends User
         /**
          * @param image
          */
-        public void EnterImages(Image image) 
+        public void EnterImages(void image) 
             {
 
             }
@@ -106,7 +106,7 @@ public class RegisteredUser extends User
          * @param userID1 
          * @param userID2
          */
-        public void InvestigateContact(int userID1, int userID2) 
+        public void InvestigateContact(void userID1, void userID2) 
             {
 
             }
@@ -124,7 +124,7 @@ public class RegisteredUser extends User
         /**
          * @param userID
          */
-        public void CreateReview(int userID) 
+        public void CreateReview(void userID) 
             {
 
             }
@@ -132,7 +132,7 @@ public class RegisteredUser extends User
         /**
          * @param starCount
          */
-        public void giveStars(int starCount) 
+        public void giveStars(void starCount) 
             {
 
             }
@@ -140,7 +140,7 @@ public class RegisteredUser extends User
         /**
          * @param descString
          */
-        public void giveDescription(String descString) 
+        public void giveDescription(void descString) 
             {
 
             }
@@ -152,7 +152,7 @@ public class RegisteredUser extends User
          * @param address 
          * @param phone
          */
-        public void createAccount(String username, String password, String email, Address address, String phone) 
+        public void createAccount(void username, void password, void email, void address, void phone) 
             {
 
             }

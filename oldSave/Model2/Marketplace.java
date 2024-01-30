@@ -11,7 +11,7 @@ public class Marketplace
         /**
          * @param email
          */
-        private void DoesAccountExist(String email) 
+        private void DoesAccountExist(void email) 
             {
                 
             }
@@ -23,7 +23,7 @@ public class Marketplace
          * @param password 
          * @param phone
          */
-        private void CreateUser(String username, String name, String address, String password, int phone) 
+        private void CreateUser(void username, void name, void address, void password, void phone) 
             {
 
             }
@@ -32,7 +32,7 @@ public class Marketplace
          * @param username 
          * @param password
          */
-        private void VerifyDetails(String username, String password)
+        private void VerifyDetails(void username, void password)
             {
 
             }
@@ -40,7 +40,7 @@ public class Marketplace
         /**
          * @param Ad
          */
-        private void Display(Advertisement Ad) 
+        private void Display(void Ad) 
             {
 
             }

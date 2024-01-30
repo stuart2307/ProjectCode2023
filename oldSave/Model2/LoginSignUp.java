@@ -10,7 +10,7 @@ public class LoginSignUp
          * @param username 
          * @param password
          */
-        public void CheckUser(String username, String password) 
+        public void CheckUser(void username, void password) 
             {
 
             }
@@ -18,7 +18,7 @@ public class LoginSignUp
         /**
          * @param email
          */
-        public void DoesAccountExist(String email)    
+        public void DoesAccountExist(void email)    
             {
 
             }
@@ -26,7 +26,7 @@ public class LoginSignUp
         /**
          * @param user
          */
-        public void Login(User user)
+        public void Login(void user)
             {
 
             }
@@ -35,7 +35,7 @@ public class LoginSignUp
          * @param username 
          * @param email
          */
-        public void confirmUniqueDetails(String username, String email) 
+        public void confirmUniqueDetails(void username, void email) 
             {
 
             }
@@ -43,7 +43,7 @@ public class LoginSignUp
         /**
          * @param type
          */
-        public void rerequestDetails() //previously void type
+        public void rerequestDetails(void type) 
             {
 
             }
@@ -63,7 +63,7 @@ public class LoginSignUp
          * @param address 
          * @param phone
          */
-        public void createAccount(String username, String password, String email, Address address, String phone) 
+        public void createAccount(void username, void password, void email, void address, void phone) 
             {
 
             }
