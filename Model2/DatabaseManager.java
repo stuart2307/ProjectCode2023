@@ -7,9 +7,15 @@ import java.sql.SQLException;
 public class DatabaseManager {
 
     Connection connection = null;
-    private static final String DATABASE_URL = "jdbc://localhost/crocodeal";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
+    final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone"};
+    final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
+    final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "ImageLocation"};
+    final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
+    final String CHATLOG[] = {"ChatID", "MessageID"};
+    final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
 
     public DatabaseManager() 
     {
@@ -43,7 +49,7 @@ public class DatabaseManager {
         }
     }
 
-    public int createEntry(String table, String parameters)
+    public int createEntry(String table, String parameters[], String values[])
         {
             try
             {
@@ -114,5 +120,13 @@ public int deleteEntry(String table, String parameters)
             //Handle exceptions appropriately
             return -1;
         }
+    }
+public void clearArray(String array[])
+    {
+        int index;
+        for (index = 0; index < array.length; index++)
+            {
+                array[index] = null;
+            }
     }
 }
