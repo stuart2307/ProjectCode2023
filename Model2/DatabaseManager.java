@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class DatabaseManager {
 
@@ -16,6 +17,7 @@ public class DatabaseManager {
     final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
     final String CHATLOG[] = {"ChatID", "MessageID"};
     final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
+    Scanner enterValue = new Scanner(System.in);
 
     public DatabaseManager() 
     {
@@ -53,6 +55,8 @@ public class DatabaseManager {
         {
             try
             {
+                System.out.println("Select the table to delete an entry from");
+                table = enterValue.nextLine();
                 //Create a prepared statement using the supplied parameters
                 PreparedStatement preparedStatement = connection.prepareStatement("insert into " + table + " values (" + parameters + ");");
                 //return the number of rows affected
@@ -104,12 +108,44 @@ public class DatabaseManager {
         }
     }
 
-public int deleteEntry(String table, String parameters)
+public int deleteEntry() //working on this one
     {
-        try
+        try 
         {
-            //Create a prepared statement
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from " + table + " where " + parameters);
+            String table = "";
+            String parameter;
+
+            System.out.println("Choose a table to delete from: \n1. accountchatlog \n2. accounts \n3. advertisements \n4. chatlog \n5. messages \n6. reviews"); //Using a menu system for simplicity when using this method
+            int choice = enterValue.nextInt();
+            if(choice == 1) //Might change to switch statement later on
+            {
+                table = "accountchatlog";
+            }
+            else if(choice == 2)
+            {
+                table = "accounts";
+            }
+            else if(choice == 3)
+            {
+                table = "advertisements";
+            }
+            else if(choice == 4)
+            {
+                table = "chatlog";
+            }
+            else if(choice == 5)
+            {
+                table = "messages";
+            }
+            else if(choice == 6)
+            {
+                table = "reviews";
+            }
+
+            System.out.println("Choose which row to delete from by entering the column name and the corresponding details of the row to be deleted. \neg. AccountID='1'");
+            parameter = enterValue.nextLine();
+
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from " + table + " where " + parameter);
 
             //Execute the deletion, and return the number of affected rows
             return preparedStatement.executeUpdate();

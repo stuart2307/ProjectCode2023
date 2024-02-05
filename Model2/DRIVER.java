@@ -11,6 +11,6 @@ public class DRIVER
             String valueArray[] = new String[11];
 
             testDBM.createEntry("accounts", ACCOUNTS, valueArray);
-            clearArray(valueArray);
+            testDBM.clearArray(valueArray);
         }
 }
