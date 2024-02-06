@@ -12,11 +12,17 @@ public class DatabaseManager {
     private final String USERNAME = "root";
     private final String PASSWORD = "";
     static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone"};
+    static final int ACCOUNTSPOS[] = {0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
+    static final int MESSAGESPOS[] = {1, 1, 0};
     static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "ImageLocation"};
+    static final int ADVERTISEMENTSPOS[] = {1, 0, 0, 0, 1, 1, 2, 2, 1, 0, 0};
     static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
+    static final int REVIEWSPOS[] = {1, 1, 0, 1};
     static final String CHATLOG[] = {"ChatID", "MessageID"};
+    static final int CHATLOGPOS[] = {1, 1};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
+    static final int ACCOUNTCHATLOGPOS[] = {1, 1};
     Scanner enterValue = new Scanner(System.in);
 
     public DatabaseManager() 
@@ -54,7 +60,7 @@ public class DatabaseManager {
         }
     }
 
-    public int createEntry(String table, String parameters[], String values[])
+    public int createEntry(String table, String parameters[], int parameterspos[], String values[])
         {
             try
             {
@@ -82,7 +88,18 @@ public class DatabaseManager {
 
                 for(int i=0; i<parameters.length;i++)
                 {
-                    pstat.setString( (i+1) , values[i]);
+                    if (parameterspos[i] == 0)
+                        {
+                            pstat.setString( (i+1) , values[i]);
+                        }
+                    else if (parameterspos[i] == 1)
+                        {
+                            pstat.setInt( (i+1) , Integer.parseInt(values[i]));
+                        }
+                    else if (parameterspos[i] == 2)
+                        {
+                            pstat.setDouble( (i+1) , Double.parseDouble(values[i]));
+                        }
                 }
 
                 // Execute update and return the number of rows affected
