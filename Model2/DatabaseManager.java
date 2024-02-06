@@ -156,39 +156,17 @@ public int deleteEntry() //working on this one
         try 
         {
             String table = "";
-            String parameter;
+            String column = "";
+            String parameter = "";
 
-            System.out.println("Choose a table to delete from: \n1. accountchatlog \n2. accounts \n3. advertisements \n4. chatlog \n5. messages \n6. reviews"); //Using a menu system for simplicity when using this method
-            int choice = enterValue.nextInt();
-            if(choice == 1) //Might change to switch statement later on
-            {
-                table = "accountchatlog";
-            }
-            else if(choice == 2)
-            {
-                table = "accounts";
-            }
-            else if(choice == 3)
-            {
-                table = "advertisements";
-            }
-            else if(choice == 4)
-            {
-                table = "chatlog";
-            }
-            else if(choice == 5)
-            {
-                table = "messages";
-            }
-            else if(choice == 6)
-            {
-                table = "reviews";
-            }
-
-            System.out.println("Choose which row to delete from by entering the column name and the corresponding details of the row to be deleted. \neg. AccountID='1'");
+            table = enterValue.nextLine();
+            column = enterValue.nextLine();
             parameter = enterValue.nextLine();
 
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from " + table + " where " + parameter);
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from ? where ?=?");
+            preparedStatement.setString(1, table);
+            preparedStatement.setString(2, column);
+            preparedStatement.setString(3, parameter);
 
             //Execute the deletion, and return the number of affected rows
             return preparedStatement.executeUpdate();
