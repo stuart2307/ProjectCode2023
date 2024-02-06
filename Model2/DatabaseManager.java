@@ -55,10 +55,8 @@ public class DatabaseManager {
         {
             try
             {
-                System.out.println("Select the table to delete an entry from");
-                table = enterValue.nextLine();
                 //Create a prepared statement using the supplied parameters
-                PreparedStatement preparedStatement = connection.prepareStatement("insert into " + table + " values (" + parameters + ");");
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO " + table + " (" + parameters + ") VALUES (" + values + ");");
                 //return the number of rows affected
                 return preparedStatement.executeUpdate();
             }
