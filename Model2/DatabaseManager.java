@@ -58,17 +58,31 @@ public class DatabaseManager {
         {
             try
             {
+                int index;
+                String valueString = "";
 
                 // Creates a New Entry for a Table
-
                 PreparedStatement pstat = null;
 
+                // Makes a string for the values placeholders
+                for (index = 0; index < parameters.length; index++)
+                    {
+                        if (index == 0)
+                            {
+                                valueString = "?";
+                            }
+                        else
+                            {
+                                valueString += ", ?";
+                            }
+                    }
+
                 // Create a prepared statement using the supplied parameters
-                pstat = connection.prepareStatement("INSERT INTO " + table + " (" + parameters + ") VALUES (?,?)");
+                pstat = connection.prepareStatement("INSERT INTO " + table + " (" + parameters + ") VALUES (" + valueString + ")");
 
                 for(int i=0; i<parameters.length;i++)
                 {
-                    pstat.setString(i, values[i]);
+                    pstat.setString( (i+1) , values[i]);
                 }
 
                 // Execute update and return the number of rows affected
