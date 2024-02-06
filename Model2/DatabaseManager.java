@@ -8,15 +8,15 @@ import java.util.Scanner;
 public class DatabaseManager {
 
     Connection connection = null;
-    private static final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
-    final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone"};
-    final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
-    final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "ImageLocation"};
-    final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
-    final String CHATLOG[] = {"ChatID", "MessageID"};
-    final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
+    private final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
+    private final String USERNAME = "root";
+    private final String PASSWORD = "";
+    static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone"};
+    static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
+    static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "ImageLocation"};
+    static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
+    static final String CHATLOG[] = {"ChatID", "MessageID"};
+    static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
     Scanner enterValue = new Scanner(System.in);
 
     public DatabaseManager() 
@@ -39,6 +39,9 @@ public class DatabaseManager {
     {
         try 
         {
+
+            // Closes Connection 
+
             if (connection != null && !connection.isClosed()) 
             {
                 connection.close();
@@ -55,15 +58,18 @@ public class DatabaseManager {
         {
             try
             {
-                //Create a prepared statement using the supplied parameters
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO " + table + " (" + parameters + ") VALUES (" + values + ");");
-                //return the number of rows affected
+
+                // Creates a New Entry for a Table
+
+                // Create a prepared statement using the supplied parameters
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO " + table + " (" + parameters + ") VALUES (" + values + ")");
+                // Return the number of rows affected
                 return preparedStatement.executeUpdate();
             }
             catch (SQLException e)
             {
                 e.printStackTrace();
-                //Handle exceptions appropriately
+                // Handle exceptions appropriately
                 return -1;
             }
         }
@@ -87,12 +93,12 @@ public class DatabaseManager {
         }
     }
 
-    public int executeUpdate(String table, String parameters) 
+    public int executeUpdate(String table, String setParameter, String setValue, String locationParameter, String locationValue) 
     {
         try 
         {
             //Create a prepared statement
-            PreparedStatement preparedStatement = connection.prepareStatement("update " + table + " " + parameters);
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE " + table + " SET " + setParameter + "=" + setValue + " WHERE " + locationParameter + "=" + locationValue);
 
             //Execute the update and return the number of affected rows
             return preparedStatement.executeUpdate();
