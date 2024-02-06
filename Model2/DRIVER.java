@@ -9,7 +9,7 @@ public class DRIVER
         {
 
             DatabaseManager testDBM = new DatabaseManager();
-            String valueArray[] = {"1", "Revolution825", "12345, ", "Diarmuid, ", "10, ", "Knocklonegad, ", "Bagenalstown, ", "Carlow, ", "R22 XH60, ", "diarmuidoneill2003@gmail.com, ", "0891234567"};
+            String valueArray[] = {"Revolution825", "12345", "Diarmuid", "10", "Knocklonegad", "Bagenalstown", "Carlow", "R22 XH60", "diarmuidoneill2003@gmail.com", "0891234567"};
 
             
 

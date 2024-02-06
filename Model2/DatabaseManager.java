@@ -61,10 +61,18 @@ public class DatabaseManager {
 
                 // Creates a New Entry for a Table
 
+                PreparedStatement pstat = null;
+
                 // Create a prepared statement using the supplied parameters
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO " + table + " (" + parameters + ") VALUES (" + values + ")");
-                // Return the number of rows affected
-                return preparedStatement.executeUpdate();
+                pstat = connection.prepareStatement("INSERT INTO " + table + " (" + parameters + ") VALUES (?,?)");
+
+                for(int i=0; i<parameters.length;i++)
+                {
+                    pstat.setString(i, values[i]);
+                }
+
+                // Execute update and return the number of rows affected
+                return pstat.executeUpdate();
             }
             catch (SQLException e)
             {
