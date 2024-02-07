@@ -82,9 +82,21 @@ public class DatabaseManager {
                                 valueString += ", ?";
                             }
                     }
-
+                String parametersString ="";
+                for (index = 0; index < parameters.length; index++)
+                    {
+                        if (index == 0)
+                            {
+                                parametersString = parameters[index];
+                            }
+                        else
+                            {
+                                parametersString += ", " + parameters[index];
+                            }
+                    }
+                    
                 // Create a prepared statement using the supplied parameters
-                pstat = connection.prepareStatement("INSERT INTO " + table + " (" + parameters + ") VALUES (" + valueString + ")");
+                pstat = connection.prepareStatement("INSERT INTO " + table + " (" + parametersString + ") VALUES (" + valueString + ")");
 
                 for(int i=0; i<parameters.length;i++)
                 {

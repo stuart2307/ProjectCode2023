@@ -14,7 +14,7 @@ public class DRIVER
             
 
 
-            testDBM.createEntry("accounts", DatabaseManager.ACCOUNTS, DatabaseManager.ACCOUNTSPOS , valueArray);
+            testDBM.createEntry("accounts", DatabaseManager.ACCOUNTS, DatabaseManager.ACCOUNTSPOS, valueArray);
             testDBM.clearArray(valueArray);
         }
 }
