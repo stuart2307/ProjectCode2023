@@ -10,7 +10,7 @@ public class DRIVER
 
             DatabaseManager testDBM = new DatabaseManager();
             String valueArray[] = {"Revolution825", "12345", "Diarmuid1", "10", "Knocklonegad", "Bagenalstown", "Carlow", "R22 XH60", "diarmuidoneill2003@gmail.com", "0891234567"};
-            testDBM.createEntry("accounts", DatabaseManager.ACCOUNTS, DatabaseManager.ACCOUNTSPOS, valueArray);
+            testDBM.createEntry("accounts", DatabaseManager.ACCOUNTS, valueArray);
 
             testDBM.deleteEntry("accounts","AccountID","6");
         }

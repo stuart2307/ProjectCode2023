@@ -17,6 +17,9 @@ public class DatabaseManager {
     static final String CHATLOG[] = {"ChatID", "MessageID"};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
 
+
+
+
     public DatabaseManager() 
     {
         try 
@@ -32,6 +35,9 @@ public class DatabaseManager {
             failedConnection.printStackTrace();
         }
     }
+
+
+
 
     public void close() 
     {
@@ -51,6 +57,9 @@ public class DatabaseManager {
             failedConnection.printStackTrace();
         }
     }
+
+
+
 
     public int createEntry(String table, String parameters[], String values[])
         {
@@ -106,6 +115,9 @@ public class DatabaseManager {
             }
         }
 
+
+
+
     public ResultSet executeQuery(String parameters[], String table, String column, String value) 
         {
             try 
@@ -140,24 +152,33 @@ public class DatabaseManager {
             }
         }
 
+
+
+
     public int executeUpdate(String table, String setParameter, String setValue, String locationParameter, String locationValue) 
-    {
-        try 
         {
-            //Create a prepared statement
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE " + table + " SET " + setParameter + "=" + setValue + " WHERE " + locationParameter + "=" + locationValue);
-
-            //Execute the update and return the number of affected rows
-            return preparedStatement.executeUpdate();
-        } 
-
-        catch (SQLException failedConnection) 
-        {
-            failedConnection.printStackTrace();
-            //Handle exceptions appropriately
-            return -1;
+            try 
+            {
+                //Create a prepared statement
+                PreparedStatement prepStatement = connection.prepareStatement("UPDATE " + table + " SET " + setParameter + "=? WHERE " + locationParameter + "=?");
+    
+                prepStatement.setString (1, setValue);
+                prepStatement.setString (2, locationValue );
+    
+                //Execute the update and return the number of affected rows
+                return prepStatement.executeUpdate();
+            } 
+    
+            catch (SQLException failedConnection) 
+            {
+                failedConnection.printStackTrace();
+                //Handle exceptions appropriately
+                return -1;
+            }
         }
-    }
+
+
+
 
 public int deleteEntry(String table, String column, String parameter) //working on this one
     {
@@ -176,6 +197,10 @@ public int deleteEntry(String table, String column, String parameter) //working 
             return -1;
         }
     }
+
+
+
+
 public void clearArray(String array[])
     {
         int index;
