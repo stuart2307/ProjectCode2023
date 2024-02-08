@@ -163,22 +163,12 @@ public class DatabaseManager {
         }
     }
 
-public int deleteEntry() //working on this one
+public int deleteEntry(String table, String column, String parameter) //working on this one
     {
         try 
         {
-            String table = "";
-            String column = "";
-            String parameter = "";
-
-            table = enterValue.nextLine();
-            column = enterValue.nextLine();
-            parameter = enterValue.nextLine();
-
-            PreparedStatement preparedStatement = connection.prepareStatement("delete from ? where ?=?");
-            preparedStatement.setString(1, table);
-            preparedStatement.setString(2, column);
-            preparedStatement.setString(3, parameter);
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM " + table + " WHERE " + column + "=?");
+            preparedStatement.setString(1, parameter);
 
             //Execute the deletion, and return the number of affected rows
             return preparedStatement.executeUpdate();
