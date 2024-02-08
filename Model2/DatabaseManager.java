@@ -52,7 +52,7 @@ public class DatabaseManager {
         }
     }
 
-    public int createEntry(String table, String parameters[], int parameterspos[], String values[])
+    public int createEntry(String table, String parameters[], String values[])
         {
             try
             {
