@@ -3,7 +3,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class DatabaseManager {
 
@@ -12,18 +11,11 @@ public class DatabaseManager {
     private final String USERNAME = "root";
     private final String PASSWORD = "";
     static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone"};
-    static final int ACCOUNTSPOS[] = {0, 0, 0, 1, 0, 0, 0, 0, 0, 0};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
-    static final int MESSAGESPOS[] = {1, 1, 0};
     static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "ImageLocation"};
-    static final int ADVERTISEMENTSPOS[] = {1, 0, 0, 0, 1, 1, 2, 2, 1, 0, 0};
     static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
-    static final int REVIEWSPOS[] = {1, 1, 0, 1};
     static final String CHATLOG[] = {"ChatID", "MessageID"};
-    static final int CHATLOGPOS[] = {1, 1};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
-    static final int ACCOUNTCHATLOGPOS[] = {1, 1};
-    Scanner enterValue = new Scanner(System.in);
 
     public DatabaseManager() 
     {
@@ -100,18 +92,7 @@ public class DatabaseManager {
 
                 for(int i=0; i<parameters.length;i++)
                 {
-                    if (parameterspos[i] == 0)
-                        {
-                            pstat.setString( (i+1) , values[i]);
-                        }
-                    else if (parameterspos[i] == 1)
-                        {
-                            pstat.setInt( (i+1) , Integer.parseInt(values[i]));
-                        }
-                    else if (parameterspos[i] == 2)
-                        {
-                            pstat.setDouble( (i+1) , Double.parseDouble(values[i]));
-                        }
+                    pstat.setString( (i+1) , values[i]);
                 }
 
                 // Execute update and return the number of rows affected
@@ -125,24 +106,39 @@ public class DatabaseManager {
             }
         }
 
-    public ResultSet executeQuery(String parameters, String table) 
-    {
-        try 
+    public ResultSet executeQuery(String parameters[], String table, String column, String value) 
         {
-            //Create a prepared statement
-            PreparedStatement preparedStatement = connection.prepareStatement("select ");
-
-            //Execute the query and return the result set
-            return preparedStatement.executeQuery();
-        } 
-        
-        catch (SQLException e) 
-        {
-            e.printStackTrace();
-            //Handle exceptions appropriately
-            return null;
+            try 
+            {
+                int index = 0;
+                String parametersString = "";
+                while (index < parameters.length && parameters[index] != null)
+                    {
+                        if (index == 0)
+                            {
+                                parametersString = parameters[index];
+                            }
+                        else
+                            {
+                                parametersString += ", " + parameters[index];
+                            }
+                        index++;
+                    }
+                //Create a prepared statement
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT " + parametersString + " FROM " + table + " WHERE " + column + "=?");
+                preparedStatement.setString(1, value);
+    
+                //Execute the query and return the result set
+                return preparedStatement.executeQuery();
+            } 
+            
+            catch (SQLException e) 
+            {
+                e.printStackTrace();
+                //Handle exceptions appropriately
+                return null;
+            }
         }
-    }
 
     public int executeUpdate(String table, String setParameter, String setValue, String locationParameter, String locationValue) 
     {
