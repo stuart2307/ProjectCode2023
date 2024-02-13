@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": [
+        "Model2",
+        "Model2\\Controller",
+        "Model2\\Model",
+        "Model2\\View"
+    ]
+}
