@@ -12,26 +12,29 @@ public class MarketPlaceGUI
     // Declarations
 
     private JFrame frame;
-    private JPanel panel;
-    private JButton button;
+    private JPanel buttonPanel;
+    private JPanel imagePanel;
+    private JButton loginButton;
+    private JButton signUpButton;
 
-    // Constructer
+    // Constructor
 
     public  MarketPlaceGUI()
         { 
             
             frame = new JFrame();                                                                       // Creates a JFrame object called frame
 
-            button = new JButton("Login");                                                         // Creates a JButton object called 
-            button.setMaximumSize(new Dimension(100, 50));                                 // Set maximum size (not working when in full screen)
+            loginButton = new JButton("Login");                                                    // Creates a JButton instance called loginButton 
+            signUpButton = new JButton("Sign Up");                                                 //Creates a JButton instance called signUpButton
 
-            panel = new JPanel();                                                                       // Creates a JPanel object called panel
-            panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));     // Creates a border on the panel
-            panel.setLayout(new GridLayout(0, 1));                                            // Changes the layout of the panel to the grid layout, with 0 rows and 1 column
-            panel.add(button);                                                                          // Adds button to panel
+            buttonPanel = new JPanel();                                                                       // Creates a JPanel object called panel
+            buttonPanel.setPreferredSize(new Dimension(100,40));    
+            buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 1750, 10, 15));    // Creates a border on the panel, Setting the left border creates more space to bring it to the top right, will have to find a better way to do this
+            buttonPanel.setLayout(new GridLayout(1, 2));                                            // Changes the layout of the panel to the grid layout, with 0 rows and 1 column
+            buttonPanel.add(loginButton);
+            buttonPanel.add(signUpButton);
 
-
-            frame.add(panel, BorderLayout.CENTER);                                                      // Adds the panel to the frame and centers it in the frame (Frame defaults to the border layout)
+            frame.add(buttonPanel, BorderLayout.NORTH);                                                 // Adds the panel to the frame and centers it in the frame (Frame defaults to the border layout)
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                                       // Allows us to terminate the program upon closing the frame
             frame.setTitle("MarketPlace");                                                        // Sets title of frame
             frame.pack();                                                                               // Causes this Window to be sized to fit the preferred size and layouts of its subcomponents.

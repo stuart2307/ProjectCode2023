@@ -2,7 +2,7 @@ public class Advertisement
 {
 
     private VehicleDetails vehicle;
-    private Image vehicleImage;
+   // private Image vehicleImage;
     private SellerDetails seller;
     private String description;   
 

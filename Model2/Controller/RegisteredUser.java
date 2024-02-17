@@ -79,13 +79,10 @@ public class RegisteredUser extends User
 
             }
 
-        /**
-         * @param image
-         */
-        public void EnterImages(Image image) 
-            {
+/*      public void EnterImages(Image image) 
+           {
 
-            }
+           }*/     
 
         public void PostAd()
             {
