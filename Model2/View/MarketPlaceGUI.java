@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,9 +34,9 @@ public class MarketPlaceGUI
     private Font titleFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
 
-    private Color green = new Color(44,238,144);                                                // Primary menu colour
-    private Color white = new Color(255,255,255);                                               // Title text colour
-    private Color grey = new Color(220,220,220);                                                // Primary background colour
+    public Color green = new Color(44,238,144);                                                // Primary menu colour
+    public Color white = new Color(255,255,255);                                               // Title text colour
+    public Color grey = new Color(220,220,220);                                                // Primary background colour
 
     
 
@@ -46,8 +49,29 @@ public class MarketPlaceGUI
             mainPanel = new JPanel(new BorderLayout());                                                 // Creates a JPanel instance called mainPanel  
             mainPanel.setBackground(grey);                   
             loginButton = new JButton("Login");                                                    // Creates a JButton instance called loginButton
+            loginButton.addActionListener(new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent loginClicked)
+                {
+                    System.out.println("Login button clicked");                                       // login button method stub
+                }
+            });
             signUpButton = new JButton("Sign Up");                                                 // Creates a JButton instance called signUpButton
+            signUpButton.addActionListener(new ActionListener()                                         // Add an action listener to the signup button
+            {
+                public void actionPerformed(ActionEvent signupClicked)                                  // Anonymous inner class contains what happens when button is clicked
+                {
+                    System.out.println("Signup button clicked");                                      // signup button method stub
+                }
+            });
             searchButton = new JButton("Search");                                                  // Creates a JButton instance called searchButton
+            searchButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent searchButtonClicked)
+                {
+                    System.out.println("SearchButton clicked");                                       // Search button method stub
+                }
+            }); 
             searchField = new JTextField(20);                                                   // Creates a JTextField instance called searchField
             
             topPanel = new JPanel(new GridLayout(1, 3));                                                  // Creates a top panel using Grid layout (1 row, 2 columns) to hold the button panels
