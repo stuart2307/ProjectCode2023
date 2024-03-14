@@ -151,6 +151,7 @@ public SignUp() {
     signUpFrame.add(signUpPanel, BorderLayout.CENTER); //Adding the Sign Up panel to the center of the border layout also covers the east and west borders
     signUpFrame.add(pageTitle, BorderLayout.NORTH); //Adding the page title to the top of the frame
     signUpFrame.setMinimumSize(new Dimension(640, 480)); // Sets a minimum size for the frame
+    signUpFrame.pack(); // Causes this Window to be sized to fit the preferred size and layouts of its subcomponents.
     signUpFrame.setVisible(true); //Makes the frame visible
 }
 }
