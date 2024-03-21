@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public class DatabaseManager {
 
-    Connection connection = null;
-    private final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
-    private final String USERNAME = "root";
-    private final String PASSWORD = "";
+    static Connection connection = null;
+    private static final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "";
     static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
     static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "ImageLocation"};
@@ -17,12 +17,9 @@ public class DatabaseManager {
     static final String CHATLOG[] = {"ChatID", "MessageID"};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
 
-
-
-
-    public DatabaseManager() 
+    public static void establishConnection()
     {
-        try 
+               try 
         {
             //Establish the connection
 
@@ -33,13 +30,10 @@ public class DatabaseManager {
         {
             System.out.println("CRITICAL ERROR. ABORTING PROCESS.");
             failedConnection.printStackTrace();
-        }
+        } 
     }
 
-
-
-
-    public void close() 
+    public static void close() 
     {
         try 
         {
@@ -61,7 +55,7 @@ public class DatabaseManager {
 
 
 
-    public int createEntry(String table, String parameters[], String values[])
+    public static int createEntry(String table, String parameters[], String values[])
         {
             try
             {
@@ -118,7 +112,7 @@ public class DatabaseManager {
 
 
 
-    public ResultSet executeQuery(String parameters[], String table, String column, String value) 
+    public static ResultSet executeQuery(String parameters[], String table, String column, String value) 
         {
             try 
             {
@@ -155,7 +149,7 @@ public class DatabaseManager {
 
 
 
-    public int executeUpdate(String table, String setParameter, String setValue, String locationParameter, String locationValue) 
+    public static int executeUpdate(String table, String setParameter, String setValue, String locationParameter, String locationValue) 
         {
             try 
             {
@@ -180,7 +174,7 @@ public class DatabaseManager {
 
 
 
-public int deleteEntry(String table, String column, String parameter) //working on this one
+public static int deleteEntry(String table, String column, String parameter) //working on this one
     {
         try 
         {
@@ -201,7 +195,7 @@ public int deleteEntry(String table, String column, String parameter) //working 
 
 
 
-public void clearArray(String array[])
+public static void clearArray(String array[])
     {
         int index;
         for (index = 0; index < array.length; index++)
