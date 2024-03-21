@@ -16,7 +16,8 @@ public class DRIVER
 
             //testDBM.executeUpdate("Accounts", "username", "Revolution829", "AccountID", "1");
 
-            new MarketPlaceGUI();  
-            new SignUp();
+            //new MarketPlaceGUI();  
+            //new SignUp();
+            new Login();
         }
 }
