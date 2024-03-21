@@ -8,10 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 public class MarketPlaceGUI 
@@ -24,19 +26,24 @@ public class MarketPlaceGUI
     private JPanel searchBarPanel;
     private JPanel logoPanel;
     private JPanel loginSignupPanel;
+    private JPanel advertisements;
     private JPanel mainPanel;
-    private JPanel imagePanel;
     private JButton loginButton;
     private JButton signUpButton;
     private JButton searchButton;
     private JTextField searchField;
+    private AdPreview ad = new AdPreview();
+    private AdPreview ad2 = new AdPreview();
+    private AdPreview ad3 = new AdPreview();
+    private AdPreview ad4 = new AdPreview();
+    private AdPreview ad5 = new AdPreview();
 
     private Font titleFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
 
-    public Color green = new Color(44,238,144);                                                // Primary menu colour
-    public Color white = new Color(255,255,255);                                               // Title text colour
-    public Color grey = new Color(220,220,220);                                                // Primary background colour
+    public static Color green = new Color(44,238,144);                                                // Primary menu colour
+    public static Color white = new Color(255,255,255);                                               // Title text colour
+    public static Color grey = new Color(219,226,233);                                                // Primary background colour
 
     
 
@@ -99,6 +106,25 @@ public class MarketPlaceGUI
             topPanel.add(logoPanel);
             topPanel.add(loginSignupPanel);
 
+
+            advertisements = new JPanel();
+            advertisements.setBackground(grey);
+            advertisements.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            advertisements.setLayout(new BoxLayout(advertisements, BoxLayout.Y_AXIS));
+            advertisements.add(ad);
+            advertisements.add(ad2);
+            advertisements.add(ad3);
+            advertisements.add(ad4);
+            advertisements.add(ad5);
+
+            JScrollPane scrollPane = new JScrollPane(advertisements);
+            scrollPane.setBackground(grey);
+            scrollPane.setPreferredSize(new Dimension(100, 100));
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+
+            mainPanel.add(scrollPane, BorderLayout.CENTER);
             mainPanel.add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
 
             frame.setMinimumSize(new Dimension(640, 480));                                 // Sets a minimum size for the frame
