@@ -13,10 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
-public class SignUp
+public class SignUp extends JPanel
 {
 
-private JFrame signUpFrame;
 private JLabel userNameLabel; //Declaring labels for input text fields
 private JLabel passWordLabel;
 private JLabel nameLabel;
@@ -41,16 +40,18 @@ private JTextField emailInput;
 private JTextField phoneInput;
 private JPanel signUpPanel;
 private JButton signUpButton;
+private JFrame signUpFrame;
 
 public SignUp() {
-    DatabaseManager DBM = new DatabaseManager(); //Creating an instance of the database manager
-    signUpFrame = new JFrame(); //Creating an instance of a jframe
+ //   DatabaseManager DBM = new DatabaseManager(); //Creating an instance of the database manager
     signUpPanel = new JPanel(new FlowLayout(0, 800, 20)); //Creating an instance of a jpanel
+    signUpFrame = new JFrame(); //Creating an instance of a jframe
     
     signUpButton = new JButton("Sign Up"); //Sign up button
     signUpButton.addActionListener(new ActionListener() { //Anonymous inner class to handle the sign up event since this will probably be it's only use
 
         public void actionPerformed(ActionEvent signUp){ 
+     
         String valueParameter[] = new String[10];
 
         String username = userNameInput.getText(); //Taking the values from the textfields and converting them to text
@@ -67,16 +68,35 @@ public SignUp() {
         valueParameter[0] = username; 
         valueParameter[1] = password;
         valueParameter[2] = name;
-        valueParameter[3] = houseNumber;
+        if (houseNumber.equals(""))
+        {
+            valueParameter[3] = null;
+        }
+        else
+        {
+        valueParameter[3] = houseNumber;            
+        }
         valueParameter[4] = streetName;
         valueParameter[5] = city;
         valueParameter[6] = county;
         valueParameter[7] = eircode;
         valueParameter[8] = email;
         valueParameter[9] = phone;
-
-        DBM.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
-
+        try{
+            Verifiers.VerifyEntries(valueParameter);
+            Verifiers.VerifyPhoneNumber(phone);
+            Verifiers.VerifyEmailAddress(email);
+            DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
+        }
+        catch(BlankEntryException e){
+            e.printStackTrace();
+        }
+        catch(phoneException p){
+            p.printStackTrace();
+        }
+        catch(EmailException s){
+            s.printStackTrace();
+        }
         }
     });
 
@@ -151,7 +171,6 @@ public SignUp() {
     signUpFrame.add(signUpPanel, BorderLayout.CENTER); //Adding the Sign Up panel to the center of the border layout also covers the east and west borders
     signUpFrame.add(pageTitle, BorderLayout.NORTH); //Adding the page title to the top of the frame
     signUpFrame.setMinimumSize(new Dimension(640, 480)); // Sets a minimum size for the frame
-    signUpFrame.pack(); // Causes this Window to be sized to fit the preferred size and layouts of its subcomponents.
     signUpFrame.setVisible(true); //Makes the frame visible
 }
 }
