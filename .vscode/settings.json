@@ -1,8 +1,6 @@
 {
-    "java.project.sourcePaths": [
-        "Model2",
-        "Model2\\Controller",
-        "Model2\\Model",
-        "Model2\\View"
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "Model2\\ReferencedLibraries\\mysql-connector-j-8.3.0.jar"
     ]
 }

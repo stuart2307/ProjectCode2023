@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
-public class tst extends JPanel {
+public class SignUp2 extends JPanel {
 
     private JLabel userNameLabel; //Declaring labels for input text fields
     private JLabel passWordLabel;
@@ -51,7 +51,7 @@ public class tst extends JPanel {
     private Font titleFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Sign Up");
 
-    public tst() {
+    public SignUp2() {
         
         setBorder(BorderFactory.createLineBorder(green, 2));
         setBackground(green);

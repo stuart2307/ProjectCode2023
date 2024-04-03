@@ -32,6 +32,8 @@ public class MarketPlaceGUI
     private JButton signUpButton;
     private JButton searchButton;
     private JTextField searchField;
+    private SignUp2 SignUp2 = new SignUp2();
+    private Login loginPanel = new Login();
     private AdPreview ad = new AdPreview();
     private AdPreview ad2 = new AdPreview();
     private AdPreview ad3 = new AdPreview();
@@ -60,7 +62,10 @@ public class MarketPlaceGUI
             {
                 public void actionPerformed(ActionEvent loginClicked)
                 {
-                    System.out.println("Login button clicked");                                       // login button method stub
+                    mainPanel.setVisible(false);
+                    frame.remove(mainPanel);                                                            
+                    frame.add(loginPanel);
+                    loginPanel.setVisible(true);
                 }
             });
             signUpButton = new JButton("Sign Up");                                                 // Creates a JButton instance called signUpButton
@@ -68,7 +73,11 @@ public class MarketPlaceGUI
             {
                 public void actionPerformed(ActionEvent signupClicked)                                  // Anonymous inner class contains what happens when button is clicked
                 {
-                    System.out.println("Signup button clicked");                                      // signup button method stub
+
+                    mainPanel.setVisible(false);
+                    frame.remove(mainPanel);                                                            
+                    frame.add(SignUp2);
+                    SignUp2.setVisible(true);
                 }
             });
             searchButton = new JButton("Search");                                                  // Creates a JButton instance called searchButton
