@@ -1,68 +1,109 @@
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Login 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+
+public class Login extends JPanel
 {
-    private JFrame loginFrame;
-    private JPanel loginPanel;
-    private JPanel logoPanel;
-    private JPanel barPanel;
-    private JPanel loginFieldPanel;
-    private Font titleFont = new Font("Arial", Font.BOLD, 30);
-    private JLabel title = new JLabel("Crocodeal");
-
-    private JLabel username = new JLabel("Username");
-    private JLabel password = new JLabel("Password");
-    private JTextField usernameField;
-    private JPasswordField passwordField;
+    private JLabel usernameLabel;
+    private JTextField usernameInput;
+    private JLabel passwordLabel;
+    private JPasswordField passwordInput;
+    private JButton loginButton;
 
     public Color green = new Color(44,238,144);                                                // Primary menu colour
     public Color white = new Color(255,255,255);                                               // Title text colour
     public Color grey = new Color(220,220,220);                                                // Primary background colour
+    private Font titleFont = new Font("Arial", Font.BOLD, 30);
+    private JLabel title = new JLabel("Log In");
 
     public Login()
-        {
-            loginFrame = new JFrame("Log In");
-            loginPanel = new JPanel(new GridBagLayout());
-            loginFieldPanel = new JPanel(new FlowLayout(0, 800, 20));
-            logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            barPanel = new JPanel(new GridLayout(1, 3));
+    {
+        setLayout(new GridBagLayout());
+        setBackground(green);
+        GridBagConstraints gbc = new GridBagConstraints();
 
-            usernameField = new JTextField(30);
-            passwordField = new JPasswordField(30);
+        title.setFont(titleFont);                                                                               // Sets the title font, bold and size
+        title.setForeground(white);                                                                             // Sets the title text colour to white
+        title.setBackground(green);
 
-            loginFieldPanel.add(username);
-            loginFieldPanel.add(usernameField);
-            loginFieldPanel.add(password);
-            loginFieldPanel.add(passwordField);
+        title.setOpaque(true);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0, 0, 10, 0);
+        add(title,gbc);
 
-            loginPanel.setBackground(grey);
-            title.setFont(titleFont);
-            title.setForeground(white);
-            logoPanel.setBackground(green);
-            logoPanel.add(title, BorderLayout.CENTER);
-            logoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            barPanel.add(logoPanel);
+        usernameLabel = new JLabel("Enter Username:");
+        gbc.insets = new Insets(0, 0, 0, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        add(usernameLabel, gbc);
 
-            loginPanel.add(loginFieldPanel, BorderLayout.CENTER);
+        usernameInput = new JTextField();
+        usernameInput.setColumns(30);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        add(usernameInput, gbc);
 
-            loginPanel.add(logoPanel, BorderLayout.NORTH);
-            loginFrame.add(loginPanel);
-            loginFrame.setMinimumSize(new Dimension(640, 480)); // Sets a minimum size for the frame
-            loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            loginFrame.pack(); // Causes this Window to be sized to fit the preferred size and layouts of its subcomponents.
-            loginFrame.setVisible(true); //Makes the frame visible
+        passwordLabel = new JLabel("Enter Password:");
+        gbc.insets = new Insets(0, 0, 0, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        add(passwordLabel, gbc);
+
+        passwordInput = new JPasswordField();
+        passwordInput.setColumns(30);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        add(passwordInput, gbc);
+
+        loginButton = new JButton("Log In");
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.insets = new Insets(10, 0, 0, 15);
+        add(loginButton,gbc);
+
+        loginButton.addActionListener(new ActionListener() { //Anonymous inner class to handle the sign up event since this will probably be it's only use
+
+        public void actionPerformed(ActionEvent signUp){ 
+     
+        String valueParameter[] = new String[2];
+
+        String username = usernameInput.getText(); //Taking the values from the textfields and converting them to text
+        String password = String.valueOf(passwordInput.getPassword()); //Taking the value from JPasswordField and converting it to string since it's stored as a char
+
+        //Inserting values to the values array
+        valueParameter[0] = username; 
+        valueParameter[1] = password;
+        try{
+            Verifiers.VerifyUsernameNotFound(username, "Username", "accounts");
+            Verifiers.VerifyWrongPassword(username, password);
+            Verifiers.VerifyEntries(valueParameter);
+            System.out.println("Login Successful");
         }
+        catch(BlankEntryException e){
+            e.printStackTrace();
+        }
+        catch(UsernameNotFoundException e){
+            e.printStackTrace();
+        }
+        catch(WrongPasswordException e){
+            e.printStackTrace();
+        }
+        }
+    });
+    }
 }

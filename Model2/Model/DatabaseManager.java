@@ -203,4 +203,58 @@ public static void clearArray(String array[])
                 array[index] = null;
             }
     }
+
+public static boolean countRows(String table, String column, String parameter)
+{
+    try
+    {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM " + table + " WHERE BINARY " + column +"=?"); //WHERE BINARY converts the where clause to a binary string to make the input case sensitive
+        preparedStatement.setString(1, parameter); 
+        ResultSet rs = preparedStatement.executeQuery(); //Taking in the results to a ResultSet variable
+        rs.next(); //Moving the pointer of the resultset to the next row which is the first one
+        int rowCount = rs.getInt(1); //Getting the result of the first column
+        if(rowCount >= 1) //If there exists a column then the input for the where clause exists eg. a username already exists
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+        
+    }
+    catch (SQLException e)
+    {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+public static boolean checkPassword(String username, String password)
+{
+    try
+    {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Name =?" + "AND Password =?");
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, password);
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.next();
+        int rowCount = rs.getInt(1);
+        if(rowCount >= 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    catch (SQLException e)
+    {
+        e.printStackTrace();
+        return false;
+    }
+    
+}
+
 }
