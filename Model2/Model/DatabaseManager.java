@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,7 +15,7 @@ public class DatabaseManager {
     private static final String PASSWORD = "";
     static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
-    static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "ImageLocation"};
+    static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
     static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
     static final String CHATLOG[] = {"ChatID", "MessageID"};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
@@ -95,7 +98,24 @@ public class DatabaseManager {
 
                 for(int i=0; i<parameters.length;i++)
                 {
-                    pstat.setString( (i+1) , values[i]);
+                    if (i == 10 && parameters[i].equals("Image"))
+                        {
+                            try
+                                {
+                                    FileInputStream fis = new FileInputStream(new File(values[i])); 
+                                    pstat.setBlob((i+1), fis);
+                                }
+                            catch (FileNotFoundException fnfe)
+                                {
+                                    System.out.print("oops");
+                                }
+                            
+                        }
+                    else
+                        {
+                            pstat.setString( (i+1) , values[i]);
+                        }
+                    
                 }
 
                 // Execute update and return the number of rows affected
