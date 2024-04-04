@@ -42,7 +42,7 @@ public class Verifiers {
 
     public static void VerifyEircode(String eircode) throws EircodeException
     {
-        if(!eircode.matches("[A-Za-z]{1}[0-9]{1,2}[ -/A-Za-z]{2,3}[0-9]{2}")) throw new EircodeException("Invalid Eircode"); //Allows for lowercase and uppercase letters and spaces and dashes
+        if(!eircode.matches("[A-Za-z]{1}[0-9]{1,2}[ -]{1}[A-Za-z0-9]{4}")) throw new EircodeException("Invalid Eircode"); //Allows for lowercase and uppercase letters and spaces and dashes
         else
         {
             System.out.println("Eircode Is Valid");
