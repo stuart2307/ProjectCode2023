@@ -281,7 +281,7 @@ public class SignUp extends JPanel {
 
         public void actionPerformed(ActionEvent signUp){ 
      
-        String valueParameter[] = new String[10];
+        String valueParameter[] = new String[11];
 
         String username = userNameInput.getText(); //Taking the values from the textfields and converting them to text
         String password = String.valueOf(passWordInput.getPassword()); //Taking the value from JPasswordField and converting it to string since it's stored as a char
@@ -313,6 +313,7 @@ public class SignUp extends JPanel {
         valueParameter[7] = eircode;
         valueParameter[8] = email;
         valueParameter[9] = phone;
+        valueParameter[10] = "../View/Crocodefault.jpg";
         try{
             Verifiers.VerifyEntries(valueParameter);
             if(blankEntryFlag == true)
