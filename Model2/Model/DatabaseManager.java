@@ -133,7 +133,7 @@ public class DatabaseManager {
 
 
 
-    public static ResultSet executeQuery(String parameters[], String table, String column, String value) 
+    public static ResultSet executeQuery(String parameters[], String table, String column, String value, String order, String orderField) 
         {
             try 
             {
@@ -152,8 +152,21 @@ public class DatabaseManager {
                         index++;
                     }
                 //Create a prepared statement
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT " + parametersString + " FROM " + table + " WHERE " + column + "=?");
-                preparedStatement.setString(1, value);
+                String statementString = "SELECT " + parametersString + " FROM " + table;
+                if (!column.equals(null) && !value.equals(null))
+                    {
+                        statementString  += " WHERE " + column + "=?";
+                    }
+                if (order.toUpperCase().equals("ASC") || order.toUpperCase().equals("DESC"))
+                    {
+                        statementString += "ORDER BY " + orderField + " " + order;
+                    }
+                PreparedStatement preparedStatement = connection.prepareStatement(statementString);
+                if (!column.equals(null) && !value.equals(null))
+                    {
+                        preparedStatement.setString(1, value);
+                    }
+                
     
                 //Execute the query and return the result set
                 return preparedStatement.executeQuery();
