@@ -102,12 +102,13 @@ public class DatabaseManager {
                         {
                             try
                                 {
-                                    FileInputStream fis = new FileInputStream(new File(values[i])); 
-                                    pstat.setBlob((i+1), fis);
+                                    File image = new File(values[i]);
+                                    FileInputStream fis = new FileInputStream(image); 
+                                    pstat.setBinaryStream((i+1), fis, (int) image.length());
                                 }
                             catch (FileNotFoundException fnfe)
                                 {
-                                    System.out.print("oops");
+                                    System.out.println("oops");
                                 }
                             
                         }
