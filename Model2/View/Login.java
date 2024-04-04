@@ -19,10 +19,18 @@ import javax.swing.JPasswordField;
 public class Login extends JPanel
 {
     private JLabel usernameLabel;
+    private JLabel usernameWarning;
+    private JLabel passwordWarning;
+    private JLabel blankEntryWarning;
     private JTextField usernameInput;
     private JLabel passwordLabel;
     private JPasswordField passwordInput;
     private JButton loginButton;
+    private JButton backButton;
+
+    private boolean wrongPasswordFlag;
+    private boolean invalidUsernameFlag;
+    private boolean blankEntryFlag;
 
     public Color green = new Color(44,238,144);                                                // Primary menu colour
     public Color white = new Color(255,255,255);                                               // Title text colour
@@ -35,6 +43,13 @@ public class Login extends JPanel
         setLayout(new GridBagLayout());
         setBackground(green);
         GridBagConstraints gbc = new GridBagConstraints();
+
+        backButton = new JButton("Back");
+        gbc.gridx = 0; 
+        gbc.gridy = 0; // Place at the first row
+        gbc.insets = new Insets(10, 10, 10, 10); 
+        add(backButton, gbc);
+
 
         title.setFont(titleFont);                                                                               // Sets the title font, bold and size
         title.setForeground(white);                                                                             // Sets the title text colour to white
@@ -88,22 +103,66 @@ public class Login extends JPanel
         //Inserting values to the values array
         valueParameter[0] = username; 
         valueParameter[1] = password;
-        try{
-            Verifiers.VerifyUsernameNotFound(username, "Username", "accounts");
-            Verifiers.VerifyWrongPassword(username, password);
+        try
+        {
             Verifiers.VerifyEntries(valueParameter);
+            if(blankEntryFlag == true)
+            {
+                blankEntryWarning.setVisible(false);
+            }
+        }
+        catch(BlankEntryException e)
+        {
+            blankEntryFlag = true;
+            blankEntryWarning = new JLabel("All Entries Must Be Filled Out");
+            gbc.gridx = 1;
+            gbc.gridy = 5;
+            add(blankEntryWarning, gbc);
+            blankEntryWarning.revalidate();
+            blankEntryWarning.repaint();
+            e.printStackTrace();
+        }
+        try
+        {
+            Verifiers.VerifyUsernameNotFound(username, "Username", "accounts");
+            if(invalidUsernameFlag == true)
+            {
+                usernameWarning.setVisible(false);
+            }
+        }
+        catch(UsernameNotFoundException e)
+        {
+            invalidUsernameFlag = true;
+            usernameWarning = new JLabel("Username Not Found");
+            gbc.gridx = 2;
+            gbc.gridy = 1;
+            add(usernameWarning, gbc);
+            usernameWarning.revalidate();
+            usernameWarning.repaint();
+            e.printStackTrace();
+        }
+
+        try
+        {
+            Verifiers.VerifyWrongPassword(username, password);
+            if(wrongPasswordFlag == true)
+            {
+                passwordWarning.setVisible(false);
+            }
             System.out.println("Login Successful");
         }
-        catch(BlankEntryException e){
-            e.printStackTrace();
-        }
-        catch(UsernameNotFoundException e){
-            e.printStackTrace();
-        }
         catch(WrongPasswordException e){
+            wrongPasswordFlag = true;
+            passwordWarning = new JLabel("Incorrect Password");
+            gbc.gridx = 2;
+            gbc.gridy = 2;
+            add(passwordWarning, gbc);
+            passwordWarning.revalidate();
+            passwordWarning.repaint();
             e.printStackTrace();
         }
         }
-    });
+        });
     }
 }
+

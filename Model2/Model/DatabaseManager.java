@@ -254,7 +254,7 @@ public static boolean checkPassword(String username, String password)
 {
     try
     {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Name =?" + "AND Password =?");
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Username =?" + "AND Password =?");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
         ResultSet rs = preparedStatement.executeQuery();

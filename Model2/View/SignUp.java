@@ -9,49 +9,232 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
-public class SignUp extends JPanel
-{
+public class SignUp extends JPanel {
 
-private JLabel userNameLabel; //Declaring labels for input text fields
-private JLabel passWordLabel;
-private JLabel confirmPasswordLabel;
-private JLabel nameLabel;
-private JLabel houseNumberLabel;
-private JLabel streetNameLabel;
-private JLabel cityLabel;
-private JLabel countyLabel;
-private JLabel eirCodeLabel;
-private JLabel emailLabel;
-private JLabel phoneLabel;    
-private JLabel pageTitle;
+    private JLabel userNameLabel; //Declaring labels for input text fields
+    private JLabel passWordLabel;
+    private JLabel confirmPasswordLabel;
+    private JLabel nameLabel;
+    private JLabel houseNumberLabel;
+    private JLabel streetNameLabel;
+    private JLabel cityLabel;
+    private JLabel countyLabel;
+    private JLabel eirCodeLabel;
+    private JLabel emailLabel;
+    private JLabel phoneLabel;    
+    private JLabel blankEntryWarning;
+    private JLabel invalidPhoneWarning;
+    private JLabel invalidEmailWarning;
+    private JLabel confirmPasswordWarning;
+    private JLabel invalidEircodeWarning;
+    private JLabel invalidUsernameWarning;
 
-private JTextField userNameInput; //Declaring corresponding textfields for inputs
-private JPasswordField passWordInput;
-private JPasswordField confirmPasswordInput;
-private JTextField nameInput;
-private JTextField houseNumberInput;
-private JTextField streetNameInput;
-private JTextField cityInput;
-private JTextField countyInput;
-private JTextField eirCodeInput;
-private JTextField emailInput;
-private JTextField phoneInput;
-private JButton signUpButton;
-private JPanel mainPanel;
+    private boolean blankEntryFlag;
+    private boolean phoneNoFlag;
+    private boolean usernameFlag;
+    private boolean eircodeFlag;
+    private boolean emailFlag;
+    private boolean passwordFlag;
 
-public SignUp() {
- //   DatabaseManager DBM = new DatabaseManager(); //Creating an instance of the database manager
-    new JPanel(new GridBagLayout());
-    //new JPanel(new GridBagLayout());
-    GridBagConstraints gbc = new GridBagConstraints();
-    signUpButton = new JButton("Sign Up"); //Sign up button
-    signUpButton.addActionListener(new ActionListener() { //Anonymous inner class to handle the sign up event since this will probably be it's only use
+    private JTextField userNameInput; //Declaring corresponding textfields for inputs
+    private JPasswordField passWordInput;
+    private JPasswordField confirmPasswordInput;
+    private JTextField nameInput;
+    private JTextField houseNumberInput;
+    private JTextField streetNameInput;
+    private JTextField cityInput;
+    private JTextField countyInput;
+    private JTextField eirCodeInput;
+    private JTextField emailInput;
+    private JTextField phoneInput;
+    private JButton signUpButton;
+    private JButton backButton;
+
+    public Color green = new Color(44,238,144);                                                // Primary menu colour
+    public Color white = new Color(255,255,255);                                               // Title text colour
+    public Color grey = new Color(220,220,220);                                                // Primary background colour
+    private Font titleFont = new Font("Arial", Font.BOLD, 30);
+    private JLabel title = new JLabel("Sign Up");
+
+    public SignUp() {
+        
+        setBorder(BorderFactory.createLineBorder(green, 2));
+        setBackground(green);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        backButton = new JButton("Back");
+        gbc.gridx = 0; 
+        gbc.gridy = 0; // Place at the first row
+        gbc.insets = new Insets(10, 10, 10, 10); 
+        add(backButton, gbc);
+
+        userNameLabel = new JLabel("Enter Username:"); //Username input
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(0, 0, 25, 10); //Sets external padding for all components
+
+        add(userNameLabel, gbc);
+
+        userNameInput = new JTextField(); //Adding corresponding text fields to the JLabels
+        userNameInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+
+        add(userNameInput, gbc);
+
+        passWordLabel = new JLabel("Enter Password:"); //password input
+        gbc.gridx = 0;
+        gbc.gridy = 2;  
+
+        add(passWordLabel, gbc);
+
+        passWordInput = new JPasswordField(); //Adding corresponding text fields to the JLabels
+        passWordInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 2;  
+
+        add(passWordInput, gbc); //confirm password input
+
+        confirmPasswordLabel = new JLabel(" Confirm Password:");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+
+        add(confirmPasswordLabel, gbc);
+
+        confirmPasswordInput = new JPasswordField(); //Adding corresponding text fields to the JLabels
+        confirmPasswordInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+
+        add(confirmPasswordInput, gbc); 
+
+        nameLabel = new JLabel("Enter Full Name:");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+
+        add(nameLabel, gbc);
+
+        nameInput = new JTextField(); //Adding corresponding text fields to the JLabels
+        nameInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+
+        add(nameInput, gbc); //house number input
+
+        houseNumberLabel = new JLabel("Enter House Number:");
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+
+        add(houseNumberLabel, gbc);
+
+        houseNumberInput = new JTextField(); //Adding corresponding text fields to the JLabels
+        houseNumberInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+ 
+        add(houseNumberInput, gbc); //street name input
+
+        streetNameLabel = new JLabel("Enter Street Name:");
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+
+        add(streetNameLabel, gbc);
+
+        streetNameInput = new JTextField(); //Adding corresponding text fields to the JLabels
+        streetNameInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+
+        add(streetNameInput, gbc); //city input
+
+        cityLabel = new JLabel("Enter City:");
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+
+        add(cityLabel, gbc);
+
+        cityInput = new JTextField(); //Adding corresponding text fields to the JLabels
+        cityInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+
+        add(cityInput, gbc); //county input
+
+        countyLabel = new JLabel("Enter County:");
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+
+        add(countyLabel, gbc);
+
+        countyInput = new JTextField(); //Adding corresponding text fields to the JLabels
+        countyInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+
+        add(countyInput, gbc); //eircode input
+
+        eirCodeLabel = new JLabel("Enter Eircode:");
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+
+        add(eirCodeLabel, gbc);
+
+        eirCodeInput = new JTextField(); //Adding corresponding text fields to the JLabels
+        eirCodeInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+
+        add(eirCodeInput, gbc); //email input
+
+        emailLabel = new JLabel("Enter Email:");
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+
+        add(emailLabel, gbc);
+
+        emailInput = new JTextField(); //Adding corresponding text fields to the JLabels
+        emailInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 10;
+
+        add(emailInput, gbc); //Phone input
+
+        phoneLabel = new JLabel("Enter Phone Number:");
+        gbc.gridx = 0;
+        gbc.gridy = 11;
+
+        add(phoneLabel, gbc);
+
+        phoneInput = new JTextField(); //Adding corresponding text fields to the JLabels
+        phoneInput.setColumns(30); //Set columns sets the width of the textfield 
+        gbc.gridx = 1;
+        gbc.gridy = 11;
+
+        add(phoneInput, gbc);
+
+        title.setFont(titleFont);                                                                               // Sets the title font, bold and size
+        title.setForeground(white);                                                                             // Sets the title text colour to white
+        title.setBackground(green);
+
+        title.setOpaque(true);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        add(title,gbc);
+
+        signUpButton = new JButton("Sign Up");
+        gbc.gridx = 1;
+        gbc.gridy = 12;
+        
+        add(signUpButton,gbc);
+        signUpButton.addActionListener(new ActionListener() { //Anonymous inner class to handle the sign up event since this will probably be it's only use
 
         public void actionPerformed(ActionEvent signUp){ 
      
@@ -87,165 +270,116 @@ public SignUp() {
         valueParameter[8] = email;
         valueParameter[9] = phone;
         try{
-            Verifiers.VerifyUsernameExists(username, "Username", "accounts");
             Verifiers.VerifyEntries(valueParameter);
-            Verifiers.VerifyEircode(eircode);
-            Verifiers.VerifyPhoneNumber(phone);
-            Verifiers.VerifyConfirmPassword(password, confPassword);
-            Verifiers.VerifyEmailAddress(email);
+            if(blankEntryFlag == true)
+            {
+                blankEntryWarning.setVisible(false);
+            }
             DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
         }
-        catch(BlankEntryException e){
-            e.printStackTrace();
+        catch(BlankEntryException blankEntryException)
+        {
+            blankEntryFlag = true;
+            blankEntryWarning = new JLabel("All Entries must be filled out");
+            gbc.gridx = 1;
+            gbc.gridy = 13;
+            add(blankEntryWarning, gbc);
+            blankEntryWarning.revalidate();
+            blankEntryWarning.repaint();
+            blankEntryException.printStackTrace();
         }
-        catch(phoneException p){
-            p.printStackTrace();
+
+        try{
+        Verifiers.VerifyUsernameExists(username, "Username", "accounts");
+        if(usernameFlag == true)
+        {
+            invalidUsernameWarning.setVisible(false);
         }
-        catch(EmailException s){
-            s.printStackTrace();
         }
-        catch(ConfirmPasswordException c){
-            c.printStackTrace();
+        catch(UsernameExistsException usernameException)
+        {
+            usernameFlag = true;
+            invalidUsernameWarning = new JLabel("Username Already Exists");
+            gbc.gridx = 2;
+            gbc.gridy = 1;
+            add(invalidUsernameWarning, gbc);
+            invalidUsernameWarning.revalidate();
+            invalidUsernameWarning.repaint();
+            usernameException.printStackTrace();
         }
-        catch(EircodeException i){
-            i.printStackTrace();
+
+        try{
+        Verifiers.VerifyConfirmPassword(password, confPassword);
+        if(passwordFlag == true)
+        {
+            confirmPasswordWarning.setVisible(false);
         }
-        catch(UsernameExistsException e){
-            e.printStackTrace();
+        }
+        catch(ConfirmPasswordException passwordException){
+            passwordFlag = true;
+            confirmPasswordWarning = new JLabel("The Password And Confirm Password do not match");
+            gbc.gridx = 2;
+            gbc.gridy = 3;
+            add(confirmPasswordWarning, gbc);
+            confirmPasswordWarning.revalidate();
+            confirmPasswordWarning.repaint();
+            passwordException.printStackTrace();
+        }
+
+        try{
+        Verifiers.VerifyEircode(eircode);
+        if(eircodeFlag == true)
+        {
+            invalidEircodeWarning.setVisible(false);
+        }
+        }
+        catch(EircodeException eircodeException){
+            eircodeFlag = true;
+            invalidEircodeWarning = new JLabel("Invalid Eircode Entered");
+            gbc.gridx = 2;
+            gbc.gridy = 9;
+            add(invalidEircodeWarning, gbc);
+            invalidEircodeWarning.revalidate();
+            invalidEircodeWarning.repaint();
+            eircodeException.printStackTrace();
+        }
+
+        try{
+        Verifiers.VerifyEmailAddress(email);
+        if(emailFlag == true)
+        {
+            invalidEmailWarning.setVisible(false);
+        }
+        }
+        catch(EmailException emailException){
+            emailFlag = true;
+            invalidEmailWarning = new JLabel("Invalid Email Entered");
+            gbc.gridx = 2;
+            gbc.gridy = 10;
+            add(invalidEmailWarning, gbc);
+            invalidEmailWarning.revalidate();
+            invalidEmailWarning.repaint();
+            emailException.printStackTrace();
+        }
+
+        try{
+        Verifiers.VerifyPhoneNumber(phone);
+        if(phoneNoFlag == true)
+        {
+            invalidPhoneWarning.setVisible(false);
+        }
+        }
+        catch(phoneException phoneNoException){
+            phoneNoFlag = true;
+            invalidPhoneWarning = new JLabel("Invalid Phone Number Entered");
+            gbc.gridx = 2;
+            gbc.gridy = 11;
+            add(invalidPhoneWarning, gbc);
+            invalidPhoneWarning.revalidate();
+            invalidPhoneWarning.repaint();
+            phoneNoException.printStackTrace();
         }
         }
     });
-
-    pageTitle = new JLabel("Sign Up"); //Adding text to the JLabels 
-    pageTitle.setFont(new Font(null, 0, 30));
-    pageTitle.setLabelFor(cityInput);
-    userNameLabel = new JLabel("Enter Username");
-    passWordLabel = new JLabel("Enter Password");
-    confirmPasswordLabel = new JLabel("Confirm Password");
-    nameLabel = new JLabel("Enter Name");
-    houseNumberLabel = new JLabel("Enter House Number");
-    streetNameLabel = new JLabel("Enter Street Name");
-    cityLabel = new JLabel("Enter City");
-    countyLabel = new JLabel("Enter County");
-    eirCodeLabel = new JLabel("Enter Eircode");
-    emailLabel = new JLabel("Enter Email");
-    phoneLabel = new JLabel("Enter Phone Number");
-
-    userNameInput = new JTextField(); //Adding corresponding text fields to the JLabels
-    userNameInput.setColumns(30); //Set columns sets the width of the textfield 
-    passWordInput = new JPasswordField();
-    passWordInput.setColumns(30);
-    confirmPasswordInput = new JPasswordField();
-    confirmPasswordInput.setColumns(30);
-    nameInput = new JTextField();
-    nameInput.setColumns(30);
-    houseNumberInput = new JTextField();
-    houseNumberInput.setColumns(30);
-    streetNameInput = new JTextField();
-    streetNameInput.setColumns(30);
-    cityInput = new JTextField();
-    cityInput.setColumns(30);
-    countyInput = new JTextField();
-    countyInput.setColumns(30);
-    eirCodeInput = new JTextField();
-    eirCodeInput.setColumns(30);
-    emailInput = new JTextField();
-    emailInput.setColumns(30);
-    phoneInput = new JTextField();
-    phoneInput.setColumns(30);
-
-    gbc.gridx = 1;
-    gbc.gridy = 1;
-    gbc.gridwidth = 5;
-    add(userNameLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 1;
-    add(userNameInput,gbc);
-
-    gbc.gridx = 1;
-    gbc.gridy = 2;
-    add(passWordLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 2;
-    add(passWordInput);
-
-    gbc.gridx = 1;
-    gbc.gridy = 3;
-    add(confirmPasswordLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 3;
-    add(confirmPasswordInput,gbc);
-
-    gbc.gridx = 1;
-    gbc.gridy = 4;
-    add(nameLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 4;
-    add(nameInput,gbc);
-
-    gbc.gridx = 1;
-    gbc.gridy = 5;
-    add(houseNumberLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 5;
-    add(houseNumberInput,gbc);
-
-    
-    gbc.gridx = 1;
-    gbc.gridy = 6;
-    add(streetNameLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 6;
-    add(streetNameInput,gbc);
-
-    gbc.gridx = 1;
-    gbc.gridy = 7;
-    add(cityLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 7;
-    add(cityInput,gbc);
-
-    gbc.gridx = 1;
-    gbc.gridy = 8;
-    add(countyLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 8;
-    add(countyInput,gbc);
-
-    gbc.gridx = 1;
-    gbc.gridy = 9;
-    add(eirCodeLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 9;
-    add(eirCodeInput,gbc);
-
-    gbc.gridx = 1;
-    gbc.gridy = 10;
-    add(emailLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 10;
-    add(emailInput,gbc);
-
-    gbc.gridx = 1;
-    gbc.gridy = 11;
-    add(phoneLabel,gbc);
-
-    gbc.gridx = 2;
-    gbc.gridy = 11;
-    add(phoneInput,gbc);
-
-    gbc.gridx = 3;
-    gbc.gridy = 12;
-    add(signUpButton,gbc);
 }
 }
