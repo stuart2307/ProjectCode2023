@@ -29,6 +29,7 @@ public class SignUp extends JPanel {
     private JLabel eirCodeLabel;
     private JLabel emailLabel;
     private JLabel phoneLabel;    
+<<<<<<< HEAD
 
     private JTextField userNameInput; //Declaring corresponding textfields for inputs
     private JPasswordField passWordInput;
@@ -45,6 +46,36 @@ public class SignUp extends JPanel {
     private JPanel mainPanel;
     private JPanel gridPanel;
 
+=======
+    private JLabel blankEntryWarning;
+    private JLabel invalidPhoneWarning;
+    private JLabel invalidEmailWarning;
+    private JLabel confirmPasswordWarning;
+    private JLabel invalidEircodeWarning;
+    private JLabel invalidUsernameWarning;
+
+    private boolean blankEntryFlag;
+    private boolean phoneNoFlag;
+    private boolean usernameFlag;
+    private boolean eircodeFlag;
+    private boolean emailFlag;
+    private boolean passwordFlag;
+
+    private JTextField userNameInput; //Declaring corresponding textfields for inputs
+    private JPasswordField passWordInput;
+    private JPasswordField confirmPasswordInput;
+    private JTextField nameInput;
+    private JTextField houseNumberInput;
+    private JTextField streetNameInput;
+    private JTextField cityInput;
+    private JTextField countyInput;
+    private JTextField eirCodeInput;
+    private JTextField emailInput;
+    private JTextField phoneInput;
+    private JButton signUpButton;
+    private JButton backButton;
+
+>>>>>>> 412ca4e2bcbb8b5e68ff94528b56b32083ee028b
     public Color green = new Color(44,238,144);                                                // Primary menu colour
     public Color white = new Color(255,255,255);                                               // Title text colour
     public Color grey = new Color(220,220,220);                                                // Primary background colour
@@ -58,6 +89,15 @@ public class SignUp extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
+<<<<<<< HEAD
+=======
+        backButton = new JButton("Back");
+        gbc.gridx = 0; 
+        gbc.gridy = 0; // Place at the first row
+        gbc.insets = new Insets(10, 10, 10, 10); 
+        add(backButton, gbc);
+
+>>>>>>> 412ca4e2bcbb8b5e68ff94528b56b32083ee028b
         userNameLabel = new JLabel("Enter Username:"); //Username input
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -253,16 +293,32 @@ public class SignUp extends JPanel {
         valueParameter[9] = phone;
         try{
             Verifiers.VerifyEntries(valueParameter);
+<<<<<<< HEAD
             Verifiers.VerifyUsernameExists(username, "Username", "accounts");
             Verifiers.VerifyConfirmPassword(password, confPassword);
             Verifiers.VerifyEircode(eircode);
             Verifiers.VerifyEmailAddress(email);
             Verifiers.VerifyPhoneNumber(phone);
+=======
+            if(blankEntryFlag == true)
+            {
+                blankEntryWarning.setVisible(false);
+            }
+>>>>>>> 412ca4e2bcbb8b5e68ff94528b56b32083ee028b
             DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
         }
-        catch(BlankEntryException e){
-            e.printStackTrace();
+        catch(BlankEntryException blankEntryException)
+        {
+            blankEntryFlag = true;
+            blankEntryWarning = new JLabel("All Entries must be filled out");
+            gbc.gridx = 1;
+            gbc.gridy = 13;
+            add(blankEntryWarning, gbc);
+            blankEntryWarning.revalidate();
+            blankEntryWarning.repaint();
+            blankEntryException.printStackTrace();
         }
+<<<<<<< HEAD
         catch(phoneException e){
             e.printStackTrace();
         }
@@ -274,13 +330,106 @@ public class SignUp extends JPanel {
         }
         catch(EircodeException e){
             e.printStackTrace();
+=======
+
+        try{
+        Verifiers.VerifyUsernameExists(username, "Username", "accounts");
+        if(usernameFlag == true)
+        {
+            invalidUsernameWarning.setVisible(false);
         }
-        catch(UsernameExistsException e){
-            e.printStackTrace();
+        }
+        catch(UsernameExistsException usernameException)
+        {
+            usernameFlag = true;
+            invalidUsernameWarning = new JLabel("Username Already Exists");
+            gbc.gridx = 2;
+            gbc.gridy = 1;
+            add(invalidUsernameWarning, gbc);
+            invalidUsernameWarning.revalidate();
+            invalidUsernameWarning.repaint();
+            usernameException.printStackTrace();
+        }
+
+        try{
+        Verifiers.VerifyConfirmPassword(password, confPassword);
+        if(passwordFlag == true)
+        {
+            confirmPasswordWarning.setVisible(false);
+>>>>>>> 412ca4e2bcbb8b5e68ff94528b56b32083ee028b
+        }
+        }
+        catch(ConfirmPasswordException passwordException){
+            passwordFlag = true;
+            confirmPasswordWarning = new JLabel("The Password And Confirm Password do not match");
+            gbc.gridx = 2;
+            gbc.gridy = 3;
+            add(confirmPasswordWarning, gbc);
+            confirmPasswordWarning.revalidate();
+            confirmPasswordWarning.repaint();
+            passwordException.printStackTrace();
+        }
+
+        try{
+        Verifiers.VerifyEircode(eircode);
+        if(eircodeFlag == true)
+        {
+            invalidEircodeWarning.setVisible(false);
+        }
+        }
+        catch(EircodeException eircodeException){
+            eircodeFlag = true;
+            invalidEircodeWarning = new JLabel("Invalid Eircode Entered");
+            gbc.gridx = 2;
+            gbc.gridy = 9;
+            add(invalidEircodeWarning, gbc);
+            invalidEircodeWarning.revalidate();
+            invalidEircodeWarning.repaint();
+            eircodeException.printStackTrace();
+        }
+
+        try{
+        Verifiers.VerifyEmailAddress(email);
+        if(emailFlag == true)
+        {
+            invalidEmailWarning.setVisible(false);
+        }
+        }
+        catch(EmailException emailException){
+            emailFlag = true;
+            invalidEmailWarning = new JLabel("Invalid Email Entered");
+            gbc.gridx = 2;
+            gbc.gridy = 10;
+            add(invalidEmailWarning, gbc);
+            invalidEmailWarning.revalidate();
+            invalidEmailWarning.repaint();
+            emailException.printStackTrace();
+        }
+
+        try{
+        Verifiers.VerifyPhoneNumber(phone);
+        if(phoneNoFlag == true)
+        {
+            invalidPhoneWarning.setVisible(false);
+        }
+        }
+        catch(phoneException phoneNoException){
+            phoneNoFlag = true;
+            invalidPhoneWarning = new JLabel("Invalid Phone Number Entered");
+            gbc.gridx = 2;
+            gbc.gridy = 11;
+            add(invalidPhoneWarning, gbc);
+            invalidPhoneWarning.revalidate();
+            invalidPhoneWarning.repaint();
+            phoneNoException.printStackTrace();
         }
         }
     });
+<<<<<<< HEAD
 
     }
+=======
+}
+>>>>>>> 412ca4e2bcbb8b5e68ff94528b56b32083ee028b
 }
 
