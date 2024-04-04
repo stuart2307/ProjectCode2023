@@ -28,10 +28,12 @@ public class MarketPlaceGUI
     private JPanel loginSignupPanel;
     private JPanel advertisements;
     private JPanel mainPanel;
+    private JButton placeAdButton;
     private JButton loginButton;
     private JButton signUpButton;
     private JButton searchButton;
     private JTextField searchField;
+    private AdPanel placeAdPanel = new AdPanel();
     private SignUp2 SignUp2 = new SignUp2();
     private Login loginPanel = new Login();
     private AdPreview ad = new AdPreview();
@@ -40,7 +42,7 @@ public class MarketPlaceGUI
     private AdPreview ad4 = new AdPreview();
     private AdPreview ad5 = new AdPreview();
 
-    private Font titleFont = new Font("Arial", Font.BOLD, 30);
+    public static Font titleFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
 
     public static Color green = new Color(44,238,144);                                                // Primary menu colour
@@ -56,7 +58,18 @@ public class MarketPlaceGUI
             
             frame = new JFrame();                                                                       // Creates a JFrame object called frame
             mainPanel = new JPanel(new BorderLayout());                                                 // Creates a JPanel instance called mainPanel  
-            mainPanel.setBackground(grey);                   
+            mainPanel.setBackground(grey);     
+            placeAdButton = new JButton("Place Ad");                                                    // Creates a JButton instance called loginButton
+            placeAdButton.addActionListener(new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent placeAdClicked)
+                {
+                    mainPanel.setVisible(false);
+                    frame.remove(mainPanel);                                                            
+                    frame.add(placeAdPanel);
+                    placeAdPanel.setVisible(true);
+                }
+            });              
             loginButton = new JButton("Login");                                                    // Creates a JButton instance called loginButton
             loginButton.addActionListener(new ActionListener() 
             {
@@ -108,6 +121,7 @@ public class MarketPlaceGUI
             loginSignupPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                        // Creates a panel using the Flow layout and positions it to the right
             loginSignupPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
             loginSignupPanel.setBackground(green);                                                                  // Sets the colour of the loginSignup panel to green
+            loginSignupPanel.add(placeAdButton);
             loginSignupPanel.add(loginButton);
             loginSignupPanel.add(signUpButton); 
 
