@@ -65,7 +65,7 @@ public class MarketPlaceGUI extends JPanel
             {
                 public void actionPerformed(ActionEvent loginClicked)
                 {
-                    GUIManager.changeViewAd(MarketPlaceGUI.this);
+                    GUIManager.changeLogin(MarketPlaceGUI.this);
                 }
             });
             signUpButton = new JButton("Sign Up");                                                 // Creates a JButton instance called signUpButton
@@ -149,6 +149,5 @@ public class MarketPlaceGUI extends JPanel
 
             add(scrollPane, BorderLayout.CENTER);
             add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
-
         }
 }

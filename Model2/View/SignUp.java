@@ -75,7 +75,7 @@ public class SignUp extends JPanel {
         {
             public void actionPerformed(ActionEvent backButtonPressed)
             {
-                GUIManager.changeMarketplace(SignUp.this);                                     // Search button method stub
+                GUIManager.goBack(SignUp.this);                                     // Search button method stub
             }
         }); 
         gbc.gridx = 0; 
