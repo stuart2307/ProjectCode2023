@@ -7,15 +7,21 @@ public class GUIManager
     private static JFrame frame = new JFrame("Crocodeal");  //Creates the frame to hold all the panels
     private static JPanel lastScreen;
     //INSTANTIATES AND INITIALISES ALL SCREENS
-    private static MarketPlaceGUI marketplace = new MarketPlaceGUI();
-    private static Login login = new Login();
-    private static SignUp signup = new SignUp();
-    private static AdPanel createAd = new AdPanel();
-    private static ViewAccount viewAccount = new ViewAccount();
-    private static ViewAd viewAd = new ViewAd();
+    private static MarketPlaceGUI marketplace;
+    private static Login login;
+    private static SignUp signup;
+    private static AdPanel createAd;
+    private static ViewAccount viewAccount;
+    private static ViewAd viewAd;
 
     public static void prepareManager()
         {
+            marketplace = new MarketPlaceGUI();
+            login = new Login();
+            signup = new SignUp();
+            createAd = new AdPanel();
+            viewAccount = new ViewAccount();
+            viewAd = new ViewAd();
             frame.add(marketplace);                                 //Adds the marketplace as the default panel
             frame.setMinimumSize(new Dimension(640, 480));          //Sets a minimum size for the JFrame
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //Makes it so that the program will terminate upon closing the frame
@@ -93,7 +99,7 @@ public class GUIManager
             marketplace.logoutButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.logoutButton);
 
-            
+
         }
         public static void loggedOut()
         {
