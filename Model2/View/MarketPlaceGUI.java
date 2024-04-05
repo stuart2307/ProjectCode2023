@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,16 +22,15 @@ public class MarketPlaceGUI extends JPanel
     private JPanel topPanel;
     private JPanel searchBarPanel;
     private JPanel logoPanel;
-    private JPanel loginSignupPanel;
+    protected JPanel loginSignupPanel;
     private JPanel advertisements;
-    private JButton placeAdButton;
-    private JButton loginButton;
-    private JButton signUpButton;
+    protected JButton placeAdButton;
+    protected JButton loginButton;
+    protected JButton signUpButton;
+    protected JButton accountButton;
+    protected JButton logoutButton;
     private JButton searchButton;
     private JTextField searchField;
-    private AdPanel placeAdPanel = new AdPanel();
-    private SignUp SignUp2 = new SignUp();
-    private Login loginPanel = new Login();
     private AdPreview ad = new AdPreview();
     private AdPreview ad2 = new AdPreview();
     private AdPreview ad3 = new AdPreview();
@@ -67,7 +65,7 @@ public class MarketPlaceGUI extends JPanel
             {
                 public void actionPerformed(ActionEvent loginClicked)
                 {
-                    GUIManager.changeLogin(MarketPlaceGUI.this);
+                    GUIManager.changeViewAd(MarketPlaceGUI.this);
                 }
             });
             signUpButton = new JButton("Sign Up");                                                 // Creates a JButton instance called signUpButton
@@ -86,6 +84,23 @@ public class MarketPlaceGUI extends JPanel
                     System.out.println("SearchButton clicked");                                       // Search button method stub
                 }
             }); 
+            accountButton = new JButton("Your Account");
+            accountButton.addActionListener(new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent accountButtonClicked)
+                {
+                    GUIManager.changeAccount(MarketPlaceGUI.this);
+                }
+            });
+            logoutButton = new JButton("Log Out");
+            logoutButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent logoutButtonClicked)
+                {
+                    CurrentSession.logUserOut();
+                    GUIManager.loggedOut();
+                }
+            });
             searchField = new JTextField(20);                                                   // Creates a JTextField instance called searchField
             
             topPanel = new JPanel(new GridLayout(1, 3));                                                  // Creates a top panel using Grid layout (1 row, 2 columns) to hold the button panels
@@ -106,7 +121,7 @@ public class MarketPlaceGUI extends JPanel
             loginSignupPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                        // Creates a panel using the Flow layout and positions it to the right
             loginSignupPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
             loginSignupPanel.setBackground(green);                                                                  // Sets the colour of the loginSignup panel to green
-            loginSignupPanel.add(placeAdButton);
+            //loginSignupPanel.add(placeAdButton);
             loginSignupPanel.add(loginButton);
             loginSignupPanel.add(signUpButton); 
 

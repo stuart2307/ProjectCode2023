@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
@@ -150,7 +152,12 @@ public class Login extends JPanel
             {
                 passwordWarning.setVisible(false);
             }
+            ResultSet rs = DatabaseManager.executeQuery(new String[]{"AccountID"}, "accounts", "Username", username, "", "");
+            rs.next();
+            CurrentSession.logUserIn(rs.getInt("AccountID"));
             System.out.println("Login Successful");
+            GUIManager.loggedIn();
+            GUIManager.changeMarketplace(Login.this);
         }
         catch(WrongPasswordException e){
             wrongPasswordFlag = true;
@@ -161,6 +168,10 @@ public class Login extends JPanel
             passwordWarning.revalidate();
             passwordWarning.repaint();
             e.printStackTrace();
+        }
+        catch(SQLException sqlError)
+        {
+            sqlError.printStackTrace();
         }
         }
         });
