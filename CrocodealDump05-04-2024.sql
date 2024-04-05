@@ -89,7 +89,7 @@ CREATE TABLE `advertisements` (
   `FuelType` varchar(255) DEFAULT NULL,
   `Year` int(11) DEFAULT NULL,
   `Mileage` int(11) DEFAULT NULL,
-  `Price` double DEFAULT NULL,
+  `Price` int(11) DEFAULT NULL,
   `EngineSize` double DEFAULT NULL,
   `PreviousOwners` int(11) DEFAULT NULL,
   `Description` mediumtext DEFAULT NULL,
