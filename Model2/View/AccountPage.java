@@ -26,10 +26,9 @@ public class AccountPage extends JPanel
     private JButton loginButton;
     private JButton signUpButton;
     private JButton searchButton;
+    private JButton accountButton;
     private JTextField searchField;
-    private AdPanel placeAdPanel = new AdPanel();
-    private SignUp SignUp2 = new SignUp();
-    private Login loginPanel = new Login();
+    private ViewAccount accountPage = new ViewAccount();
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
@@ -39,7 +38,6 @@ public class AccountPage extends JPanel
     public static Color grey = new Color(219,226,233);                                                // Primary background colour
 
     
-
     // Constructor
 
     public AccountPage()
