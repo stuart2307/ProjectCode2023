@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +17,9 @@ public class AdPanel extends JPanel
 {
     private JPanel placeAdPanel;
     private JPanel titlePanel;
-    private JPanel topPanel;
+    private JPanel bottomPanel;
+    private JPanel rightPanel;
+    private JPanel leftPanel;
     private JPanel formPanel;
     private JLabel pageTitle;
     private JLabel makeLabel;
@@ -61,27 +64,41 @@ public class AdPanel extends JPanel
 
         titlePanel = new JPanel();                                                  // Creates panel for the title
         titlePanel.setLayout(new BorderLayout());                                   // Sets the titlePanel to BorderLayout
-        titlePanel.setPreferredSize(new Dimension(500, 250));          // Sets the preferred size of title panel
+        titlePanel.setPreferredSize(new Dimension(660, 220));          // Sets the preferred size of title panel
         titlePanel.setBackground(MarketPlaceGUI.green);                             // Sets the colour of the title panel to green 
-        pageTitle = new JLabel("        Create Advertisement");                // Creates the text for the title of the page 
-        pageTitle.setHorizontalAlignment(JLabel.CENTER);                            // Positions the text to the center of the JLabel
+
+        pageTitle = new JLabel("Create Advertisement ");                        // Creates the text for the title of the page 
+        pageTitle.setHorizontalAlignment(JLabel.RIGHT);                             // Positions the text to the center of the JLabel
         pageTitle.setFont(MarketPlaceGUI.titleFont);                                // Sets the font, size and text decoration
         pageTitle.setForeground(MarketPlaceGUI.white);                              // Sets title colour to white
-        topPanel = new JPanel();                                                    // Creates the topPanel
+
+        bottomPanel = new JPanel();                                                 // Creates the topPanel
         returnButton = new JButton("Back");                                    // Creates the returnButton
         returnButton.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent back)
             {
-                                                                                    // Method stub for back button
+                GUIManager.changeMarketplace(AdPanel.this);                         // Switches to MarketPlaceGUI when clicking the back button
             }
         });
-        topPanel.setLayout(new BorderLayout());                                     // Sets topPanel to borderLayout
-        topPanel.add(returnButton, BorderLayout.WEST);                              // Adds returnButton to the west of topPanel using borderLayout
-        topPanel.setBackground(MarketPlaceGUI.green);                               // Sets the colour of topPanel to green
+        bottomPanel.setLayout(new GridLayout(1,2, 0, 40));      // Sets bottomPanel to borderLayout
 
-        titlePanel.add(pageTitle, BorderLayout.CENTER);                             // Adds the title to the center of the titlePanel using borderLayout
-        titlePanel.add(topPanel, BorderLayout.NORTH);                               // Adds the topPanel to the North region of titlePanel using borderLayout
+        bottomPanel.setBackground(MarketPlaceGUI.green);                            // Sets the colour of bottomPanel to green
+
+        leftPanel = new JPanel();
+        leftPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        leftPanel.setBackground(MarketPlaceGUI.green);
+        leftPanel.add(returnButton);
+
+        rightPanel = new JPanel();
+        rightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        rightPanel.setBackground(MarketPlaceGUI.green);
+        rightPanel.add(pageTitle);
+
+        bottomPanel.add(leftPanel);
+        bottomPanel.add(rightPanel);
+
+        titlePanel.add(bottomPanel, BorderLayout.SOUTH);                            // Adds the bottomPanel to the South region of titlePanel using borderLayout
         
         placeAdPanel.add(titlePanel);                                               // Adds title panel to the placeAdPanel
 
@@ -104,7 +121,7 @@ public class AdPanel extends JPanel
         {
             public void actionPerformed(ActionEvent choicePicked)
             {
-                selection = (String) fuelType.getSelectedItem();                     // Method stub for fuelType comboBox
+                selection = (String) fuelType.getSelectedItem();                     // Method for selecting fuelType when using combobox
             }
         });
         yearLabel = new JLabel("Car Year : ");
