@@ -153,7 +153,7 @@ public class DatabaseManager {
                     }
                 //Create a prepared statement
                 String statementString = "SELECT " + parametersString + " FROM " + table;
-                if (!column.equals(null) && !value.equals(null))
+                if (!column.equals("") && !value.equals(""))
                     {
                         statementString  += " WHERE " + column + "=?";
                     }
@@ -162,7 +162,7 @@ public class DatabaseManager {
                         statementString += "ORDER BY " + orderField + " " + order;
                     }
                 PreparedStatement preparedStatement = connection.prepareStatement(statementString);
-                if (!column.equals(null) && !value.equals(null))
+                if (!column.equals("") && !value.equals(""))
                     {
                         preparedStatement.setString(1, value);
                     }

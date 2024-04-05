@@ -26,11 +26,8 @@ public class AccountPage extends JPanel
     private JButton loginButton;
     private JButton signUpButton;
     private JButton searchButton;
-private JButton accountButton;
+    private JButton accountButton;
     private JTextField searchField;
-    private AdPanel placeAdPanel = new AdPanel();
-    private SignUp SignUp2 = new SignUp();
-    private Login loginPanel = new Login();
     private ViewAccount accountPage = new ViewAccount();
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
@@ -115,7 +112,6 @@ private JButton accountButton;
             topPanel.add(searchBarPanel);
             topPanel.add(logoPanel);
             topPanel.add(loginSignupPanel);
-            topPanel.add(accountButton);
 
             add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
         }

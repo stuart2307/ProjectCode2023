@@ -64,7 +64,7 @@ public class ViewAccount extends JPanel
     private ResultSet accountDetails;
     private int userChoice;
 
-    ViewAccount()
+    public ViewAccount()
     {
         //Code to access the account information
         accountInformation[0] = "Name";
@@ -72,7 +72,7 @@ public class ViewAccount extends JPanel
         accountInformation[2] = "Phone";
         
         try{
-        accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "5", null, null);
+        accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "5", "", "");
         while (accountDetails.next()) 
         {
             nameLabel2 = new JLabel(accountDetails.getString(1));
