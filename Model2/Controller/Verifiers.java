@@ -1,3 +1,5 @@
+import java.util.InputMismatchException;
+
 public class Verifiers {
     public static void VerifyEntries(String[] Entries) throws BlankEntryException
     {
@@ -75,6 +77,27 @@ public class Verifiers {
             System.out.println("Password is valid");
         }
         
+    }
+
+    public static void VerifyInt(String item) throws InputMismatchException
+    {
+        if(!item.matches("[0-9]{1,10}")) throw new InputMismatchException("Only Numbers Allowed in Number Fields");
+        else
+        {
+            System.out.println("Input Successful");
+        }
+    }
+
+    public static void VerifyDouble(String item) throws InputMismatchException
+    {
+        try
+        {
+            Double parsed = Double.parseDouble(item);
+        }
+        catch(NumberFormatException e)
+        {
+            throw new InputMismatchException("Only Numbers Allowed in Number Fields");
+        }
     }
 
 }

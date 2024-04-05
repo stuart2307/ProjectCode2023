@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.InputMismatchException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -21,6 +22,10 @@ public class AdPanel extends JPanel
     private JPanel rightPanel;
     private JPanel leftPanel;
     private JPanel formPanel;
+    private JPanel warningPanel;
+    private JPanel warning1;
+    private JPanel warning2;
+
     private JLabel pageTitle;
     private JLabel makeLabel;
     private JLabel modelLabel;
@@ -31,6 +36,16 @@ public class AdPanel extends JPanel
     private JLabel engineLabel;
     private JLabel ownersLabel;
     private JLabel descriptionLabel;
+
+    private JLabel blankEntryWarning  = new JLabel("All entries must be filled out");
+    private JLabel numberWarning = new JLabel("Only numbers allowed in number fields");
+
+    private boolean blankEntryFlag;
+    private boolean yearFlag;
+    private boolean mileageFlag;
+    private boolean ownerFlag;
+    private boolean engineFlag;
+
     private JComboBox fuelType;
     private String[] fuelStrings = {"Petrol", "Diesel", "Electric", "Hybrid"};
     private String selection;
@@ -42,6 +57,7 @@ public class AdPanel extends JPanel
     private JTextField engineField;
     private JTextField ownersField;
     private JTextField descriptionField;
+
     private JButton submitButton;
     private JButton returnButton;
 
@@ -78,6 +94,8 @@ public class AdPanel extends JPanel
         {
             public void actionPerformed(ActionEvent back)
             {
+                blankEntryWarning.setVisible(false);
+                numberWarning.setVisible(false);
                 GUIManager.changeMarketplace(AdPanel.this);                         // Switches to MarketPlaceGUI when clicking the back button
             }
         });
@@ -133,7 +151,7 @@ public class AdPanel extends JPanel
         priceLabel = new JLabel("Car Price : ");
         priceLabel.setHorizontalAlignment(JLabel.CENTER);
         priceField = new JTextField(20);
-        engineLabel = new JLabel("Enigine Size : ");
+        engineLabel = new JLabel("Engine Size : ");
         engineLabel.setHorizontalAlignment(JLabel.CENTER);
         engineField = new JTextField(20);
         ownersLabel = new JLabel("Previous Owners : ");
@@ -143,7 +161,6 @@ public class AdPanel extends JPanel
         descriptionLabel.setHorizontalAlignment(JLabel.CENTER);
         descriptionField = new JTextField(20);
         submitButton = new JButton("Submit");
-        submitButton.setMinimumSize(new Dimension(200, 50));
         submitButton.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent submit)
@@ -170,10 +187,130 @@ public class AdPanel extends JPanel
                 detailsArray[6] = engineSize;
                 detailsArray[7] = previousOwners;
                 detailsArray[8] = description;
+
+                try 
+                {
+                    Verifiers.VerifyEntries(detailsArray);
+                    if(blankEntryFlag==true)
+                    {
+                        blankEntryWarning.setVisible(false);
+                        blankEntryFlag = false;
+                    }
+
+                }
+                catch(BlankEntryException blankEntryException)
+                {
+                    blankEntryFlag = true;
+                    blankEntryWarning.setVisible(true);
+                    // blankEntryException.printStackTrace();
+                }
+                finally
+                {
+                    blankEntryWarning.revalidate();
+                    blankEntryWarning.repaint();
+                }
+
+                try
+                {
+                    Verifiers.VerifyInt(year);
+                    if(yearFlag==true)
+                    {
+                        numberWarning.setVisible(false);
+                        yearFlag = false;
+                    }
+                }
+                catch(InputMismatchException IntException)
+                {
+                    yearFlag = true;
+                    numberWarning.setVisible(true);
+                    // IntException.printStackTrace();
+                }
+                finally
+                {
+                    numberWarning.revalidate();
+                    numberWarning.repaint();
+                }
+
+                try
+                {
+                    Verifiers.VerifyInt(mileage);
+                    if(mileageFlag==true)
+                    {
+                        numberWarning.setVisible(false);
+                        mileageFlag = false;
+                    }
+                }
+                catch(InputMismatchException IntException)
+                {
+                    mileageFlag = true;
+                    numberWarning.setVisible(true);
+                    // IntException.printStackTrace();
+                }
+                finally
+                {
+                    numberWarning.revalidate();
+                    numberWarning.repaint();
+                }
+
+                try
+                {
+                    Verifiers.VerifyInt(previousOwners);
+                    if(ownerFlag==true)
+                    {
+                        numberWarning.setVisible(false);
+                        ownerFlag = false;
+                    }
+                }
+                catch(InputMismatchException IntException)
+                {
+                    ownerFlag = true;
+                    numberWarning.setVisible(true);
+                    // IntException.printStackTrace();
+                }
+                finally
+                {
+                    numberWarning.revalidate();
+                    numberWarning.repaint();
+                }
+
+                try
+                {
+                    Verifiers.VerifyDouble(engineSize);
+                    if(engineFlag==true)
+                    {
+                        numberWarning.setVisible(false);
+                        engineFlag = false;
+                    }
+                }
+                catch(InputMismatchException DoubleException)
+                {
+                    engineFlag = true;
+                    numberWarning.setVisible(true);
+                    // DoubleException.printStackTrace();
+                }
+                finally
+                {
+                    numberWarning.revalidate();
+                    numberWarning.repaint();
+                }
+
             }
         });
 
-        // private String detailsArray[] = new String[10];
+        warningPanel = new JPanel(new GridLayout(2, 1, 10, 10));
+        warningPanel.setBackground(MarketPlaceGUI.green);
+        numberWarning.setVisible(false);
+        blankEntryWarning.setVisible(false);
+        warning1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        warning1.setBorder(BorderFactory.createEmptyBorder(40, 0, 10, 0));
+        warning1.setBackground(MarketPlaceGUI.green);
+        warning2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        warning2.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
+        warning2.setBackground(MarketPlaceGUI.green);
+        warning1.add(blankEntryWarning);
+        warning2.add(numberWarning);
+        warningPanel.add(warning1);
+        warningPanel.add(warning2);
 
         // Add labels and text fields to the panel
         
@@ -200,6 +337,7 @@ public class AdPanel extends JPanel
 
         placeAdPanel.add(formPanel);
         placeAdPanel.add(submitButton);
+        placeAdPanel.add(warningPanel);
 
         // Adding elements to the main AdPanel
 
