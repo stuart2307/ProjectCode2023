@@ -7,7 +7,6 @@ public class GUIManager
     private static JFrame frame = new JFrame("Crocodeal");  //Creates the frame to hold all the panels
     //INSTANTIATES AND INITIALISES ALL SCREENS
     private static MarketPlaceGUI marketplace = new MarketPlaceGUI();
-    private static AccountPage accountpage = new AccountPage();
     private static Login login = new Login();
     private static SignUp signup = new SignUp();
     private static AdPanel createad = new AdPanel();
@@ -51,11 +50,5 @@ public class GUIManager
             createad.setVisible(true);                              //Sets the ad creation panel to be visible
             frame.add(createad);                                    //Adds the ad creation panel to the Frame
         }
-        public static void changeAccount(JPanel switchFrom)
-        {
-            switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
-            frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
-            accountpage.setVisible(true);                           //Sets the account view's panel to be visible
-            frame.add(accountpage);                                 //Adds the account view's panel to the Frame
-        }
+
 }
