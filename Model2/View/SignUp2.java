@@ -283,4 +283,3 @@ public class SignUp2 extends JPanel {
 
     }
 }
-

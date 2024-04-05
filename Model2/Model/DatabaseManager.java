@@ -13,7 +13,7 @@ public class DatabaseManager {
     private static final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
-    static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone"};
+    static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "Image"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
     static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
     static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
@@ -102,12 +102,13 @@ public class DatabaseManager {
                         {
                             try
                                 {
-                                    FileInputStream fis = new FileInputStream(new File(values[i])); 
-                                    pstat.setBlob((i+1), fis);
+                                    File image = new File(values[i]);
+                                    FileInputStream fis = new FileInputStream(image); 
+                                    pstat.setBinaryStream((i+1), fis, (int) image.length());
                                 }
                             catch (FileNotFoundException fnfe)
                                 {
-                                    System.out.print("oops");
+                                    System.out.println("oops");
                                 }
                             
                         }
@@ -132,7 +133,7 @@ public class DatabaseManager {
 
 
 
-    public static ResultSet executeQuery(String parameters[], String table, String column, String value) 
+    public static ResultSet executeQuery(String parameters[], String table, String column, String value, String order, String orderField) 
         {
             try 
             {
@@ -151,8 +152,21 @@ public class DatabaseManager {
                         index++;
                     }
                 //Create a prepared statement
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT " + parametersString + " FROM " + table + " WHERE " + column + "=?");
-                preparedStatement.setString(1, value);
+                String statementString = "SELECT " + parametersString + " FROM " + table;
+                if (!column.equals(null) && !value.equals(null))
+                    {
+                        statementString  += " WHERE " + column + "=?";
+                    }
+                if (order.toUpperCase().equals("ASC") || order.toUpperCase().equals("DESC"))
+                    {
+                        statementString += "ORDER BY " + orderField + " " + order;
+                    }
+                PreparedStatement preparedStatement = connection.prepareStatement(statementString);
+                if (!column.equals(null) && !value.equals(null))
+                    {
+                        preparedStatement.setString(1, value);
+                    }
+                
     
                 //Execute the query and return the result set
                 return preparedStatement.executeQuery();
@@ -254,7 +268,7 @@ public static boolean checkPassword(String username, String password)
 {
     try
     {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Username =?" + "AND Password =?");
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Name =?" + "AND Password =?");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
         ResultSet rs = preparedStatement.executeQuery();

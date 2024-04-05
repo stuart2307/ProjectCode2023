@@ -71,6 +71,13 @@ public class SignUp extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
 
         backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent backButtonPressed)
+            {
+                GUIManager.changeMarketplace(SignUp.this);                                     // Search button method stub
+            }
+        }); 
         gbc.gridx = 0; 
         gbc.gridy = 0; // Place at the first row
         gbc.insets = new Insets(10, 10, 10, 10); 
@@ -232,13 +239,49 @@ public class SignUp extends JPanel {
         signUpButton = new JButton("Sign Up");
         gbc.gridx = 1;
         gbc.gridy = 12;
-        
         add(signUpButton,gbc);
+
+        blankEntryWarning = new JLabel("All Entries must be filled out");
+        gbc.gridx = 1;
+        gbc.gridy = 13;
+        blankEntryWarning.setVisible(false);
+        add(blankEntryWarning, gbc);
+
+        invalidUsernameWarning = new JLabel("Username Already Exists");
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        invalidUsernameWarning.setVisible(false);
+        add(invalidUsernameWarning, gbc);
+
+        confirmPasswordWarning = new JLabel("The Password And Confirm Password do not match");
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        confirmPasswordWarning.setVisible(false);
+        add(confirmPasswordWarning, gbc);
+
+        invalidEircodeWarning = new JLabel("Invalid Eircode Entered");
+        gbc.gridx = 2;
+        gbc.gridy = 9;
+        invalidEircodeWarning.setVisible(false);
+        add(invalidEircodeWarning, gbc);
+
+        invalidEmailWarning = new JLabel("Invalid Email Entered");
+        gbc.gridx = 2;
+        gbc.gridy = 10;
+        invalidEmailWarning.setVisible(false);
+        add(invalidEmailWarning, gbc);
+
+        invalidPhoneWarning = new JLabel("Invalid Phone Number Entered");
+        gbc.gridx = 2;
+        gbc.gridy = 11;
+        invalidPhoneWarning.setVisible(false);
+        add(invalidPhoneWarning, gbc);
+
         signUpButton.addActionListener(new ActionListener() { //Anonymous inner class to handle the sign up event since this will probably be it's only use
 
         public void actionPerformed(ActionEvent signUp){ 
      
-        String valueParameter[] = new String[10];
+        String valueParameter[] = new String[11];
 
         String username = userNameInput.getText(); //Taking the values from the textfields and converting them to text
         String password = String.valueOf(passWordInput.getPassword()); //Taking the value from JPasswordField and converting it to string since it's stored as a char
@@ -251,6 +294,7 @@ public class SignUp extends JPanel {
         String eircode = eirCodeInput.getText();
         String email = emailInput.getText();
         String phone = phoneInput.getText();
+
         //Inserting values to the values array
         valueParameter[0] = username; 
         valueParameter[1] = password;
@@ -269,117 +313,139 @@ public class SignUp extends JPanel {
         valueParameter[7] = eircode;
         valueParameter[8] = email;
         valueParameter[9] = phone;
+        valueParameter[10] = "../View/Crocodefault.jpg";
         try{
             Verifiers.VerifyEntries(valueParameter);
             if(blankEntryFlag == true)
             {
                 blankEntryWarning.setVisible(false);
+                blankEntryFlag = false;
             }
-            DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
         }
         catch(BlankEntryException blankEntryException)
         {
             blankEntryFlag = true;
-            blankEntryWarning = new JLabel("All Entries must be filled out");
-            gbc.gridx = 1;
-            gbc.gridy = 13;
-            add(blankEntryWarning, gbc);
-            blankEntryWarning.revalidate();
-            blankEntryWarning.repaint();
+            blankEntryWarning.setVisible(true);
             blankEntryException.printStackTrace();
         }
+        finally 
+            {
+                blankEntryWarning.revalidate();
+                blankEntryWarning.repaint();  
+            }
+            
 
         try{
         Verifiers.VerifyUsernameExists(username, "Username", "accounts");
         if(usernameFlag == true)
         {
             invalidUsernameWarning.setVisible(false);
+            usernameFlag = false;
         }
         }
         catch(UsernameExistsException usernameException)
         {
             usernameFlag = true;
-            invalidUsernameWarning = new JLabel("Username Already Exists");
-            gbc.gridx = 2;
-            gbc.gridy = 1;
-            add(invalidUsernameWarning, gbc);
-            invalidUsernameWarning.revalidate();
-            invalidUsernameWarning.repaint();
+            invalidUsernameWarning.setVisible(true);
             usernameException.printStackTrace();
         }
-
+        finally
+            {
+                invalidUsernameWarning.revalidate();
+                invalidUsernameWarning.repaint();
+            }
+            
         try{
         Verifiers.VerifyConfirmPassword(password, confPassword);
         if(passwordFlag == true)
         {
             confirmPasswordWarning.setVisible(false);
+            passwordFlag = false;
         }
         }
         catch(ConfirmPasswordException passwordException){
             passwordFlag = true;
-            confirmPasswordWarning = new JLabel("The Password And Confirm Password do not match");
-            gbc.gridx = 2;
-            gbc.gridy = 3;
-            add(confirmPasswordWarning, gbc);
-            confirmPasswordWarning.revalidate();
-            confirmPasswordWarning.repaint();
+            confirmPasswordWarning.setVisible(true);
             passwordException.printStackTrace();
         }
-
+        finally
+            {
+                confirmPasswordWarning.revalidate();
+                confirmPasswordWarning.repaint(); 
+            }
+            
         try{
         Verifiers.VerifyEircode(eircode);
         if(eircodeFlag == true)
         {
             invalidEircodeWarning.setVisible(false);
+            eircodeFlag = false;
         }
         }
         catch(EircodeException eircodeException){
             eircodeFlag = true;
-            invalidEircodeWarning = new JLabel("Invalid Eircode Entered");
-            gbc.gridx = 2;
-            gbc.gridy = 9;
-            add(invalidEircodeWarning, gbc);
-            invalidEircodeWarning.revalidate();
-            invalidEircodeWarning.repaint();
+            invalidEircodeWarning.setVisible(true);
             eircodeException.printStackTrace();
         }
+        finally
+            {
+                invalidEircodeWarning.revalidate();
+                invalidEircodeWarning.repaint();  
+            }
+            
 
         try{
         Verifiers.VerifyEmailAddress(email);
         if(emailFlag == true)
         {
             invalidEmailWarning.setVisible(false);
+            emailFlag = false;
         }
         }
         catch(EmailException emailException){
             emailFlag = true;
-            invalidEmailWarning = new JLabel("Invalid Email Entered");
-            gbc.gridx = 2;
-            gbc.gridy = 10;
-            add(invalidEmailWarning, gbc);
-            invalidEmailWarning.revalidate();
-            invalidEmailWarning.repaint();
+            invalidEmailWarning.setVisible(true);
             emailException.printStackTrace();
         }
+        finally
+            {
+                invalidEmailWarning.revalidate();
+                invalidEmailWarning.repaint(); 
+            }
+            
 
         try{
         Verifiers.VerifyPhoneNumber(phone);
         if(phoneNoFlag == true)
         {
             invalidPhoneWarning.setVisible(false);
+            phoneNoFlag = false;
         }
+         
         }
         catch(phoneException phoneNoException){
             phoneNoFlag = true;
-            invalidPhoneWarning = new JLabel("Invalid Phone Number Entered");
-            gbc.gridx = 2;
-            gbc.gridy = 11;
-            add(invalidPhoneWarning, gbc);
-            invalidPhoneWarning.revalidate();
-            invalidPhoneWarning.repaint();
+            invalidPhoneWarning.setVisible(true);
             phoneNoException.printStackTrace();
         }
+        finally
+            {
+                invalidPhoneWarning.revalidate();
+                invalidPhoneWarning.repaint();
+            }
+            
+
+        if (blankEntryFlag || usernameFlag || passwordFlag || eircodeFlag || emailFlag || phoneNoFlag)
+            {
+                System.out.println("oops, account not created!");
+            }
+        else
+            {
+                DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
+            }
         }
+        
     });
 }
 }
+

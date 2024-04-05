@@ -14,17 +14,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AccountPage 
+public class AccountPage extends JPanel
 {  
 
     // Declarations
-
-    private JFrame frame;
     private JPanel topPanel;
     private JPanel searchBarPanel;
     private JPanel logoPanel;
     private JPanel loginSignupPanel;
-    private JPanel mainPanel;
     private JButton placeAdButton;
     private JButton loginButton;
     private JButton signUpButton;
@@ -32,7 +29,7 @@ public class AccountPage
 private JButton accountButton;
     private JTextField searchField;
     private AdPanel placeAdPanel = new AdPanel();
-    private SignUp2 SignUp2 = new SignUp2();
+    private SignUp SignUp2 = new SignUp();
     private Login loginPanel = new Login();
     private ViewAccount accountPage = new ViewAccount();
 
@@ -46,33 +43,18 @@ private JButton accountButton;
     
     // Constructor
 
-    public  AccountPage()
+    public AccountPage()
         { 
-            
-            frame = new JFrame();                                                                       // Creates a JFrame object called frame
-            mainPanel = new JPanel(new BorderLayout());                                                 // Creates a JPanel instance called mainPanel  
-            mainPanel.setBackground(grey);     
-accountButton = new JButton("View Account");
-            accountButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent switchToAccount)
-                {
-                    mainPanel.setVisible(false);
-                    frame.remove(mainPanel);                                                            
-                    frame.add(accountPage);
-                    accountPage.setVisible(true);
-                }
-            });
-                
+            setBackground(grey);     
             placeAdButton = new JButton("Place Ad");                                                    // Creates a JButton instance called loginButton
             placeAdButton.addActionListener(new ActionListener() 
             {
                 public void actionPerformed(ActionEvent placeAdClicked)
                 {
-                    mainPanel.setVisible(false);
-                    frame.remove(mainPanel);                                                            
-                    frame.add(placeAdPanel);
-                    placeAdPanel.setVisible(true);
+                    //mainPanel.setVisible(false);
+                    //frame.remove(mainPanel);                                                            
+                    //frame.add(placeAdPanel);
+                    //placeAdPanel.setVisible(true);
                 }
             });              
             loginButton = new JButton("Login");                                                    // Creates a JButton instance called loginButton
@@ -80,10 +62,10 @@ accountButton = new JButton("View Account");
             {
                 public void actionPerformed(ActionEvent loginClicked)
                 {
-                    mainPanel.setVisible(false);
-                    frame.remove(mainPanel);                                                            
-                    frame.add(loginPanel);
-                    loginPanel.setVisible(true);
+                    //mainPanel.setVisible(false);
+                    //frame.remove(mainPanel);                                                            
+                    //frame.add(loginPanel);
+                    //loginPanel.setVisible(true);
                 }
             });
             signUpButton = new JButton("Sign Up");                                                 // Creates a JButton instance called signUpButton
@@ -92,10 +74,10 @@ accountButton = new JButton("View Account");
                 public void actionPerformed(ActionEvent signupClicked)                                  // Anonymous inner class contains what happens when button is clicked
                 {
 
-                    mainPanel.setVisible(false);
-                    frame.remove(mainPanel);                                                            
-                    frame.add(SignUp2);
-                    SignUp2.setVisible(true);
+                    //mainPanel.setVisible(false);
+                    //frame.remove(mainPanel);                                                            
+                    //frame.add(SignUp2);
+                    //SignUp2.setVisible(true);
                 }
             });
             searchButton = new JButton("Search");                                                  // Creates a JButton instance called searchButton
@@ -135,14 +117,7 @@ accountButton = new JButton("View Account");
             topPanel.add(loginSignupPanel);
             topPanel.add(accountButton);
 
-            mainPanel.add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
-
-            frame.setMinimumSize(new Dimension(640, 480));                                 // Sets a minimum size for the frame
-            frame.add(mainPanel);                                                                       // Adds the panel to the frame and positions it to the centre (Frame defaults to the border layout)
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                                       // Allows us to terminate the program upon closing the frame
-            frame.setTitle("MarketPlace");                                                        // Sets title of frame
-            frame.pack();                                                                               // Causes this Window to be sized to fit the preferred size and layouts of its subcomponents.
-            frame.setVisible(true);                                                                   // Allows frame to actually be visible
+            add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
         }
 }
 
