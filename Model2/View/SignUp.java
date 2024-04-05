@@ -328,8 +328,12 @@ public class SignUp extends JPanel {
             blankEntryWarning.setVisible(true);
             blankEntryException.printStackTrace();
         }
-            blankEntryWarning.revalidate();
-            blankEntryWarning.repaint();
+        finally 
+            {
+                blankEntryWarning.revalidate();
+                blankEntryWarning.repaint();  
+            }
+            
 
         try{
         Verifiers.VerifyUsernameExists(username, "Username", "accounts");
@@ -345,9 +349,12 @@ public class SignUp extends JPanel {
             invalidUsernameWarning.setVisible(true);
             usernameException.printStackTrace();
         }
-            invalidUsernameWarning.revalidate();
-            invalidUsernameWarning.repaint();
-
+        finally
+            {
+                invalidUsernameWarning.revalidate();
+                invalidUsernameWarning.repaint();
+            }
+            
         try{
         Verifiers.VerifyConfirmPassword(password, confPassword);
         if(passwordFlag == true)
@@ -361,9 +368,12 @@ public class SignUp extends JPanel {
             confirmPasswordWarning.setVisible(true);
             passwordException.printStackTrace();
         }
-            confirmPasswordWarning.revalidate();
-            confirmPasswordWarning.repaint();
-
+        finally
+            {
+                confirmPasswordWarning.revalidate();
+                confirmPasswordWarning.repaint(); 
+            }
+            
         try{
         Verifiers.VerifyEircode(eircode);
         if(eircodeFlag == true)
@@ -377,8 +387,12 @@ public class SignUp extends JPanel {
             invalidEircodeWarning.setVisible(true);
             eircodeException.printStackTrace();
         }
-            invalidEircodeWarning.revalidate();
-            invalidEircodeWarning.repaint();
+        finally
+            {
+                invalidEircodeWarning.revalidate();
+                invalidEircodeWarning.repaint();  
+            }
+            
 
         try{
         Verifiers.VerifyEmailAddress(email);
@@ -393,8 +407,12 @@ public class SignUp extends JPanel {
             invalidEmailWarning.setVisible(true);
             emailException.printStackTrace();
         }
-            invalidEmailWarning.revalidate();
-            invalidEmailWarning.repaint();
+        finally
+            {
+                invalidEmailWarning.revalidate();
+                invalidEmailWarning.repaint(); 
+            }
+            
 
         try{
         Verifiers.VerifyPhoneNumber(phone);
@@ -410,8 +428,12 @@ public class SignUp extends JPanel {
             invalidPhoneWarning.setVisible(true);
             phoneNoException.printStackTrace();
         }
-            invalidPhoneWarning.revalidate();
-            invalidPhoneWarning.repaint();
+        finally
+            {
+                invalidPhoneWarning.revalidate();
+                invalidPhoneWarning.repaint();
+            }
+            
 
         if (blankEntryFlag || usernameFlag || passwordFlag || eircodeFlag || emailFlag || phoneNoFlag)
             {
@@ -421,7 +443,6 @@ public class SignUp extends JPanel {
             {
                 DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
             }
-        SignUp.this.repaint();
         }
         
     });
