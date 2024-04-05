@@ -92,6 +92,8 @@ public class GUIManager
             marketplace.loginSignupPanel.add(marketplace.accountButton);
             marketplace.logoutButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.logoutButton);
+
+            
         }
         public static void loggedOut()
         {
