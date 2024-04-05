@@ -122,6 +122,7 @@ public class Login extends JPanel
             blankEntryWarning.repaint();
             e.printStackTrace();
         }
+        
         try
         {
             Verifiers.VerifyUsernameNotFound(username, "Username", "accounts");
