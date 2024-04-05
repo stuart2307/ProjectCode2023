@@ -29,10 +29,12 @@ public class AccountPage
     private JButton loginButton;
     private JButton signUpButton;
     private JButton searchButton;
+private JButton accountButton;
     private JTextField searchField;
     private AdPanel placeAdPanel = new AdPanel();
     private SignUp2 SignUp2 = new SignUp2();
     private Login loginPanel = new Login();
+    private ViewAccount accountPage = new ViewAccount();
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
@@ -42,7 +44,6 @@ public class AccountPage
     public static Color grey = new Color(219,226,233);                                                // Primary background colour
 
     
-
     // Constructor
 
     public  AccountPage()
@@ -51,6 +52,18 @@ public class AccountPage
             frame = new JFrame();                                                                       // Creates a JFrame object called frame
             mainPanel = new JPanel(new BorderLayout());                                                 // Creates a JPanel instance called mainPanel  
             mainPanel.setBackground(grey);     
+accountButton = new JButton("View Account");
+            accountButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent switchToAccount)
+                {
+                    mainPanel.setVisible(false);
+                    frame.remove(mainPanel);                                                            
+                    frame.add(accountPage);
+                    accountPage.setVisible(true);
+                }
+            });
+                
             placeAdButton = new JButton("Place Ad");                                                    // Creates a JButton instance called loginButton
             placeAdButton.addActionListener(new ActionListener() 
             {
@@ -120,6 +133,7 @@ public class AccountPage
             topPanel.add(searchBarPanel);
             topPanel.add(logoPanel);
             topPanel.add(loginSignupPanel);
+            topPanel.add(accountButton);
 
             mainPanel.add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
 

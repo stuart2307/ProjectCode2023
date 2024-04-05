@@ -146,7 +146,6 @@ public class MarketPlaceGUI
             scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
             scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-
             mainPanel.add(scrollPane, BorderLayout.CENTER);
             mainPanel.add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
 
@@ -156,5 +155,6 @@ public class MarketPlaceGUI
             frame.setTitle("MarketPlace");                                                        // Sets title of frame
             frame.pack();                                                                               // Causes this Window to be sized to fit the preferred size and layouts of its subcomponents.
             frame.setVisible(true);                                                                   // Allows frame to actually be visible
+            
         }
 }
