@@ -16,13 +16,21 @@ public class GUIManager
 
     public static void prepareManager()
         {
-            marketplace = new MarketPlaceGUI();
-            login = new Login();
-            signup = new SignUp();
-            createAd = new AdPanel();
-            viewAccount = new ViewAccount();
-            viewAd = new ViewAd();
-            frame.add(marketplace);                                 //Adds the marketplace as the default panel
+            if (DatabaseManager.connection == null)
+                {
+                    NoConnection errorPanel = new NoConnection();
+                    frame.add(errorPanel, "Center");
+                }
+            else
+                {
+                    marketplace = new MarketPlaceGUI();
+                    login = new Login();
+                    signup = new SignUp();
+                    createAd = new AdPanel();
+                    viewAccount = new ViewAccount();
+                    viewAd = new ViewAd();
+                    frame.add(marketplace);   //Adds the marketplace as the default panel
+                }     
             frame.setMinimumSize(new Dimension(640, 480));          //Sets a minimum size for the JFrame
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //Makes it so that the program will terminate upon closing the frame
             frame.setTitle("Crocodeal");                            //Sets the frame's title to Crocodeal
