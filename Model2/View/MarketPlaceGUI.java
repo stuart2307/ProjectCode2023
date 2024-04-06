@@ -33,6 +33,7 @@ public class MarketPlaceGUI extends JPanel
     protected JButton accountButton;
     protected JButton logoutButton;
     private JButton searchButton;
+    private JButton viewAccount = new JButton("Account");
     private JTextField searchField;
     private AdPreview ads[] = new AdPreview[15]; 
     private ResultSet adResultSet;
