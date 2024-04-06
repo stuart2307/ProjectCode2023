@@ -56,7 +56,7 @@ public class MarketPlaceGUI extends JPanel
         {
             for(int i=0; i < ads.length; i++)
                 {
-                    ads[i] = new AdPreview();
+                    ads[i] = new AdPreview(MarketPlaceGUI.this);
                 } 
             generateAds();
             setLayout(new BorderLayout());                                                 // Creates a JPanel instance called mainPanel  

@@ -27,8 +27,9 @@ public class ViewAd extends JPanel
     protected JPanel buttonPanel;
     private JPanel topPanel;
     private JPanel bottomPanel;
-    private JPanel editDeletePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    private JPanel adPanel;
+    private JPanel priceDescPanel;
+    private JPanel sellerInfoPanel;
+    private JPanel vehicleInfoPanel;
     protected JButton loginButton = new JButton("Log In");
     protected JButton signUpButton = new JButton("Sign Up");
     protected JButton logoutButton = new JButton("Log Out");
@@ -142,6 +143,25 @@ public class ViewAd extends JPanel
         bottomPanel.setBackground(MarketPlaceGUI.grey);
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
+        price.setFont(informationFont);
+        price.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
+        fuelType.setFont(informationFont);
+        fuelType.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
+        gearBox.setFont(informationFont);
+        gearBox.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
+        mileage.setFont(informationFont);
+        mileage.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
+        engineSize.setFont(informationFont);
+        engineSize.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
+        previousOwners.setFont(informationFont);
+        previousOwners.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
+        adDescription.setFont(informationFont);
+        adDescription.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
+        sellerUsername.setFont(informationFont);
+        sellerUsername.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
+
+        
+
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridx = 0;
@@ -151,50 +171,12 @@ public class ViewAd extends JPanel
         gbc.weightx = gbc.gridwidth;
         gbc.weighty = gbc.gridheight;
         bottomPanel.add(adImage, gbc);
-
-        gbc.gridx = 3;
-        gbc.gridheight = 1;
-        gbc.weightx = gbc.gridwidth;
-        gbc.weighty = gbc.gridheight;
-        bottomPanel.add(price, gbc);
-
-        gbc.gridheight++;
-        gbc.gridy++;
-        gbc.weightx = gbc.gridwidth;
-        gbc.weighty = gbc.gridheight;
-        bottomPanel.add(adDescription, gbc);
-
-        gbc.gridy = 0;
-        gbc.gridx = 7;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        gbc.weightx = gbc.gridwidth;
-        gbc.weighty = gbc.gridheight;
-        bottomPanel.add(sellerPic, gbc);
         
-        gbc.gridx++;
-        gbc.gridwidth = 2;
-        gbc.weightx = gbc.gridwidth;
-        gbc.weighty = gbc.gridheight;
-        bottomPanel.add(sellerUsername, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        bottomPanel.add(fuelType, gbc);
-
-        gbc.gridy++;
-        bottomPanel.add(gearBox, gbc);
-
-        gbc.gridx = 2;
-        bottomPanel.add(engineSize, gbc);
-
-        gbc.gridy--;
-        bottomPanel.add(mileage, gbc);
-
-        gbc.gridx = 4;
-        bottomPanel.add(previousOwners, gbc);        
+        priceDescPanel = new JPanel(new GridBagLayout());
         
         add(bottomPanel, BorderLayout.CENTER);
+        
+       
     } 
     public Boolean populateScreen(int advertisementID)
         {

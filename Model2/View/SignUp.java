@@ -439,6 +439,7 @@ public class SignUp extends JPanel {
         else
             {
                 DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
+                GUIManager.backButton(SignUp.this);
             }
         }
         

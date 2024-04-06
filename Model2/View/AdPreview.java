@@ -9,6 +9,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -32,10 +34,12 @@ public class AdPreview extends JPanel
     private JPanel infoPanel;
     private ImageIcon adImageIcon = new ImageIcon();
     private int AdID;
+    private JPanel fromPanel;
 
     // Constructor
-    public AdPreview()
+    public AdPreview(JPanel from)
     {
+        fromPanel = from;
         setLayout(new BorderLayout());
         setBackground(MarketPlaceGUI.white);
         setMaximumSize(new Dimension(650, 325));
@@ -73,6 +77,29 @@ public class AdPreview extends JPanel
         infoPanel.add(priceLabel, gbc);
         
         add(detailsPanel, BorderLayout.CENTER);
+        addMouseListener(new MouseListener() 
+        {
+            public void mouseClicked(MouseEvent e) 
+            {
+                GUIManager.changeViewAd(fromPanel, AdID);
+            }
+            public void mouseEntered(MouseEvent e) 
+            {
+
+            }
+            public void mouseExited(MouseEvent e)
+            {
+
+            }
+            public void mousePressed(MouseEvent e) 
+            {
+            
+            }
+            public void mouseReleased(MouseEvent e) 
+            {
+
+            }
+        });
     }
 
     // Setter Methods
