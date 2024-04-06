@@ -20,28 +20,19 @@ public class ViewAd extends JPanel
     private JPanel topPanel;
     private JPanel bottomPanel;
     private JPanel editDeletePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    private JPanel accountPanel;
-    private JPanel namePanel = new JPanel(new GridLayout(1,2));
-    private JPanel eircodePanel = new JPanel(new GridLayout(1,2));
-    private JPanel phonePanel = new JPanel(new GridLayout(1,2));
+    private JPanel adPanel;
     protected JButton loginButton = new JButton("Log In");
     protected JButton signUpButton = new JButton("Sign Up");
     protected JButton logoutButton = new JButton("Log Out");
     protected JButton placeAdButton = new JButton("Place Advertisement");
     protected JButton viewMarketplaceButton = new JButton("View MarketPlace");
     protected JButton accountButton = new JButton("Account");
-    private JButton likeButton = new JButton("Like");
-    private JButton dislikeButton = new JButton("Dislike");
-    private JButton editDetails = new JButton("Edit Account");
-    private JButton deleteAccount = new JButton("Delete Account");
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
     private Font informationFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
     protected JLabel adTitle = new JLabel("The Ad!");
     private JLabel adImage = new JLabel("Insert image here");
-    private JLabel eircodeLabel = new JLabel("Eircode:");
-    private JLabel phoneLabel = new JLabel("Phone:");
 
 
     public ViewAd()
