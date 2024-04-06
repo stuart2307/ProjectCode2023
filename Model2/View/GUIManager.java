@@ -10,6 +10,7 @@ public class GUIManager
     private static Login login = new Login();
     private static SignUp signup = new SignUp();
     private static AdPanel createad = new AdPanel();
+    private static ViewAccount viewAccount = new ViewAccount();
 
     public static void prepareManager()
         {
@@ -49,6 +50,13 @@ public class GUIManager
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             createad.setVisible(true);                              //Sets the ad creation panel to be visible
             frame.add(createad);                                    //Adds the ad creation panel to the Frame
+        }
+        public static void changeViewAccount(JPanel switchFrom)
+        {
+            switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
+            frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
+            viewAccount.setVisible(true);                              //Sets the ad creation panel to be visible
+            frame.add(viewAccount);                                    //Adds the ad creation panel to the Frame
         }
 
 }

@@ -29,6 +29,7 @@ public class MarketPlaceGUI extends JPanel
     private JButton loginButton;
     private JButton signUpButton;
     private JButton searchButton;
+    private JButton viewAccount = new JButton("Account");
     private JTextField searchField;
     private AdPanel placeAdPanel = new AdPanel();
     private SignUp SignUp2 = new SignUp();
@@ -38,6 +39,7 @@ public class MarketPlaceGUI extends JPanel
     private AdPreview ad3 = new AdPreview();
     private AdPreview ad4 = new AdPreview();
     private AdPreview ad5 = new AdPreview();
+    private ViewAccount acc ;
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
@@ -134,6 +136,13 @@ public class MarketPlaceGUI extends JPanel
 
             add(scrollPane, BorderLayout.CENTER);
             add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
+            viewAccount.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent signupClicked)                                  // Anonymous inner class contains what happens when button is clicked
+                {
+                    GUIManager.changeViewAccount(MarketPlaceGUI.this);
+                }
+            });
+            add(viewAccount);
 
         }
 }
