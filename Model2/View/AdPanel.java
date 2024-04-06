@@ -30,12 +30,15 @@ public class AdPanel extends JPanel
     private JLabel makeLabel;
     private JLabel modelLabel;
     private JLabel fuelLabel;
+    private JLabel transmissionLabel;
     private JLabel yearLabel;
     private JLabel mileageLabel;
     private JLabel priceLabel;
     private JLabel engineLabel;
     private JLabel ownersLabel;
     private JLabel descriptionLabel;
+    private JLabel uploadImageLabel;
+    private JButton uploadImage;
 
     private JLabel blankEntryWarning  = new JLabel("All entries must be filled out");
     private JLabel numberWarning = new JLabel("Only numbers allowed in number fields");
@@ -47,8 +50,11 @@ public class AdPanel extends JPanel
     private boolean engineFlag;
 
     private JComboBox fuelType;
+    private JComboBox transmissionType;
     private String[] fuelStrings = {"Petrol", "Diesel", "Electric", "Hybrid"};
-    private String selection;
+    private String[] transmissionStrings = {"Manual", "Automatic"};
+    private String fuelSelection;
+    private String transmissionSelection;
     private JTextField makeField;
     private JTextField modelField;
     private JTextField yearField;
@@ -61,7 +67,7 @@ public class AdPanel extends JPanel
     private JButton submitButton;
     private JButton returnButton;
 
-    private String detailsArray[] = new String[9];
+    private String detailsArray[] = new String[11];
     private String make;
     private String model;
     private String year;
@@ -120,7 +126,7 @@ public class AdPanel extends JPanel
         
         placeAdPanel.add(titlePanel);                                               // Adds title panel to the placeAdPanel
 
-        formPanel = new JPanel(new GridLayout(9, 2, 0, 20));    // Creates a form panel using grid layout with two columns
+        formPanel = new JPanel(new GridLayout(11, 2, 0, 20));   // Creates a form panel using grid layout with two columns
         formPanel.setBackground(MarketPlaceGUI.green);                              // Sets colour of formPanel
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));     // Sets an empty top and bottom border to formpanel
 
@@ -139,7 +145,17 @@ public class AdPanel extends JPanel
         {
             public void actionPerformed(ActionEvent choicePicked)
             {
-                selection = (String) fuelType.getSelectedItem();                     // Method for selecting fuelType when using combobox
+                fuelSelection = (String) fuelType.getSelectedItem();                  // Method for selecting fuelType when using combobox
+            }
+        });
+        transmissionLabel = new JLabel("Transmission Type : ");
+        transmissionLabel.setHorizontalAlignment(JLabel.CENTER);
+        transmissionType = new JComboBox<>(transmissionStrings);
+        transmissionType.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent choicePicked)
+            {
+                transmissionSelection = (String) fuelType.getSelectedItem();          // Method for selecting transmissionType when using combobox
             }
         });
         yearLabel = new JLabel("Car Year : ");
@@ -160,6 +176,9 @@ public class AdPanel extends JPanel
         descriptionLabel = new JLabel("Description : ");
         descriptionLabel.setHorizontalAlignment(JLabel.CENTER);
         descriptionField = new JTextField(20);
+        uploadImageLabel = new JLabel("Upload Image : ");
+        uploadImageLabel.setHorizontalAlignment(JLabel.CENTER);
+        uploadImage = new JButton("Upload Image");
         submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() 
         {
@@ -180,13 +199,15 @@ public class AdPanel extends JPanel
 
                 detailsArray[0] = make;
                 detailsArray[1] = model;
-                detailsArray[2] = selection;
-                detailsArray[3] = year;
-                detailsArray[4] = mileage;
-                detailsArray[5] = price;
-                detailsArray[6] = engineSize;
-                detailsArray[7] = previousOwners;
-                detailsArray[8] = description;
+                detailsArray[2] = fuelSelection;
+                detailsArray[3] = transmissionSelection;
+                detailsArray[4] = year;
+                detailsArray[5] = mileage;
+                detailsArray[6] = price;
+                detailsArray[7] = engineSize;
+                detailsArray[8] = previousOwners;
+                detailsArray[9] = description;
+                // detailsArray[10] = ; This is for IMAGE
 
                 try 
                 {
@@ -294,6 +315,14 @@ public class AdPanel extends JPanel
                     numberWarning.repaint();
                 }
 
+                if (blankEntryFlag || yearFlag || mileageFlag || ownerFlag || engineFlag)
+                {
+                    System.out.println("oops, account not created!");
+                }
+                else
+                {
+                    DatabaseManager.createEntry("advertisements", DatabaseManager.ADVERTISEMENTS, detailsArray);
+                }
             }
         });
 
@@ -320,6 +349,8 @@ public class AdPanel extends JPanel
         formPanel.add(modelField);
         formPanel.add(fuelLabel);
         formPanel.add(fuelType);
+        formPanel.add(transmissionLabel);
+        formPanel.add(transmissionType);
         formPanel.add(yearLabel);
         formPanel.add(yearField);
         formPanel.add(mileageLabel);
@@ -332,6 +363,8 @@ public class AdPanel extends JPanel
         formPanel.add(ownersField);
         formPanel.add(descriptionLabel);
         formPanel.add(descriptionField);
+        formPanel.add(uploadImageLabel);
+        formPanel.add(uploadImage);
 
         // Adding elements to the PlaceAdPanel
 
