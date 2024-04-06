@@ -7,7 +7,7 @@ public class DRIVER
 {
     public static void main(String args[])
         {
-            GUIManager mainFrame = new GUIManager();
-            
+            DatabaseManager.establishConnection();
+            GUIManager.prepareManager();
         }
 }

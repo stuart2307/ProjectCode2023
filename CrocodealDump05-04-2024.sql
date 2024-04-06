@@ -93,7 +93,7 @@ CREATE TABLE `advertisements` (
   `EngineSize` double DEFAULT NULL,
   `PreviousOwners` int(11) DEFAULT NULL,
   `Description` mediumtext DEFAULT NULL,
-  `image` mediumblob DEFAULT NULL,
+  `Image` mediumblob DEFAULT NULL,
   PRIMARY KEY (`AdvertisementID`),
   KEY `AccountID` (`AccountID`),
   CONSTRAINT `advertisements_ibfk_1` FOREIGN KEY (`AccountID`) REFERENCES `accounts` (`AccountID`)

@@ -17,6 +17,7 @@ public class GUIManager
 
     public static void prepareManager()
         {
+<<<<<<< HEAD
             marketplace = new MarketPlaceGUI();
             login = new Login();
             signup = new SignUp();
@@ -25,6 +26,23 @@ public class GUIManager
             editAccount = new EditAccount();
             viewAd = new ViewAd();
             frame.add(marketplace);                                 //Adds the marketplace as the default panel
+=======
+            if (DatabaseManager.connection == null)
+                {
+                    NoConnection errorPanel = new NoConnection();
+                    frame.add(errorPanel, "Center");
+                }
+            else
+                {
+                    marketplace = new MarketPlaceGUI();
+                    login = new Login();
+                    signup = new SignUp();
+                    createAd = new AdPanel();
+                    viewAccount = new ViewAccount();
+                    viewAd = new ViewAd();
+                    frame.add(marketplace);   //Adds the marketplace as the default panel
+                }     
+>>>>>>> 07c370b502e0ff17c5b4d9971f398a47a44e9ae9
             frame.setMinimumSize(new Dimension(640, 480));          //Sets a minimum size for the JFrame
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //Makes it so that the program will terminate upon closing the frame
             frame.setTitle("Crocodeal");                            //Sets the frame's title to Crocodeal
@@ -89,7 +107,7 @@ public class GUIManager
             viewAd.setVisible(true);
             frame.add(viewAd);
         }
-        public static void goBack(JPanel switchFrom)
+        public static void backButton(JPanel switchFrom)
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
@@ -98,28 +116,18 @@ public class GUIManager
         }
         public static void loggedIn()
         {
-            marketplace.signUpButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.signUpButton);
-            marketplace.loginButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.loginButton);
-            marketplace.placeAdButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.placeAdButton);
-            marketplace.accountButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.accountButton);
-            marketplace.logoutButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.logoutButton);
         }
         public static void loggedOut()
         {
-            marketplace.logoutButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.logoutButton);
-            marketplace.accountButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.accountButton);
-            marketplace.placeAdButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.placeAdButton);
-            marketplace.signUpButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.signUpButton);
-            marketplace.loginButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.loginButton);
         }
 }
