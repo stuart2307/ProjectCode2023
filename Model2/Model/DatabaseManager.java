@@ -169,7 +169,8 @@ public class DatabaseManager {
                 
     
                 //Execute the query and return the result set
-                return preparedStatement.executeQuery();
+                ResultSet results = preparedStatement.executeQuery();
+                return results;
             } 
             
             catch (SQLException e) 

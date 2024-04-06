@@ -6,11 +6,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,26 +25,24 @@ public class MarketPlaceGUI extends JPanel
     private JPanel topPanel;
     private JPanel searchBarPanel;
     private JPanel logoPanel;
-    private JPanel loginSignupPanel;
+    protected JPanel loginSignupPanel;
     private JPanel advertisements;
-    private JButton placeAdButton;
-    private JButton loginButton;
-    private JButton signUpButton;
+    protected JButton placeAdButton;
+    protected JButton loginButton;
+    protected JButton signUpButton;
+    protected JButton accountButton;
+    protected JButton logoutButton;
     private JButton searchButton;
     private JButton viewAccount = new JButton("Account");
     private JTextField searchField;
-    private AdPanel placeAdPanel = new AdPanel();
-    private SignUp SignUp2 = new SignUp();
-    private Login loginPanel = new Login();
-    private AdPreview ad = new AdPreview();
-    private AdPreview ad2 = new AdPreview();
-    private AdPreview ad3 = new AdPreview();
-    private AdPreview ad4 = new AdPreview();
-    private AdPreview ad5 = new AdPreview();
-    private ViewAccount acc ;
+    private AdPreview ads[] = new AdPreview[15]; 
+    private ResultSet adResultSet;
+    private ResultSetMetaData adRSMD;
+    private int adCount = 0;
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
+    private JLabel error = new JLabel("No ads available!");
 
     public static Color green = new Color(44,238,144);                                                // Primary menu colour
     public static Color white = new Color(255,255,255);                                               // Title text colour
@@ -53,7 +53,12 @@ public class MarketPlaceGUI extends JPanel
     // Constructor
 
     public MarketPlaceGUI()
-        { 
+        {
+            for(int i=0; i < ads.length; i++)
+                {
+                    ads[i] = new AdPreview();
+                } 
+            generateAds();
             setLayout(new BorderLayout());                                                 // Creates a JPanel instance called mainPanel  
             setBackground(grey);     
             placeAdButton = new JButton("Place Ad");                                                    // Creates a JButton instance called loginButton
@@ -88,6 +93,23 @@ public class MarketPlaceGUI extends JPanel
                     System.out.println("SearchButton clicked");                                       // Search button method stub
                 }
             }); 
+            accountButton = new JButton("Your Account");
+            accountButton.addActionListener(new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent accountButtonClicked)
+                {
+                    GUIManager.changeAccount(MarketPlaceGUI.this);
+                }
+            });
+            logoutButton = new JButton("Log Out");
+            logoutButton.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent logoutButtonClicked)
+                {
+                    CurrentSession.logUserOut();
+                    GUIManager.loggedOut();
+                }
+            });
             searchField = new JTextField(20);                                                   // Creates a JTextField instance called searchField
             
             topPanel = new JPanel(new GridLayout(1, 3));                                                  // Creates a top panel using Grid layout (1 row, 2 columns) to hold the button panels
@@ -108,7 +130,7 @@ public class MarketPlaceGUI extends JPanel
             loginSignupPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                        // Creates a panel using the Flow layout and positions it to the right
             loginSignupPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
             loginSignupPanel.setBackground(green);                                                                  // Sets the colour of the loginSignup panel to green
-            loginSignupPanel.add(placeAdButton);
+            //loginSignupPanel.add(placeAdButton);
             loginSignupPanel.add(loginButton);
             loginSignupPanel.add(signUpButton); 
 
@@ -121,28 +143,70 @@ public class MarketPlaceGUI extends JPanel
             advertisements.setBackground(grey);
             advertisements.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
             advertisements.setLayout(new BoxLayout(advertisements, BoxLayout.Y_AXIS));
-            advertisements.add(ad);
-            advertisements.add(ad2);
-            advertisements.add(ad3);
-            advertisements.add(ad4);
-            advertisements.add(ad5);
+            for (int i = 0; i < 15; i++)
+                {
+                    advertisements.add(ads[i]);
+                    ads[i].setVisible(false);
+                }
+            advertisements.add(error);
 
             JScrollPane scrollPane = new JScrollPane(advertisements);
             scrollPane.setBackground(grey);
             scrollPane.setPreferredSize(new Dimension(100, 100));
-            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
             scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-
+            populateAdDisplay();
             add(scrollPane, BorderLayout.CENTER);
             add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
-            viewAccount.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent signupClicked)                                  // Anonymous inner class contains what happens when button is clicked
+        }
+    public void generateAds()
+        {
+            try
+            {
+                adCount = 0;
+                error.setVisible(false);
+                adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Make", "Model", "Year", "Price", "Image"}, "advertisements", "", "", "", "");
+                adRSMD = adResultSet.getMetaData();
+                if (adResultSet.next() == false)
+                    {
+                        System.out.println("oops");
+                    }
+                else
+                    {
+                        do
+                        {
+                            ads[adCount].setAdID(adResultSet.getInt("AdvertisementID"));
+                            ads[adCount].setTitle(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model"));
+                            ads[adCount].setPrice(adResultSet.getInt("Price"));
+                            ads[adCount].setImage(adResultSet.getBlob("Image"));
+                            adCount++;
+                        } while (adResultSet.next() && adCount < 15);
+                    }
+                while(adResultSet.next() && adCount < 15);
+                
+            }
+            catch (SQLException databaseError)
+            {
+                error.setVisible(true);
+                databaseError.printStackTrace();
+            }
+        }
+    public void populateAdDisplay()
+        {
+            for (int index = 0; index < adCount; index++)
                 {
-                    GUIManager.changeViewAccount(MarketPlaceGUI.this);
+                    ads[index].setVisible(false);
+                    error.setVisible(true);
                 }
-            });
-            add(viewAccount);
-
+            if (adCount != 0)
+                {
+                    error.setVisible(false);
+                    for (int index = 0; index < adCount; index++)
+                        {
+                            ads[index].setVisible(getFocusTraversalKeysEnabled());
+                        }
+                }
+            
         }
 }
