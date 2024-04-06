@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Properties;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
@@ -307,7 +309,8 @@ public class SignUp extends JPanel {
         valueParameter[7] = eircode;
         valueParameter[8] = email;
         valueParameter[9] = phone;
-        valueParameter[10] = "../View/Crocodefault.jpg";
+        File imagePathFile = new File("Model2/View/Crocodefault.jpg");
+        valueParameter[10] = imagePathFile.getAbsolutePath().replace("\\", "/");
         try{
             Verifiers.VerifyEntries(valueParameter);
             if(blankEntryFlag == true)

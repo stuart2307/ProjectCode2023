@@ -71,7 +71,7 @@ public class Verifiers {
 
     public static void VerifyWrongPassword(String username, String password) throws WrongPasswordException
     {
-        if(DatabaseManager.checkPassword(username, password)) throw new WrongPasswordException("Incorrect password entered");
+        if(!DatabaseManager.checkPassword(username, password)) throw new WrongPasswordException("Incorrect password entered");
         else
         {
             System.out.println("Password is valid");

@@ -15,7 +15,7 @@ public class DatabaseManager {
     private static final String PASSWORD = "";
     static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "ProfilePic"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
-    static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
+    static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "GearBox", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
     static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
     static final String CHATLOG[] = {"ChatID", "MessageID"};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
@@ -98,7 +98,7 @@ public class DatabaseManager {
 
                 for(int i=0; i<parameters.length;i++)
                 {
-                    if (i == 10 && parameters[i].equals("Image"))
+                    if (parameters[i].equals("Image") || parameters[i].equals("ProfilePic"))
                         {
                             try
                                 {
@@ -108,6 +108,7 @@ public class DatabaseManager {
                                 }
                             catch (FileNotFoundException fnfe)
                                 {
+                                    fnfe.printStackTrace();
                                     System.out.println("oops");
                                 }
                             
@@ -268,7 +269,7 @@ public static boolean checkPassword(String username, String password)
 {
     try
     {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Username =?" + "AND Password =?");
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Username =?" + " AND Password =?");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
         ResultSet rs = preparedStatement.executeQuery();

@@ -90,11 +90,12 @@ public class GUIManager
             editAccount.setVisible(true);
             frame.add(editAccount);
         }
-        public static void changeViewAd(JPanel switchFrom)
+        public static void changeViewAd(JPanel switchFrom, int adId)
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
             lastScreen = switchFrom;
+            viewAd.populateScreen(adId);
             viewAd.setVisible(true);
             frame.add(viewAd);
         }
