@@ -5,8 +5,12 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,28 +24,25 @@ public class ViewAd extends JPanel
     private JPanel topPanel;
     private JPanel bottomPanel;
     private JPanel editDeletePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    private JPanel accountPanel;
-    private JPanel namePanel = new JPanel(new GridLayout(1,2));
-    private JPanel eircodePanel = new JPanel(new GridLayout(1,2));
-    private JPanel phonePanel = new JPanel(new GridLayout(1,2));
+    private JPanel adPanel;
     protected JButton loginButton = new JButton("Log In");
     protected JButton signUpButton = new JButton("Sign Up");
     protected JButton logoutButton = new JButton("Log Out");
     protected JButton placeAdButton = new JButton("Place Advertisement");
     protected JButton viewMarketplaceButton = new JButton("View MarketPlace");
     protected JButton accountButton = new JButton("Account");
-    private JButton likeButton = new JButton("Like");
-    private JButton dislikeButton = new JButton("Dislike");
-    private JButton editDetails = new JButton("Edit Account");
-    private JButton deleteAccount = new JButton("Delete Account");
+    private ResultSet adResultSet;
+    protected int adID;
+    private JLabel sellerPic = new JLabel();
+    private JLabel sellerUsername = new JLabel();
+    private ResultSet userResultSet;
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
     private Font informationFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
     protected JLabel adTitle = new JLabel("The Ad!");
     private JLabel adImage = new JLabel("Insert image here");
-    private JLabel eircodeLabel = new JLabel("Eircode:");
-    private JLabel phoneLabel = new JLabel("Phone:");
+    private JLabel adDescription = new JLabel("You shouldn't be seeing this.");
 
 
     public ViewAd()
@@ -127,7 +128,34 @@ public class ViewAd extends JPanel
         bottomPanel.setBackground(MarketPlaceGUI.green);
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         bottomPanel.add(editDeletePanel);
-        
-} 
+    } 
+    public Boolean populateScreen(int advertisementID)
+        {
+            try 
+                {
+                    adResultSet = DatabaseManager.executeQuery(DatabaseManager.ADVERTISEMENTS, "advertisements", "AdvertisementID", "" + advertisementID, "", "");
+                    adResultSet.next();
+                    adID = advertisementID;
+                    Blob image = adResultSet.getBlob("Image");
+                    adImage.setIcon(new ImageIcon(image.getBytes(1, (int) image.length())));
+                    adImage.setText("");
+                    adTitle.setText(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model"));
+                    adDescription.setText(adResultSet.getString("Description"));
+                    userResultSet = DatabaseManager.executeQuery(DatabaseManager.ACCOUNTS, "accounts", "AccountID", "" + adResultSet.getInt("AccountID"), "", "");
+                    userResultSet.next();
+                    sellerUsername.setText(userResultSet.getString("Username"));
+                    image = userResultSet.getBlob("ProfilePic");
+                    sellerPic.setIcon(new ImageIcon(image.getBytes(1, (int) image.length())));
+                    return true;
+                }
+            catch (SQLException sqlException)
+                {
+                    sqlException.printStackTrace();
+                    adImage.setText("No image found!");
+                    return false;
+                }
+            
+            
+        }
 }
 

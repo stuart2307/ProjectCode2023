@@ -75,6 +75,7 @@ public class GUIManager
         }
         public static void changeAccount(JPanel switchFrom)
         {
+            viewAccount.populatePage();
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
             lastScreen = switchFrom;
