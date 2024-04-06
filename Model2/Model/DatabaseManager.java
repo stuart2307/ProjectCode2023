@@ -13,7 +13,7 @@ public class DatabaseManager {
     private static final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
-    static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "Image"};
+    static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "ProfilePic"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
     static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
     static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
@@ -169,8 +169,7 @@ public class DatabaseManager {
                 
     
                 //Execute the query and return the result set
-                ResultSet results = preparedStatement.executeQuery();
-                return results;
+                return preparedStatement.executeQuery();
             } 
             
             catch (SQLException e) 
@@ -269,7 +268,7 @@ public static boolean checkPassword(String username, String password)
 {
     try
     {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Name =?" + "AND Password =?");
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Username =?" + "AND Password =?");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
         ResultSet rs = preparedStatement.executeQuery();

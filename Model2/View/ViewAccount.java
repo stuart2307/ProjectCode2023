@@ -51,33 +51,34 @@ public class ViewAccount extends JPanel
     private JLabel nameLabel = new JLabel("Name:");
     private JLabel eircodeLabel = new JLabel("Eircode:");
     private JLabel phoneLabel = new JLabel("Phone:");
-    private JLabel nameLabel2;
-    private JLabel eircodeLabel2;
-    private JLabel phoneLabel2;
+    private JLabel nameLabel2 = new JLabel();
+    private JLabel eircodeLabel2 = new JLabel();
+    private JLabel phoneLabel2 = new JLabel();
     private JLabel adsPlacedLabel = new JLabel("Recent Advertisements:");
     private JLabel fillerLabel1 = new JLabel("Filler");
     private JLabel fillerLabel2 = new JLabel("Filler");
     private JLabel fillerLabel3 = new JLabel("Filler");
-    private JOptionPane deleteAccountWarning = new JOptionPane();
 
     private String[] accountInformation = new String[3];
+    private String accID;
     private ResultSet accountDetails;
     private int userChoice;
+    
 
     public ViewAccount()
     {
         //Code to access the account information
+        accID = String.valueOf(CurrentSession.getUserID()); 
         accountInformation[0] = "Name";
         accountInformation[1] = "Eircode";
         accountInformation[2] = "Phone";
-        
         try{
-        accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "5", "", "");
+        accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", accID, "", "");
         while (accountDetails.next()) 
         {
-            nameLabel2 = new JLabel(accountDetails.getString(1));
-            eircodeLabel2 = new JLabel(accountDetails.getString(2));
-            phoneLabel2 = new JLabel(accountDetails.getString(3));
+            nameLabel2.setText(accountDetails.getString("Name"));
+            eircodeLabel2.setText(accountDetails.getString("Eircode"));
+            phoneLabel2.setText(accountDetails.getString("Phone"));
         }
         }
         catch(SQLException sqlException)
@@ -85,6 +86,7 @@ public class ViewAccount extends JPanel
             System.out.println("Error");
             sqlException.printStackTrace();
         }
+                
         informationPanel = new JPanel(new GridLayout(1, 2));
         advertisementPanel = new JPanel(new GridLayout(4,1));
         
@@ -169,7 +171,7 @@ public class ViewAccount extends JPanel
         {
             public void actionPerformed(ActionEvent searchButtonClicked)
             {
-                System.out.println("SearchButton clicked");                                       // Search button method stub
+                GUIManager.changeEditAccount(ViewAccount.this);
             }
         }); 
 
@@ -177,17 +179,20 @@ public class ViewAccount extends JPanel
         {
             public void actionPerformed(ActionEvent deleteAccount)
             {
-                if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
+                int userId = CurrentSession.getUserID();
+                String userIdString = String.valueOf(userId);
+
+                if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "WARNING",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
                 {
-                    System.out.println("You pressed yes");
+                    DatabaseManager.deleteEntry("accounts","AccountID" , userIdString);
+                    JOptionPane.showMessageDialog(null, "Your account has been deleted");
                 } 
                 else 
                 {
-                    System.out.println("You pressed no");
+                    JOptionPane.showMessageDialog(null, "Your account has not been deleted");
                 }
             }
         }); 
-        
 } 
 }

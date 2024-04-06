@@ -12,6 +12,7 @@ public class GUIManager
     private static SignUp signup;
     private static AdPanel createAd;
     private static ViewAccount viewAccount;
+    private static EditAccount editAccount;
     private static ViewAd viewAd;
 
     public static void prepareManager()
@@ -21,6 +22,7 @@ public class GUIManager
             signup = new SignUp();
             createAd = new AdPanel();
             viewAccount = new ViewAccount();
+            editAccount = new EditAccount();
             viewAd = new ViewAd();
             frame.add(marketplace);                                 //Adds the marketplace as the default panel
             frame.setMinimumSize(new Dimension(640, 480));          //Sets a minimum size for the JFrame
@@ -71,6 +73,14 @@ public class GUIManager
             viewAccount.setVisible(true);
             frame.add(viewAccount);
         }
+        public static void changeEditAccount(JPanel switchFrom)
+        {
+            switchFrom.setVisible(false);
+            frame.remove(switchFrom);
+            lastScreen = switchFrom;
+            editAccount.setVisible(true);
+            frame.add(editAccount);
+        }
         public static void changeViewAd(JPanel switchFrom)
         {
             switchFrom.setVisible(false);
@@ -98,8 +108,6 @@ public class GUIManager
             marketplace.loginSignupPanel.add(marketplace.accountButton);
             marketplace.logoutButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.logoutButton);
-
-
         }
         public static void loggedOut()
         {
