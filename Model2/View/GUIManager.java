@@ -29,6 +29,7 @@ public class GUIManager
                     signup = new SignUp();
                     createAd = new AdPanel();
                     viewAccount = new ViewAccount();
+                    editAccount = new EditAccount();
                     viewAd = new ViewAd();
                     frame.add(marketplace);   //Adds the marketplace as the default panel
                 }     

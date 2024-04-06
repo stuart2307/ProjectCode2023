@@ -60,7 +60,6 @@ public class ViewAccount extends JPanel
     private JLabel fillerLabel3 = new JLabel("Filler");
 
     private String[] accountInformation = new String[3];
-    private String accID;
     private ResultSet accountDetails;
     private int userChoice;
     
@@ -68,12 +67,11 @@ public class ViewAccount extends JPanel
     public ViewAccount()
     {
         //Code to access the account information
-        accID = String.valueOf(CurrentSession.getUserID()); 
         accountInformation[0] = "Name";
         accountInformation[1] = "Eircode";
         accountInformation[2] = "Phone";
         try{
-        accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", accID, "", "");
+        accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "4", "", "");
         while (accountDetails.next()) 
         {
             nameLabel2.setText(accountDetails.getString("Name"));
@@ -179,13 +177,10 @@ public class ViewAccount extends JPanel
         {
             public void actionPerformed(ActionEvent deleteAccount)
             {
-                int userId = CurrentSession.getUserID();
-                String userIdString = String.valueOf(userId);
-
                 if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "WARNING",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
                 {
-                    DatabaseManager.deleteEntry("accounts","AccountID" , userIdString);
+                    DatabaseManager.deleteEntry("accounts","AccountID" , "4");
                     JOptionPane.showMessageDialog(null, "Your account has been deleted");
                 } 
                 else 
