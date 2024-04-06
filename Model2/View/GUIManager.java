@@ -87,7 +87,7 @@ public class GUIManager
             viewAd.setVisible(true);
             frame.add(viewAd);
         }
-        public static void goBack(JPanel switchFrom)
+        public static void backButton(JPanel switchFrom)
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
@@ -96,30 +96,20 @@ public class GUIManager
         }
         public static void loggedIn()
         {
-            marketplace.signUpButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.signUpButton);
-            marketplace.loginButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.loginButton);
-            marketplace.placeAdButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.placeAdButton);
-            marketplace.accountButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.accountButton);
-            marketplace.logoutButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.logoutButton);
 
 
         }
         public static void loggedOut()
         {
-            marketplace.logoutButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.logoutButton);
-            marketplace.accountButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.accountButton);
-            marketplace.placeAdButton.setVisible(false);
             marketplace.loginSignupPanel.remove(marketplace.placeAdButton);
-            marketplace.signUpButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.signUpButton);
-            marketplace.loginButton.setVisible(true);
             marketplace.loginSignupPanel.add(marketplace.loginButton);
         }
 }

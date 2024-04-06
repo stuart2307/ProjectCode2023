@@ -47,13 +47,7 @@ public class Login extends JPanel
         GridBagConstraints gbc = new GridBagConstraints();
 
         backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent backClicked)
-                {
-                    GUIManager.goBack(Login.this);
-                }    
-        });
+        backButton.addActionListener(new goBack(Login.this));
         gbc.gridx = 0; 
         gbc.gridy = 0; // Place at the first row
         gbc.insets = new Insets(10, 10, 10, 10); 

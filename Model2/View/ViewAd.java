@@ -16,7 +16,7 @@ public class ViewAd extends JPanel
 {
     private JPanel logoPanel;
     private JPanel titlePanel;
-    private JPanel buttonPanel;
+    protected JPanel buttonPanel;
     private JPanel topPanel;
     private JPanel bottomPanel;
     private JPanel editDeletePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -39,8 +39,7 @@ public class ViewAd extends JPanel
     private Font informationFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
     protected JLabel adTitle = new JLabel("The Ad!");
-    private JLabel profilePicture = new JLabel("Insert image here");
-    private JLabel nameLabel = new JLabel("Name:");
+    private JLabel adImage = new JLabel("Insert image here");
     private JLabel eircodeLabel = new JLabel("Eircode:");
     private JLabel phoneLabel = new JLabel("Phone:");
 
@@ -122,58 +121,12 @@ public class ViewAd extends JPanel
         buttonPanel.add(signUpButton);
         topPanel.add(buttonPanel, BorderLayout.CENTER);
 
-        //Account Information Code
-        accountPanel = new JPanel(new GridLayout(3,1));
-        nameLabel.setFont(informationFont);
-        eircodeLabel.setFont(informationFont);
-        phoneLabel.setFont(informationFont);
-
-        namePanel.add(nameLabel);
-
-        eircodePanel.add(eircodeLabel);
-
-        phonePanel.add(phoneLabel);
-
-        accountPanel.add(profilePicture);
-        accountPanel.add(namePanel);
-        accountPanel.add(eircodePanel);
-        accountPanel.add(phonePanel);
-        accountPanel.add(likeButton);
-        accountPanel.add(dislikeButton);
-
         //Bottom Panel Code
 
         bottomPanel = new JPanel(new GridBagLayout());
         bottomPanel.setBackground(MarketPlaceGUI.green);
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        editDeletePanel.setBackground(MarketPlaceGUI.green);
-        editDeletePanel.add(editDetails);
-        editDeletePanel.add(deleteAccount);
         bottomPanel.add(editDeletePanel);
-        add(bottomPanel, BorderLayout.SOUTH);
-        editDetails.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent searchButtonClicked)
-            {
-                System.out.println("SearchButton clicked");                                       // Search button method stub
-            }
-        }); 
-
-        deleteAccount.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent deleteAccount)
-            {
-                if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
-                {
-                    System.out.println("You pressed yes");
-                } 
-                else 
-                {
-                    System.out.println("You pressed no");
-                }
-            }
-        }); 
         
 } 
 }

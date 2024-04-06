@@ -71,13 +71,7 @@ public class SignUp extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
 
         backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent backButtonPressed)
-            {
-                GUIManager.goBack(SignUp.this);                                     // Search button method stub
-            }
-        }); 
+        backButton.addActionListener(new goBack(SignUp.this));
         gbc.gridx = 0; 
         gbc.gridy = 0; // Place at the first row
         gbc.insets = new Insets(10, 10, 10, 10); 
