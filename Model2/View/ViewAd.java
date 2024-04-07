@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -22,6 +23,9 @@ import javax.swing.JPanel;
 
 public class ViewAd extends JPanel
 {
+    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private int xBlock = (int) screenSize.getWidth() / 10;
+    private int yBlock = (int) screenSize.getHeight() / 6;
     private JPanel logoPanel;
     private JPanel titlePanel;
     protected JPanel buttonPanel;
@@ -30,6 +34,7 @@ public class ViewAd extends JPanel
     private JPanel priceDescPanel;
     private JPanel sellerInfoPanel;
     private JPanel vehicleInfoPanel;
+    private JPanel imagePanel;
     protected JButton loginButton = new JButton("Log In");
     protected JButton signUpButton = new JButton("Sign Up");
     protected JButton logoutButton = new JButton("Log Out");
@@ -57,11 +62,12 @@ public class ViewAd extends JPanel
     private JLabel previousOwners = new JLabel();
     private JLabel gearBox = new JLabel();
     private JLabel engineSize = new JLabel();
-
+    private JLabel phone = new JLabel();
+    private JLabel email = new JLabel();
+    private JLabel county = new JLabel();
 
     public ViewAd()
     {
-        
         topPanel = new JPanel(new GridLayout(1,3));
         setLayout(new BorderLayout());
         add(topPanel, BorderLayout.NORTH);
@@ -118,13 +124,7 @@ public class ViewAd extends JPanel
                     CurrentSession.logUserOut();
                 }
         });
-        accountButton.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent accountClicked)
-                {
-                    GUIManager.changeAccount(ViewAd.this);
-                }
-        });
+        accountButton.addActionListener(new accountButtonAL(ViewAd.this));
         viewMarketplaceButton.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent marketplaceClicked)
@@ -144,39 +144,121 @@ public class ViewAd extends JPanel
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         price.setFont(informationFont);
-        price.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
         fuelType.setFont(informationFont);
-        fuelType.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
         gearBox.setFont(informationFont);
-        gearBox.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
         mileage.setFont(informationFont);
-        mileage.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
         engineSize.setFont(informationFont);
-        engineSize.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
         previousOwners.setFont(informationFont);
-        previousOwners.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
         adDescription.setFont(informationFont);
-        adDescription.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
         sellerUsername.setFont(informationFont);
-        sellerUsername.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, true));
+        phone.setFont(informationFont);
+        email.setFont(informationFont);
+        county.setFont(informationFont);
 
-        
 
+        imagePanel = new JPanel();
+        imagePanel.add(adImage, BorderLayout.CENTER);
+        imagePanel.setMinimumSize(new Dimension(xBlock * 3, yBlock * 3));
+        imagePanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridheight = 3;
-        gbc.gridwidth = 3;
-        gbc.weightx = gbc.gridwidth;
-        gbc.weighty = gbc.gridheight;
-        bottomPanel.add(adImage, gbc);
+        gbc.gridx = gbc.gridy = 0;
+        gbc.gridheight = gbc.gridwidth = 3;
+        gbc.weightx = gbc.gridwidth / 10;
+        gbc.weighty = gbc.gridheight / 10;
+        bottomPanel.add(imagePanel, gbc);
         
+        gbc.anchor = GridBagConstraints.NORTHWEST;
         priceDescPanel = new JPanel(new GridBagLayout());
+        priceDescPanel.setMinimumSize(new Dimension(xBlock * 3, yBlock * 3));
+        priceDescPanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
+        gbc.gridx = 3;
+        bottomPanel.add(priceDescPanel, gbc);
+
+        vehicleInfoPanel = new JPanel(new GridBagLayout());
+        vehicleInfoPanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
+        vehicleInfoPanel.setMinimumSize(new Dimension(xBlock * 6, yBlock * 2));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridheight = 2;
+        gbc.gridwidth = 6;
+        gbc.weightx = gbc.gridwidth / 10;
+        gbc.weighty = gbc.gridheight / 10;
+        bottomPanel.add(vehicleInfoPanel, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTHEAST;
+        sellerInfoPanel = new JPanel(new GridBagLayout());
+        sellerInfoPanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
+        sellerInfoPanel.setMinimumSize(new Dimension(xBlock * 3, yBlock * 5));
+        gbc.gridx = 7;
+        gbc.gridheight = 5;
+        gbc.weighty = gbc.gridheight / 10;
+        bottomPanel.add(sellerInfoPanel);
+
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.gridx = gbc.gridy = 0;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 3;
+        gbc.weightx = gbc.gridwidth / 10;
+        gbc.weighty = gbc.gridheight / 10;
+        priceDescPanel.add(price, gbc);
+
+        gbc.anchor = GridBagConstraints.SOUTHWEST;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.gridheight++;
+        gbc.weighty = gbc.gridheight / 10;
+        priceDescPanel.add(adDescription, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 2;
+        gbc.weightx = gbc.gridwidth / 10;
+        gbc.weighty = gbc.gridheight / 10;
+        vehicleInfoPanel.add(fuelType, gbc);
         
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.gridx = 2;
+        vehicleInfoPanel.add(mileage, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTHEAST;
+        gbc.gridx = 4;
+        vehicleInfoPanel.add(previousOwners, gbc);
+
+        gbc.anchor = GridBagConstraints.SOUTHWEST;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        vehicleInfoPanel.add(gearBox, gbc);
+
+        gbc.anchor = GridBagConstraints.SOUTH;
+        gbc.gridx = 2;
+        vehicleInfoPanel.add(engineSize, gbc);
+        
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.gridx = gbc.gridy = 0;
+        gbc.gridheight = gbc.gridwidth = 1;
+        gbc.weightx = gbc.gridwidth / 10;
+        gbc.weighty = gbc.gridheight / 10;
+        sellerInfoPanel.add(sellerPic, gbc);
+
+        gbc.anchor = GridBagConstraints.NORTHEAST;
+        gbc.weightx = gbc.gridwidth = 2;
+        gbc.gridx++;
+        sellerInfoPanel.add(sellerUsername, gbc);
+        
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = gbc.gridwidth = 3;
+        sellerInfoPanel.add(phone, gbc);
+
+        gbc.gridy++;
+        sellerInfoPanel.add(email, gbc);
+
+        gbc.gridy++;
+        sellerInfoPanel.add(county, gbc);
+
         add(bottomPanel, BorderLayout.CENTER);
-        
-       
     } 
     public Boolean populateScreen(int advertisementID)
         {
@@ -189,17 +271,21 @@ public class ViewAd extends JPanel
                     adImage.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(450, 450, Image.SCALE_SMOOTH)));
                     adImage.setText("");
                     adTitle.setText(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model"));
-                    adDescription.setText(adResultSet.getString("Description"));
+                    adDescription.setText("Description: " + adResultSet.getString("Description"));
                     price.setText("$" + adResultSet.getInt("Price"));
                     fuelType.setText("Fuel Type: " + adResultSet.getString("FuelType"));
                     mileage.setText("Mileage: " + adResultSet.getString("Mileage"));
                     previousOwners.setText("Previous Owners: " + adResultSet.getInt("PreviousOwners"));
                     engineSize.setText("Engine Size: " + adResultSet.getDouble("EngineSize"));
                     gearBox.setText("Gearbox: " + adResultSet.getString("GearBox"));
+                    
 
                     userResultSet = DatabaseManager.executeQuery(DatabaseManager.ACCOUNTS, "accounts", "AccountID", "" + adResultSet.getInt("AccountID"), "", "");
                     userResultSet.next();
                     sellerUsername.setText(userResultSet.getString("Username"));
+                    phone.setText("Phone: " + userResultSet.getString("Phone"));
+                    email.setText("Email: " + userResultSet.getString("Email"));
+                    county.setText("County: " + userResultSet.getString("County"));
                     image = userResultSet.getBlob("ProfilePic");
                     sellerPic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
                     

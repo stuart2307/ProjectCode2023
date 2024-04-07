@@ -34,6 +34,7 @@ public class GUIManager
                     frame.add(marketplace);   //Adds the marketplace as the default panel
                 }     
             frame.setMinimumSize(new Dimension(640, 480));          //Sets a minimum size for the JFrame
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //Makes it so that the program will terminate upon closing the frame
             frame.setTitle("Crocodeal");                            //Sets the frame's title to Crocodeal
             frame.pack();                                           //Sets the frame to adjust to the size of its components
