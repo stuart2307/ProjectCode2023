@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.xml.crypto.Data;
 import javax.swing.JPasswordField;
 
 public class EditAccount extends JPanel{
@@ -56,6 +57,7 @@ public class EditAccount extends JPanel{
     private JTextField phoneInput;
     private JButton editButton;
     private JButton backButton;
+    private JButton addPic;
 
     public Color green = new Color(44,238,144);                                                // Primary menu colour
     public Color white = new Color(255,255,255);                                               // Title text colour
@@ -82,6 +84,19 @@ public class EditAccount extends JPanel{
         gbc.gridy = 0; // Place at the first row
         gbc.insets = new Insets(10, 10, 10, 10); 
         add(backButton, gbc);
+
+        addPic = new JButton("Add Profile Picture");
+        addPic.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent backButtonPressed)
+            {
+                GUIManager.changeAccount(EditAccount.this);                                     
+            }
+        }); 
+        gbc.gridx = 2; 
+        gbc.gridy = 0; // Place at the first row
+        gbc.insets = new Insets(10, 10, 10, 10); 
+        add(addPic, gbc);
 
         userNameLabel = new JLabel("Enter Username:"); //Username input
         gbc.gridx = 0;

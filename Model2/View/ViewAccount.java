@@ -4,12 +4,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.LayoutManager;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -62,13 +59,14 @@ public class ViewAccount extends JPanel
     private JLabel fillerLabel2 = new JLabel("Filler");
     private JLabel fillerLabel3 = new JLabel("Filler");
 
-    private String[] accountInformation = new String[4];
+    private String[] accountInformation = new String[3];
     private ResultSet accountDetails;
     private int userChoice;
     
 
     public ViewAccount()
-    {         
+    {
+                
         informationPanel = new JPanel(new GridLayout(1, 2));
         advertisementPanel = new JPanel(new GridLayout(4,1));
         
@@ -164,8 +162,10 @@ public class ViewAccount extends JPanel
                 if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "WARNING",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
                 {
-                    DatabaseManager.deleteEntry("accounts","AccountID" , "4");
+                    DatabaseManager.deleteEntry("accounts","AccountID" , "7");
                     JOptionPane.showMessageDialog(null, "Your account has been deleted");
+                    GUIManager.changeMarketplace(ViewAccount.this);
+                    CurrentSession.logUserOut();
                 } 
                 else 
                 {
@@ -173,36 +173,36 @@ public class ViewAccount extends JPanel
                 }
             }
         }); 
-    } 
+} 
     public void populatePage()
-        {
-             //Code to access the account information
-            accountInformation[0] = "Name";
-            accountInformation[1] = "Eircode";
-            accountInformation[2] = "Phone";
+    {
+        //Code to access the account information
+        accountInformation[0] = "Name";
+        accountInformation[1] = "Eircode";
+        accountInformation[2] = "Phone";
             accountInformation[3] = "ProfilePic";
             profilePicture.setText("IMAGE GOES HERE");
-            try{
+        try{
             accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
             if (accountDetails.next()) 
-            {
-                nameLabel2.setText(accountDetails.getString("Name"));
-                eircodeLabel2.setText(accountDetails.getString("Eircode"));
-                phoneLabel2.setText(accountDetails.getString("Phone"));
+        {
+        nameLabel2.setText(accountDetails.getString("Name"));
+        eircodeLabel2.setText(accountDetails.getString("Eircode"));
+        phoneLabel2.setText(accountDetails.getString("Phone"));
                 Blob image = accountDetails.getBlob("ProfilePic");
                 profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
                 profilePicture.setText("");
-            }
+        }
             else throw new UserNotFoundException("User not found in database!");
-            }
-            catch(SQLException sqlException)
-            {
-                System.out.println("Error");
-                sqlException.printStackTrace();
-            }
+        }
+        catch(SQLException sqlException)
+        {
+        System.out.println("Error");
+        sqlException.printStackTrace();
+        }
             catch(UserNotFoundException unfe)
             {
                 unfe.printStackTrace();
             }
-        }
+    }
 }
