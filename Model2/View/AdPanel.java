@@ -5,14 +5,20 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.InputMismatchException;
+import com.sun.java.swing.plaf.windows.WindowsFileChooserUI;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class AdPanel extends JPanel
 {
@@ -67,7 +73,7 @@ public class AdPanel extends JPanel
     private JButton submitButton;
     private JButton returnButton;
 
-    private String detailsArray[] = new String[11];
+    private String detailsArray[] = new String[12];
     private String make;
     private String model;
     private String year;
@@ -76,6 +82,7 @@ public class AdPanel extends JPanel
     private String engineSize;
     private String previousOwners;
     private String description;
+    private String filePath;
 
 
     public AdPanel()
@@ -179,6 +186,34 @@ public class AdPanel extends JPanel
         uploadImageLabel = new JLabel("Upload Image : ");
         uploadImageLabel.setHorizontalAlignment(JLabel.CENTER);
         uploadImage = new JButton("Upload Image");
+        uploadImage.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent selectFile)
+                {
+                    LookAndFeel laf = UIManager.getLookAndFeel();
+                    try
+                        {
+                          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());  
+                        }
+                    catch (Exception e)
+                        {
+                            System.out.println("oops");
+                        }
+                    JFileChooser getFile = new JFileChooser();
+                    getFile.setFileFilter(new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png"));
+                    WindowsFileChooserUI wfcui = new WindowsFileChooserUI(getFile);
+                    wfcui.installUI(getFile);
+                    if (getFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+                        {
+                            filePath = getFile.getSelectedFile().getAbsolutePath();
+                        }
+                    try
+                        {
+                            UIManager.setLookAndFeel(laf);
+                        }
+                    catch (UnsupportedLookAndFeelException ulafe){}
+                }
+        });
         submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() 
         {
@@ -197,17 +232,18 @@ public class AdPanel extends JPanel
 
                 // Adding details to array
 
-                detailsArray[0] = make;
-                detailsArray[1] = model;
-                detailsArray[2] = fuelSelection;
-                detailsArray[3] = transmissionSelection;
-                detailsArray[4] = year;
-                detailsArray[5] = mileage;
-                detailsArray[6] = price;
-                detailsArray[7] = engineSize;
-                detailsArray[8] = previousOwners;
-                detailsArray[9] = description;
-                // detailsArray[10] = ; This is for IMAGE
+                detailsArray[0] = "" + CurrentSession.getUserID();
+                detailsArray[1] = make;
+                detailsArray[2] = model;
+                detailsArray[3] = fuelSelection;
+                detailsArray[4] = transmissionSelection;
+                detailsArray[5] = year;
+                detailsArray[6] = mileage;
+                detailsArray[7] = price;
+                detailsArray[8] = engineSize;
+                detailsArray[9] = previousOwners;
+                detailsArray[10] = description;
+                detailsArray[11] = filePath;
 
                 try 
                 {
