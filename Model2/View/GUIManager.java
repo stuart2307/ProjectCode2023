@@ -114,18 +114,26 @@ public class GUIManager
         }
         public static void loggedIn()
         {
-            marketplace.loginSignupPanel.remove(marketplace.signUpButton);
-            marketplace.loginSignupPanel.remove(marketplace.loginButton);
-            marketplace.loginSignupPanel.add(marketplace.placeAdButton);
-            marketplace.loginSignupPanel.add(marketplace.accountButton);
-            marketplace.loginSignupPanel.add(marketplace.logoutButton);
+            marketplace.preLoginButtonPanel.setVisible(false);
+            marketplace.topPanel.remove(marketplace.preLoginButtonPanel);
+            marketplace.postLoginButtonPanel.setVisible(true);
+            marketplace.topPanel.add(marketplace.postLoginButtonPanel);
+
+            viewAd.preLoginButtonPanel.setVisible(false);
+            viewAd.topPanel.remove(marketplace.preLoginButtonPanel);
+            viewAd.postLoginButtonPanel.setVisible(true);
+            viewAd.topPanel.add(marketplace.postLoginButtonPanel);
         }
         public static void loggedOut()
         {
-            marketplace.loginSignupPanel.remove(marketplace.logoutButton);
-            marketplace.loginSignupPanel.remove(marketplace.accountButton);
-            marketplace.loginSignupPanel.remove(marketplace.placeAdButton);
-            marketplace.loginSignupPanel.add(marketplace.signUpButton);
-            marketplace.loginSignupPanel.add(marketplace.loginButton);
+            marketplace.postLoginButtonPanel.setVisible(false);
+            marketplace.topPanel.remove(marketplace.postLoginButtonPanel);
+            marketplace.preLoginButtonPanel.setVisible(true);
+            marketplace.topPanel.add(marketplace.preLoginButtonPanel);
+
+            viewAd.postLoginButtonPanel.setVisible(false);
+            viewAd.topPanel.remove(marketplace.postLoginButtonPanel);
+            viewAd.preLoginButtonPanel.setVisible(true);
+            viewAd.topPanel.add(marketplace.preLoginButtonPanel);
         }
 }

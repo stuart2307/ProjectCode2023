@@ -1,26 +1,21 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 public class ViewAccount extends JPanel
 {
@@ -59,7 +54,7 @@ public class ViewAccount extends JPanel
     private JLabel fillerLabel2 = new JLabel("Filler");
     private JLabel fillerLabel3 = new JLabel("Filler");
 
-    private String[] accountInformation = new String[3];
+    private String[] accountInformation = new String[4];
     private ResultSet accountDetails;
     private int userChoice;
     
@@ -180,8 +175,8 @@ public class ViewAccount extends JPanel
         accountInformation[0] = "Name";
         accountInformation[1] = "Eircode";
         accountInformation[2] = "Phone";
-            accountInformation[3] = "ProfilePic";
-            profilePicture.setText("IMAGE GOES HERE");
+        accountInformation[3] = "ProfilePic";
+        profilePicture.setText("IMAGE GOES HERE");
         try{
             accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
             if (accountDetails.next()) 

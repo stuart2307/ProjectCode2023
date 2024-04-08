@@ -161,7 +161,7 @@ public class AdPanel extends JPanel
         {
             public void actionPerformed(ActionEvent choicePicked)
             {
-                transmissionSelection = (String) fuelType.getSelectedItem();          // Method for selecting transmissionType when using combobox
+                transmissionSelection = (String) transmissionType.getSelectedItem();          // Method for selecting transmissionType when using combobox
             }
         });
         yearLabel = new JLabel("Car Year : ");

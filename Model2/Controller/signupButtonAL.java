@@ -3,10 +3,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-public class signupButton implements ActionListener
+public class signupButtonAL implements ActionListener
 {
     JPanel from;
-    public signupButton(JPanel switchFrom)
+    public signupButtonAL(JPanel switchFrom)
         {
             from = switchFrom;
         }   
