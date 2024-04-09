@@ -28,8 +28,9 @@ public class ViewAd extends JPanel
     private int yBlock = (int) screenSize.getHeight() / 6;
     private JPanel logoPanel;
     private JPanel titlePanel;
-    protected JPanel buttonPanel;
-    private JPanel topPanel;
+    protected JPanel preLoginButtonPanel;
+    protected JPanel postLoginButtonPanel;
+    protected JPanel topPanel;
     private JPanel bottomPanel;
     private JPanel priceDescPanel;
     private JPanel sellerInfoPanel;
@@ -92,50 +93,30 @@ public class ViewAd extends JPanel
         titlePanel.add(adTitle);
         topPanel.add(titlePanel);
 
-        buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        buttonPanel.setBackground(MarketPlaceGUI.green);
-        loginButton.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent loginClicked)
-                {
-                    GUIManager.changeLogin(ViewAd.this);
-                }
-        });
-        signUpButton.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent signupClicked)
-                {
-                    GUIManager.changeSignup(ViewAd.this);
-                }
-        });
-        placeAdButton.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent placeAdClicked)
-                {
-                    GUIManager.changeLogin(ViewAd.this);
-                }
-        });
-        logoutButton.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent logoutClicked)
-                {
-                    GUIManager.loggedOut();
-                    CurrentSession.logUserOut();
-                }
-        });
+        preLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        preLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        preLoginButtonPanel.setBackground(MarketPlaceGUI.green);
+        postLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        postLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        postLoginButtonPanel.setBackground(MarketPlaceGUI.green);
+
+        loginButton.addActionListener(new loginButtonAL(ViewAd.this));
+        signUpButton.addActionListener(new signupButtonAL(ViewAd.this));
+        placeAdButton.addActionListener(new placeAdButtonAL(ViewAd.this));
+        logoutButton.addActionListener(new logoutButtonAL());
         accountButton.addActionListener(new accountButtonAL(ViewAd.this));
-        viewMarketplaceButton.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent marketplaceClicked)
-                {
-                    GUIManager.changeMarketplace(ViewAd.this);
-                }
-        });
-        buttonPanel.add(viewMarketplaceButton);
-        buttonPanel.add(loginButton);
-        buttonPanel.add(signUpButton);
-        topPanel.add(buttonPanel, BorderLayout.CENTER);
+        viewMarketplaceButton.addActionListener(new marketplaceButtonAL(ViewAd.this));
+
+        preLoginButtonPanel.add(viewMarketplaceButton);
+        preLoginButtonPanel.add(loginButton);
+        preLoginButtonPanel.add(signUpButton);
+
+        postLoginButtonPanel.add(viewMarketplaceButton);
+        postLoginButtonPanel.add(placeAdButton);
+        postLoginButtonPanel.add(accountButton);
+        postLoginButtonPanel.add(logoutButton);
+
+        topPanel.add(preLoginButtonPanel, BorderLayout.CENTER);
 
         //Bottom Panel Code
 

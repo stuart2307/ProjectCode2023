@@ -22,10 +22,11 @@ public class MarketPlaceGUI extends JPanel
 {  
 
     // Declarations
-    private JPanel topPanel;
+    protected JPanel topPanel;
     private JPanel searchBarPanel;
     private JPanel logoPanel;
-    protected JPanel loginSignupPanel;
+    protected JPanel preLoginButtonPanel;
+    protected JPanel postLoginButtonPanel;
     private JPanel advertisements;
     protected JButton placeAdButton;
     protected JButton loginButton;
@@ -62,29 +63,11 @@ public class MarketPlaceGUI extends JPanel
             setLayout(new BorderLayout());                                                 // Creates a JPanel instance called mainPanel  
             setBackground(grey);     
             placeAdButton = new JButton("Place Ad");                                                    // Creates a JButton instance called loginButton
-            placeAdButton.addActionListener(new ActionListener() 
-            {
-                public void actionPerformed(ActionEvent placeAdClicked)
-                {
-                    GUIManager.changeCreateAd(MarketPlaceGUI.this);
-                }
-            });              
+            placeAdButton.addActionListener(new placeAdButtonAL(MarketPlaceGUI.this));              
             loginButton = new JButton("Login");                                                    // Creates a JButton instance called loginButton
-            loginButton.addActionListener(new ActionListener() 
-            {
-                public void actionPerformed(ActionEvent loginClicked)
-                {
-                    GUIManager.changeLogin(MarketPlaceGUI.this);
-                }
-            });
+            loginButton.addActionListener(new loginButtonAL(MarketPlaceGUI.this));
             signUpButton = new JButton("Sign Up");                                                 // Creates a JButton instance called signUpButton
-            signUpButton.addActionListener(new ActionListener()                                         // Add an action listener to the signup button
-            {
-                public void actionPerformed(ActionEvent signupClicked)                                  // Anonymous inner class contains what happens when button is clicked
-                {
-                    GUIManager.changeSignup(MarketPlaceGUI.this);
-                }
-            });
+            signUpButton.addActionListener(new signupButtonAL(MarketPlaceGUI.this));
             searchButton = new JButton("Search");                                                  // Creates a JButton instance called searchButton
             searchButton.addActionListener(new ActionListener()
             {
@@ -94,22 +77,9 @@ public class MarketPlaceGUI extends JPanel
                 }
             }); 
             accountButton = new JButton("Your Account");
-            accountButton.addActionListener(new ActionListener() 
-            {
-                public void actionPerformed(ActionEvent accountButtonClicked)
-                {
-                    GUIManager.changeAccount(MarketPlaceGUI.this);
-                }
-            });
+            accountButton.addActionListener(new accountButtonAL(MarketPlaceGUI.this));
             logoutButton = new JButton("Log Out");
-            logoutButton.addActionListener(new ActionListener()
-            {
-                public void actionPerformed(ActionEvent logoutButtonClicked)
-                {
-                    CurrentSession.logUserOut();
-                    GUIManager.loggedOut();
-                }
-            });
+            logoutButton.addActionListener(new logoutButtonAL());
             searchField = new JTextField(20);                                                   // Creates a JTextField instance called searchField
             
             topPanel = new JPanel(new GridLayout(1, 3));                                                  // Creates a top panel using Grid layout (1 row, 2 columns) to hold the button panels
@@ -127,17 +97,23 @@ public class MarketPlaceGUI extends JPanel
             title.setForeground(white);                                                                             // Sets the title text colour to white
             logoPanel.add(title, BorderLayout.CENTER);                                                              // Adds the title to the logoPanel and positions it to the centre
             
-            loginSignupPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                        // Creates a panel using the Flow layout and positions it to the right
-            loginSignupPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
-            loginSignupPanel.setBackground(green);                                                                  // Sets the colour of the loginSignup panel to green
-            //loginSignupPanel.add(placeAdButton);
-            loginSignupPanel.add(loginButton);
-            loginSignupPanel.add(signUpButton); 
+            preLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                        // Creates a panel using the Flow layout and positions it to the right
+            preLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
+            preLoginButtonPanel.setBackground(green);                                                                  // Sets the colour of the loginSignup panel to green
+            preLoginButtonPanel.add(loginButton);
+            preLoginButtonPanel.add(signUpButton); 
+
+            postLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                        // Creates a panel using the Flow layout and positions it to the right
+            postLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
+            postLoginButtonPanel.setBackground(green);                                                                  // Sets the colour of the loginSignup panel to green
+            postLoginButtonPanel.add(placeAdButton);
+            postLoginButtonPanel.add(accountButton);
+            postLoginButtonPanel.add(logoutButton);
+            postLoginButtonPanel.setVisible(false);
 
             topPanel.add(searchBarPanel);
             topPanel.add(logoPanel);
-            topPanel.add(loginSignupPanel);
-
+            topPanel.add(preLoginButtonPanel);
 
             advertisements = new JPanel();
             advertisements.setBackground(grey);
