@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 
 import javax.swing.BorderFactory;
@@ -92,7 +94,7 @@ public class AdPanel extends JPanel
 
         titlePanel = new JPanel();                                                  // Creates panel for the title
         titlePanel.setLayout(new BorderLayout());                                   // Sets the titlePanel to BorderLayout
-        titlePanel.setPreferredSize(new Dimension(660, 220));          // Sets the preferred size of title panel
+        titlePanel.setPreferredSize(new Dimension(660, 100));          // Sets the preferred size of title panel
         titlePanel.setBackground(MarketPlaceGUI.green);                             // Sets the colour of the title panel to green 
 
         pageTitle = new JLabel("Create Advertisement ");                        // Creates the text for the title of the page 
@@ -256,7 +258,7 @@ public class AdPanel extends JPanel
                 {
                     blankEntryFlag = true;
                     blankEntryWarning.setVisible(true);
-                    // blankEntryException.printStackTrace();
+                    blankEntryException.printStackTrace();
                 }
                 finally
                 {
@@ -277,7 +279,7 @@ public class AdPanel extends JPanel
                 {
                     yearFlag = true;
                     numberWarning.setVisible(true);
-                    // IntException.printStackTrace();
+                    IntException.printStackTrace();
                 }
                 finally
                 {
@@ -298,7 +300,7 @@ public class AdPanel extends JPanel
                 {
                     mileageFlag = true;
                     numberWarning.setVisible(true);
-                    // IntException.printStackTrace();
+                    IntException.printStackTrace();
                 }
                 finally
                 {
@@ -319,7 +321,7 @@ public class AdPanel extends JPanel
                 {
                     ownerFlag = true;
                     numberWarning.setVisible(true);
-                    // IntException.printStackTrace();
+                    IntException.printStackTrace();
                 }
                 finally
                 {
@@ -340,7 +342,7 @@ public class AdPanel extends JPanel
                 {
                     engineFlag = true;
                     numberWarning.setVisible(true);
-                    // DoubleException.printStackTrace();
+                    DoubleException.printStackTrace();
                 }
                 finally
                 {
@@ -354,7 +356,21 @@ public class AdPanel extends JPanel
                 }
                 else
                 {
+
                     DatabaseManager.createEntry("advertisements", DatabaseManager.ADVERTISEMENTS, detailsArray);
+
+                    try 
+                    {
+                        ResultSet results = DatabaseManager.executeQuery(new String[]{"AdvertisementID"}, "advertisements", "", "", "DESC", "AdvertisementID");
+
+                        results.next();
+
+                        GUIManager.changeViewAd(AdPanel.this, results.getInt(1));
+                    }
+                    catch (SQLException e)
+                    {
+                        System.err.println("Error processing sql results...");
+                    }
                 }
             }
         });
@@ -364,7 +380,7 @@ public class AdPanel extends JPanel
         numberWarning.setVisible(false);
         blankEntryWarning.setVisible(false);
         warning1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        warning1.setBorder(BorderFactory.createEmptyBorder(40, 0, 10, 0));
+        warning1.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
         warning1.setBackground(MarketPlaceGUI.green);
         warning2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         warning2.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));

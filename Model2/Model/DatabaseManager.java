@@ -160,7 +160,7 @@ public class DatabaseManager {
                     }
                 if (order.toUpperCase().equals("ASC") || order.toUpperCase().equals("DESC"))
                     {
-                        statementString += "ORDER BY " + orderField + " " + order;
+                        statementString += " ORDER BY " + orderField + " " + order;
                     }
                 PreparedStatement preparedStatement = connection.prepareStatement(statementString);
                 if (!column.equals("") && !value.equals(""))
