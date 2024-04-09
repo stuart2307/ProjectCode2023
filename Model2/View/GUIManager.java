@@ -120,9 +120,9 @@ public class GUIManager
             marketplace.topPanel.add(marketplace.postLoginButtonPanel);
 
             viewAd.preLoginButtonPanel.setVisible(false);
-            viewAd.topPanel.remove(marketplace.preLoginButtonPanel);
+            viewAd.topPanel.remove(viewAd.preLoginButtonPanel);
             viewAd.postLoginButtonPanel.setVisible(true);
-            viewAd.topPanel.add(marketplace.postLoginButtonPanel);
+            viewAd.topPanel.add(viewAd.postLoginButtonPanel);
         }
         public static void loggedOut()
         {
@@ -132,8 +132,8 @@ public class GUIManager
             marketplace.topPanel.add(marketplace.preLoginButtonPanel);
 
             viewAd.postLoginButtonPanel.setVisible(false);
-            viewAd.topPanel.remove(marketplace.postLoginButtonPanel);
+            viewAd.topPanel.remove(viewAd.postLoginButtonPanel);
             viewAd.preLoginButtonPanel.setVisible(true);
-            viewAd.topPanel.add(marketplace.preLoginButtonPanel);
+            viewAd.topPanel.add(viewAd.preLoginButtonPanel);
         }
 }
