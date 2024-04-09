@@ -5,11 +5,17 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.sql.Blob;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,7 +26,7 @@ import javax.swing.JPasswordField;
 public class EditAccount extends JPanel{
 
     private JLabel userNameLabel; //Declaring labels for input text fields
-    private JLabel passWordLabel;
+    private JLabel newPassWordLabel;
     private JLabel confirmPasswordLabel;
     private JLabel nameLabel;
     private JLabel houseNumberLabel;
@@ -30,6 +36,7 @@ public class EditAccount extends JPanel{
     private JLabel eirCodeLabel;
     private JLabel emailLabel;
     private JLabel phoneLabel;    
+    private JLabel profilePicture;
     private JLabel blankEntryWarning;
     private JLabel invalidPhoneWarning;
     private JLabel invalidEmailWarning;
@@ -64,6 +71,7 @@ public class EditAccount extends JPanel{
     public Color grey = new Color(220,220,220);                                                // Primary background colour
     private Font titleFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Edit Details");
+    private String[] accountInformation = new String[11];
 
     public EditAccount() {
         
@@ -112,11 +120,11 @@ public class EditAccount extends JPanel{
 
         add(userNameInput, gbc);
 
-        passWordLabel = new JLabel("Enter Password:"); //password input
+        newPassWordLabel = new JLabel("Enter new Password:"); //password input
         gbc.gridx = 0;
         gbc.gridy = 2;  
 
-        add(passWordLabel, gbc);
+        add(newPassWordLabel, gbc);
 
         passWordInput = new JPasswordField(); //Adding corresponding text fields to the JLabels
         passWordInput.setColumns(30); //Set columns sets the width of the textfield 
@@ -344,31 +352,42 @@ public class EditAccount extends JPanel{
             blankEntryException.printStackTrace();
         }
         finally 
-            {
-                blankEntryWarning.revalidate();
-                blankEntryWarning.repaint();  
-            }
+        {
+            blankEntryWarning.revalidate();
+            blankEntryWarning.repaint();  
+        }
             
-
         try{
-        Verifiers.VerifyUsernameExists(username, "Username", "accounts");
-        if(usernameFlag == true)
+        ResultSet accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
+        if(username == accountDetails.getString("Username"))
         {
-            invalidUsernameWarning.setVisible(false);
-            usernameFlag = false;
+            
         }
-        }
-        catch(UsernameExistsException usernameException)
+        else
         {
-            usernameFlag = true;
-            invalidUsernameWarning.setVisible(true);
-            usernameException.printStackTrace();
-        }
-        finally
+            try
             {
-                invalidUsernameWarning.revalidate();
-                invalidUsernameWarning.repaint();
+                Verifiers.VerifyUsernameExists(username, "Username", "accounts");
             }
+            catch(UsernameExistsException usernameException)
+            {
+                usernameFlag = true;
+                invalidUsernameWarning.setVisible(true);
+                usernameException.printStackTrace();
+            }
+            finally
+                {
+                    invalidUsernameWarning.revalidate();
+                    invalidUsernameWarning.repaint();
+                }
+        }
+
+        }
+        catch(SQLException sqlException)
+        {
+            System.out.println("Error");
+            sqlException.printStackTrace();
+        }
             
         try{
         Verifiers.VerifyConfirmPassword(password, confPassword);
@@ -456,10 +475,56 @@ public class EditAccount extends JPanel{
             }
         else
             {
-                DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
+                for(int i=0;i<valueParameter.length;i++)
+                {
+                    DatabaseManager.executeUpdate("accounts",DatabaseManager.ACCOUNTS[i] ,valueParameter[i] ,"AccountId" ,"" + CurrentSession.getUserID() + "");
+                }
             }
         }
         
     });
+}
+public void populateEditPage()
+{
+    //Code to access the account information
+    accountInformation[0] = "Username";
+    accountInformation[1] = "Password";
+    accountInformation[2] = "Name";
+    accountInformation[3] = "HouseNumber";
+    accountInformation[4] = "StreetName";
+    accountInformation[5] = "City";
+    accountInformation[6] = "County";
+    accountInformation[7] = "Eircode";
+    accountInformation[8] = "Email";
+    accountInformation[9] = "Phone";
+    //profilePicture.setText("IMAGE GOES HERE");
+    try{
+        ResultSet accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
+        if (accountDetails.next()) 
+    {
+        userNameInput.setText(accountDetails.getString("Username"));
+        nameInput.setText(accountDetails.getString("Name"));
+        houseNumberInput.setText(accountDetails.getString("HouseNumber"));
+        streetNameInput.setText(accountDetails.getString("StreetName"));
+        cityInput.setText(accountDetails.getString("City"));
+        countyInput.setText(accountDetails.getString("County"));
+        eirCodeInput.setText(accountDetails.getString("Eircode"));
+        emailInput.setText(accountDetails.getString("Email"));    
+        phoneInput.setText(accountDetails.getString("Phone"));
+        //Blob image = accountDetails.getBlob("ProfilePic");
+        //profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
+        //profilePicture.setText("");
+    }
+        else throw new UserNotFoundException("User not found in database!");
+    }
+    catch(SQLException sqlException)
+    {
+    System.out.println("Error");
+    sqlException.printStackTrace();
+    }
+        catch(UserNotFoundException unfe)
+        {
+            unfe.printStackTrace();
+        }
 }
 }

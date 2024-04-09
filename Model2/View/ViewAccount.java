@@ -4,9 +4,12 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.LayoutManager;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -59,7 +62,7 @@ public class ViewAccount extends JPanel
     private JLabel fillerLabel2 = new JLabel("Filler");
     private JLabel fillerLabel3 = new JLabel("Filler");
 
-    private String[] accountInformation = new String[3];
+    private String[] accountInformation = new String[4];
     private ResultSet accountDetails;
     private int userChoice;
     

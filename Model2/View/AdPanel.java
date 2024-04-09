@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.InputMismatchException;
-import com.sun.java.swing.plaf.windows.WindowsFileChooserUI;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -201,8 +200,6 @@ public class AdPanel extends JPanel
                         }
                     JFileChooser getFile = new JFileChooser();
                     getFile.setFileFilter(new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png"));
-                    WindowsFileChooserUI wfcui = new WindowsFileChooserUI(getFile);
-                    wfcui.installUI(getFile);
                     if (getFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
                         {
                             filePath = getFile.getSelectedFile().getAbsolutePath();
