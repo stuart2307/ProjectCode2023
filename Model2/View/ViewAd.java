@@ -31,7 +31,9 @@ public class ViewAd extends JPanel
     protected JPanel preLoginButtonPanel;
     protected JPanel postLoginButtonPanel;
     protected JPanel topPanel;
-    private JPanel bottomPanel;
+    protected JPanel bottomPanel;
+    protected JPanel footerPanel;
+    protected JPanel footerButtonPanel;
     private JPanel priceDescPanel;
     private JPanel sellerInfoPanel;
     private JPanel vehicleInfoPanel;
@@ -42,6 +44,7 @@ public class ViewAd extends JPanel
     protected JButton placeAdButton = new JButton("Place Advertisement");
     protected JButton viewMarketplaceButton = new JButton("View MarketPlace");
     protected JButton accountButton = new JButton("Account");
+    protected JButton deleteButton = new JButton("Delete Advertisement");
     private ResultSet adResultSet;
     private GridBagConstraints gbc = new GridBagConstraints();
     protected int adID;
@@ -66,6 +69,8 @@ public class ViewAd extends JPanel
     private JLabel phone = new JLabel();
     private JLabel email = new JLabel();
     private JLabel county = new JLabel();
+
+    private int adAccountId;
 
     public ViewAd()
     {
@@ -106,9 +111,10 @@ public class ViewAd extends JPanel
         logoutButton.addActionListener(new logoutButtonAL());
         accountButton.addActionListener(new accountButtonAL(ViewAd.this));
         viewMarketplaceButton.addActionListener(new marketplaceButtonAL(ViewAd.this));
+        // deleteButton.addActionListener(new deleteAdvertisementAL(ViewAd.this));
 
         preLoginButtonPanel.add(viewMarketplaceButton);
-        preLoginButtonPanel.add(loginButton);
+        preLoginButtonPanel.add(loginButton); 
         preLoginButtonPanel.add(signUpButton);
 
         postLoginButtonPanel.add(viewMarketplaceButton);
@@ -240,6 +246,21 @@ public class ViewAd extends JPanel
         sellerInfoPanel.add(county, gbc);
 
         add(bottomPanel, BorderLayout.CENTER);
+
+        // Footer Panel Code
+
+        footerPanel = new JPanel();
+        footerPanel.setBackground(MarketPlaceGUI.green);
+        footerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        
+        footerButtonPanel = new JPanel();
+        footerButtonPanel.setBackground(MarketPlaceGUI.green);
+        footerButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        footerButtonPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 5, 20));
+
+        footerPanel.add(footerButtonPanel);
+        add(footerPanel, BorderLayout.SOUTH);
+
     } 
     public Boolean populateScreen(int advertisementID)
         {
@@ -259,6 +280,7 @@ public class ViewAd extends JPanel
                     previousOwners.setText("Previous Owners: " + adResultSet.getInt("PreviousOwners"));
                     engineSize.setText("Engine Size: " + adResultSet.getDouble("EngineSize"));
                     gearBox.setText("Gearbox: " + adResultSet.getString("GearBox"));
+                    adAccountId = adResultSet.getInt("AccountID");
                     
 
                     userResultSet = DatabaseManager.executeQuery(DatabaseManager.ACCOUNTS, "accounts", "AccountID", "" + adResultSet.getInt("AccountID"), "", "");
@@ -281,5 +303,10 @@ public class ViewAd extends JPanel
             
             
         }
+
+    public int getAdAccountId()
+    {
+        return adAccountId;
+    }
 }
 

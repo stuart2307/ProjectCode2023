@@ -13,7 +13,7 @@ public class DatabaseManager {
     private static final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
-    static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "ProfilePic"};
+    static final String ACCOUNTS[] = {"AccountID, Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "ProfilePic"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
     static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "GearBox", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
     static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
@@ -160,7 +160,7 @@ public class DatabaseManager {
                     }
                 if (order.toUpperCase().equals("ASC") || order.toUpperCase().equals("DESC"))
                     {
-                        statementString += "ORDER BY " + orderField + " " + order;
+                        statementString += " ORDER BY " + orderField + " " + order;
                     }
                 PreparedStatement preparedStatement = connection.prepareStatement(statementString);
                 if (!column.equals("") && !value.equals(""))

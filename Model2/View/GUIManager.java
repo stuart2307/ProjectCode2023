@@ -123,6 +123,12 @@ public class GUIManager
             viewAd.topPanel.remove(viewAd.preLoginButtonPanel);
             viewAd.postLoginButtonPanel.setVisible(true);
             viewAd.topPanel.add(viewAd.postLoginButtonPanel);
+
+            if(viewAd.getAdAccountId()==CurrentSession.getUserID())
+            {
+                viewAd.deleteButton.setVisible(true);
+                viewAd.footerButtonPanel.add(viewAd.deleteButton);
+            }
         }
         public static void loggedOut()
         {
@@ -135,5 +141,7 @@ public class GUIManager
             viewAd.topPanel.remove(viewAd.postLoginButtonPanel);
             viewAd.preLoginButtonPanel.setVisible(true);
             viewAd.topPanel.add(viewAd.preLoginButtonPanel);
+            viewAd.deleteButton.setVisible(false);
+            viewAd.footerButtonPanel.remove(viewAd.deleteButton);
         }
 }
