@@ -17,9 +17,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.crypto.Data;
 import javax.swing.JPasswordField;
 
@@ -66,6 +71,8 @@ public class EditAccount extends JPanel{
     private JButton backButton;
     private JButton addPic;
 
+    private String filePath;
+
     public Color green = new Color(44,238,144);                                                // Primary menu colour
     public Color white = new Color(255,255,255);                                               // Title text colour
     public Color grey = new Color(220,220,220);                                                // Primary background colour
@@ -96,9 +103,29 @@ public class EditAccount extends JPanel{
         addPic = new JButton("Add Profile Picture");
         addPic.addActionListener(new ActionListener()
         {
-            public void actionPerformed(ActionEvent backButtonPressed)
+            public void actionPerformed(ActionEvent addProfilePic)
             {
-                GUIManager.changeAccount(EditAccount.this);                                     
+                LookAndFeel laf = UIManager.getLookAndFeel();
+                    try
+                        {
+                          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());  
+                        }
+                    catch (Exception e)
+                        {
+                            System.out.println("oops");
+                        }
+                    JFileChooser getFile = new JFileChooser();
+                    getFile.setFileFilter(new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png"));
+                    if (getFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+                        {
+                            filePath = getFile.getSelectedFile().getAbsolutePath();
+                            DatabaseManager.executeUpdate("accounts", "ProfilePic", filePath, "AccountID", "" + CurrentSession.getUserID() + "");
+                        }
+                    try
+                        {
+                            UIManager.setLookAndFeel(laf);
+                        }
+                    catch (UnsupportedLookAndFeelException ulafe){}
             }
         }); 
         gbc.gridx = 2; 
@@ -359,29 +386,25 @@ public class EditAccount extends JPanel{
             
         try{
         ResultSet accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
-        if(username == accountDetails.getString("Username"))
-        {
-            
-        }
-        else
-        {
-            try
+        if(username != accountDetails.getString("Username"))
             {
-                Verifiers.VerifyUsernameExists(username, "Username", "accounts");
-            }
-            catch(UsernameExistsException usernameException)
-            {
-                usernameFlag = true;
-                invalidUsernameWarning.setVisible(true);
-                usernameException.printStackTrace();
-            }
-            finally
+                try
+                {
+                    Verifiers.VerifyUsernameExists(username, "Username", "accounts");
+                }
+                catch(UsernameExistsException usernameException)
+                {
+                    usernameFlag = true;
+                    invalidUsernameWarning.setVisible(true);
+                    usernameException.printStackTrace();
+                }
+                finally
                 {
                     invalidUsernameWarning.revalidate();
                     invalidUsernameWarning.repaint();
-                }
-        }
+                }   
 
+            }
         }
         catch(SQLException sqlException)
         {

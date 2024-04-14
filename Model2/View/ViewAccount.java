@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -24,16 +25,17 @@ public class ViewAccount extends JPanel
     private JPanel bottomPanel;
     private JPanel editDeletePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     private JPanel marketPlaceButtonPanel;
-    private JPanel messagesPanel;
+    private JPanel backPanel;
     private JPanel informationPanel;
     private JPanel advertisementPanel;
     private JPanel accountPanel;
+    private JPanel profilePicPanel = new JPanel(new GridLayout(1,1));
     private JPanel namePanel = new JPanel(new GridLayout(1,2));
     private JPanel eircodePanel = new JPanel(new GridLayout(1,2));
     private JPanel phonePanel = new JPanel(new GridLayout(1,2));
     private JButton placeAdButton = new JButton("Place Advertisement");
     private JButton viewMarketplaceButton = new JButton("View MarketPlace");
-    private JButton showMessagesButton = new JButton("Messages");
+    private JButton backButton = new JButton("Back");
     private JButton likeButton = new JButton("Like");
     private JButton dislikeButton = new JButton("Dislike");
     private JButton editDetails = new JButton("Edit Account");
@@ -58,6 +60,9 @@ public class ViewAccount extends JPanel
     private ResultSet accountDetails;
     private int userChoice;
     
+    public static Color black = new Color(000,000,000);
+
+    //Needs To display profile pic and recent ads
 
     public ViewAccount()
     {
@@ -72,10 +77,16 @@ public class ViewAccount extends JPanel
 
         //Top Panel Code
 
-        messagesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));                                           // Creates a panel using the Flow layout and positions it to the left
-        messagesPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));        // Adds some borders to make things look nice
-        messagesPanel.setBackground(MarketPlaceGUI.green);                                                      // Sets colour of the searchbar panel to green
-        messagesPanel.add(showMessagesButton);
+        backPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));                                           // Creates a panel using the Flow layout and positions it to the left
+        backPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));        // Adds some borders to make things look nice
+        backPanel.setBackground(MarketPlaceGUI.green);                                                      // Sets colour of the searchbar panel to green
+        backPanel.add(backButton);
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent goBack)
+            {
+                GUIManager.backButton(ViewAccount.this);
+            }
+        });
     
         logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));                                              // Creates a JPanel called logoPanel and positions its contents to the centre using flow layout
         logoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));             // Sets a custom border around the contents 
@@ -88,9 +99,22 @@ public class ViewAccount extends JPanel
         marketPlaceButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
         marketPlaceButtonPanel.setBackground(MarketPlaceGUI.green);                                                   // Sets the colour of the loginSignup panel to green
         marketPlaceButtonPanel.add(placeAdButton);
-        marketPlaceButtonPanel.add(viewMarketplaceButton);
+        placeAdButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent placeAd)
+            {
+                GUIManager.changeCreateAd(ViewAccount.this);
+            }
+        });
 
-        topPanel.add(messagesPanel);
+        marketPlaceButtonPanel.add(viewMarketplaceButton);
+        viewMarketplaceButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent viewMarketplace)
+            {
+                GUIManager.changeMarketplace(ViewAccount.this);
+            }
+        });
+
+        topPanel.add(backPanel);
         topPanel.add(logoPanel);
         topPanel.add(marketPlaceButtonPanel);
         topPanel.setBackground(MarketPlaceGUI.green);
@@ -105,15 +129,22 @@ public class ViewAccount extends JPanel
         eircodeLabel2.setFont(informationFont);
         phoneLabel2.setFont(informationFont);
 
+        profilePicPanel.add(profilePicture);
+        profilePicPanel.setBorder(BorderFactory.createMatteBorder(1,1,1,1, black));
+
         namePanel.add(nameLabel);
         namePanel.add(nameLabel2);
+        namePanel.setBorder(BorderFactory.createMatteBorder(0,1,1,0, black)); //left,bottom
 
         eircodePanel.add(eircodeLabel);
         eircodePanel.add(eircodeLabel2);
+        eircodePanel.setBorder(BorderFactory.createMatteBorder(1,0,1,1, black)); //right,up,down
 
         phonePanel.add(phoneLabel);
         phonePanel.add(phoneLabel2);
+        phonePanel.setBorder(BorderFactory.createMatteBorder(0,0,1,0, black)); //bottom
 
+        accountPanel.setBorder(BorderFactory.createLineBorder(black, 2));
         accountPanel.add(profilePicture);
         accountPanel.add(namePanel);
         accountPanel.add(eircodePanel);
@@ -122,6 +153,7 @@ public class ViewAccount extends JPanel
         accountPanel.add(dislikeButton);
 
         adsPlacedLabel.setFont(informationFont);
+        advertisementPanel.setBorder(BorderFactory.createLineBorder(black, 2));
         advertisementPanel.add(adsPlacedLabel);
         advertisementPanel.add(fillerLabel1);
         advertisementPanel.add(fillerLabel2);
@@ -157,7 +189,7 @@ public class ViewAccount extends JPanel
                 if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "WARNING",
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
                 {
-                    DatabaseManager.deleteEntry("accounts","AccountID" , "7");
+                    DatabaseManager.deleteEntry("accounts","AccountID" , "" + CurrentSession.getUserID() + "");
                     JOptionPane.showMessageDialog(null, "Your account has been deleted");
                     GUIManager.changeMarketplace(ViewAccount.this);
                     CurrentSession.logUserOut();
