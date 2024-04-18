@@ -92,6 +92,7 @@ public class Verifiers {
     {
         try
         {
+            @SuppressWarnings("unused")
             Double parsed = Double.parseDouble(item);
         }
         catch(NumberFormatException e)
