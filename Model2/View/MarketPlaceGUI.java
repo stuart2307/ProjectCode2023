@@ -36,7 +36,7 @@ public class MarketPlaceGUI extends JPanel
     private JButton searchButton;
     private JButton viewAccount = new JButton("Account");
     private JTextField searchField;
-    private AdPreview ads[] = new AdPreview[15]; 
+    private AdPreview ads[] = new AdPreview[45]; 
     private ResultSet adResultSet;
     private ResultSetMetaData adRSMD;
     private int adCount = 0;
@@ -118,8 +118,8 @@ public class MarketPlaceGUI extends JPanel
             advertisements = new JPanel();
             advertisements.setBackground(grey);
             advertisements.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            advertisements.setLayout(new BoxLayout(advertisements, BoxLayout.Y_AXIS));
-            for (int i = 0; i < 15; i++)
+            advertisements.setLayout(new GridLayout(0, 3));
+            for (int i = 0; i < 45; i++)
                 {
                     advertisements.add(ads[i]);
                     ads[i].setVisible(false);
@@ -159,7 +159,7 @@ public class MarketPlaceGUI extends JPanel
                             adCount++;
                         } while (adResultSet.next() && adCount < 15);
                     }
-                while(adResultSet.next() && adCount < 15);
+                while(adResultSet.next() && adCount < 45);
                 
             }
             catch (SQLException databaseError)
