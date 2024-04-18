@@ -145,7 +145,7 @@ public class ViewAd extends JPanel
 
         imagePanel = new JPanel();
         imagePanel.add(adImage, BorderLayout.CENTER);
-        imagePanel.setMinimumSize(new Dimension(xBlock * 3, yBlock * 3));
+        imagePanel.setPreferredSize(new Dimension(xBlock * 3, yBlock * 3));
         imagePanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -157,14 +157,14 @@ public class ViewAd extends JPanel
         
         gbc.anchor = GridBagConstraints.NORTHWEST;
         priceDescPanel = new JPanel(new GridBagLayout());
-        priceDescPanel.setMinimumSize(new Dimension(xBlock * 3, yBlock * 3));
+        priceDescPanel.setPreferredSize(new Dimension(xBlock * 3, yBlock * 3));
         priceDescPanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
         gbc.gridx = 3;
         bottomPanel.add(priceDescPanel, gbc);
 
         vehicleInfoPanel = new JPanel(new GridBagLayout());
         vehicleInfoPanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
-        vehicleInfoPanel.setMinimumSize(new Dimension(xBlock * 6, yBlock * 2));
+        vehicleInfoPanel.setPreferredSize(new Dimension(xBlock * 6, yBlock * 2));
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridheight = 2;
@@ -176,7 +176,7 @@ public class ViewAd extends JPanel
         gbc.anchor = GridBagConstraints.NORTHEAST;
         sellerInfoPanel = new JPanel(new GridBagLayout());
         sellerInfoPanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
-        sellerInfoPanel.setMinimumSize(new Dimension(xBlock * 3, yBlock * 5));
+        sellerInfoPanel.setPreferredSize(new Dimension(xBlock * 3, yBlock * 5));
         gbc.gridx = 7;
         gbc.gridheight = 5;
         gbc.weighty = gbc.gridheight / 10;
