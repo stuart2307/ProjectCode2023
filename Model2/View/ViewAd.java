@@ -48,7 +48,7 @@ public class ViewAd extends JPanel
     private ResultSet adResultSet;
     private GridBagConstraints gbc = new GridBagConstraints();
     protected int adID;
-    
+
     private ResultSet userResultSet;
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
@@ -111,7 +111,22 @@ public class ViewAd extends JPanel
         logoutButton.addActionListener(new logoutButtonAL());
         accountButton.addActionListener(new accountButtonAL(ViewAd.this));
         viewMarketplaceButton.addActionListener(new marketplaceButtonAL(ViewAd.this));
-        // deleteButton.addActionListener(new deleteAdvertisementAL(ViewAd.this));
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent clicked)
+            {
+                if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this Advertisement?", "WARNING",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
+            {
+                DatabaseManager.deleteEntry("advertisements","AdvertisementId" , "" + adID + "");
+                JOptionPane.showMessageDialog(null, "Your Advertisement has been deleted");
+                GUIManager.changeMarketplace(ViewAd.this);
+            } 
+            else 
+            {
+                JOptionPane.showMessageDialog(null, "Your account has not been deleted");
+            }
+            }
+        });
 
         preLoginButtonPanel.add(viewMarketplaceButton);
         preLoginButtonPanel.add(loginButton); 

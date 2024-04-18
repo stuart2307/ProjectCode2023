@@ -99,6 +99,16 @@ public class GUIManager
             frame.remove(switchFrom);
             lastScreen = switchFrom;
             viewAd.populateScreen(adId);
+            if(viewAd.getAdAccountId()==CurrentSession.getUserID())
+            {
+                viewAd.deleteButton.setVisible(true);
+                viewAd.footerButtonPanel.add(viewAd.deleteButton);
+            }
+            else
+            {
+                viewAd.deleteButton.setVisible(false);
+                viewAd.footerButtonPanel.remove(viewAd.deleteButton);
+            }
             viewAd.setVisible(true);
             frame.add(viewAd);
         }
@@ -121,12 +131,6 @@ public class GUIManager
             viewAd.topPanel.remove(viewAd.preLoginButtonPanel);
             viewAd.postLoginButtonPanel.setVisible(true);
             viewAd.topPanel.add(viewAd.postLoginButtonPanel);
-
-            if(viewAd.getAdAccountId()==CurrentSession.getUserID())
-            {
-                viewAd.deleteButton.setVisible(true);
-                viewAd.footerButtonPanel.add(viewAd.deleteButton);
-            }
         }
         public static void loggedOut()
         {
