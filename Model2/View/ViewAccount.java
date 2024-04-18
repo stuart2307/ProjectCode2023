@@ -116,7 +116,7 @@ public class ViewAccount extends JPanel
         viewMarketplaceButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent viewMarketplace)
             {
-                GUIManager.changeMarketplace(ViewAccount.this);
+                GUIManager.changeMarketplace(ViewAccount.this, "");
             }
         });
 
@@ -203,7 +203,7 @@ public class ViewAccount extends JPanel
                 {
                     DatabaseManager.deleteEntry("accounts","AccountID" , "" + CurrentSession.getUserID() + "");
                     JOptionPane.showMessageDialog(null, "Your account has been deleted");
-                    GUIManager.changeMarketplace(ViewAccount.this);
+                    GUIManager.changeMarketplace(ViewAccount.this, "");
                     CurrentSession.logUserOut();
                 } 
                 else 

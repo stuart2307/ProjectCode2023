@@ -43,7 +43,7 @@ public class AdPreview extends JPanel
         setLayout(new BorderLayout());
         setBackground(MarketPlaceGUI.white);
         setMaximumSize(new Dimension(650, 325));
-        setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 10, false));
+        setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, false));
         
         titleLabel = new JLabel("Title:");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 15));
@@ -126,7 +126,7 @@ public class AdPreview extends JPanel
         try
         {
             byte imageBytes[] = imageBlob.getBytes(1, (int) imageBlob.length());
-            adImageIcon.setImage(Toolkit.getDefaultToolkit().createImage(imageBytes).getScaledInstance(300, 300, Image.SCALE_SMOOTH));
+            adImageIcon.setImage(Toolkit.getDefaultToolkit().createImage(imageBytes).getScaledInstance(250, 250, Image.SCALE_SMOOTH));
             imageLabel.setIcon(adImageIcon);
         }
         catch (SQLException error)

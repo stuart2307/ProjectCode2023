@@ -42,12 +42,12 @@ public class GUIManager
         }
         
 
-    public static void changeMarketplace(JPanel switchFrom)
+    public static void changeMarketplace(JPanel switchFrom, String search)
         {
             switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            marketplace.generateAds();
+            marketplace.generateAds(search);
             marketplace.setVisible(true);                           //Sets the marketplace's panel to be visible
             frame.add(marketplace);                                 //Adds the marketplace's panel to the Frame
         }
@@ -116,7 +116,7 @@ public class GUIManager
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
-            marketplace.generateAds();
+            marketplace.generateAds("");
             lastScreen.setVisible(true);
             frame.add(lastScreen);
         }

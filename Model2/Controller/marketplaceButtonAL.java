@@ -12,6 +12,6 @@ public class marketplaceButtonAL implements ActionListener
         }   
     public void actionPerformed(ActionEvent market)
         {
-            GUIManager.changeMarketplace(from);
+            GUIManager.changeMarketplace(from, "");
         }
 }

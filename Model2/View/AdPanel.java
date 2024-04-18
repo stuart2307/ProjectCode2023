@@ -110,7 +110,7 @@ public class AdPanel extends JPanel
             {
                 blankEntryWarning.setVisible(false);
                 numberWarning.setVisible(false);
-                GUIManager.changeMarketplace(AdPanel.this);                         // Switches to MarketPlaceGUI when clicking the back button
+                GUIManager.changeMarketplace(AdPanel.this, "");                         // Switches to MarketPlaceGUI when clicking the back button
             }
         });
         bottomPanel.setLayout(new GridLayout(1,2, 0, 40));      // Sets bottomPanel to borderLayout
