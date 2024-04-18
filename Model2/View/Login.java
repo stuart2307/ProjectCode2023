@@ -158,7 +158,7 @@ public class Login extends JPanel
             CurrentSession.logUserIn(rs.getInt("AccountID"));
             System.out.println("Login Successful");
             GUIManager.loggedIn();
-            GUIManager.changeMarketplace(Login.this);
+            GUIManager.changeMarketplace(Login.this, "");
         }
         catch(WrongPasswordException e){
             wrongPasswordFlag = true;

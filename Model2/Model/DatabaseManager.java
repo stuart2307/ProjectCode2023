@@ -15,7 +15,7 @@ public class DatabaseManager {
     private static final String PASSWORD = "";
     static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "ProfilePic"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
-    static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "GearBox", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
+    static final String ADVERTISEMENTS[] = {"AdvertisementID", "AccountID", "Make", "Model", "FuelType", "GearBox", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
     static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
     static final String CHATLOG[] = {"ChatID", "MessageID"};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
@@ -71,7 +71,11 @@ public class DatabaseManager {
                 // Makes a string for the values placeholders
                 for (index = 0; index < parameters.length; index++)
                     {
-                        if (index == 0)
+                        if(parameters[index].equals("AdvertisementID"))
+                        {
+
+                        }
+                        else if (index == 0)
                             {
                                 valueString = "?";
                             }
@@ -83,7 +87,11 @@ public class DatabaseManager {
                 String parametersString ="";
                 for (index = 0; index < parameters.length; index++)
                     {
-                        if (index == 0)
+                        if (parameters[index].equals("AdvertisementID"))
+                            {
+
+                            }
+                        else if (index == 0)
                             {
                                 parametersString = parameters[index];
                             }
@@ -156,16 +164,36 @@ public class DatabaseManager {
                 String statementString = "SELECT " + parametersString + " FROM " + table;
                 if (!column.equals("") && !value.equals(""))
                     {
+                        if(!column.toUpperCase().equals("LIKE"))
                         statementString  += " WHERE " + column + "=?";
+                        else
+                            {
+                                for (int i = 0; i < parameters.length; i++)
+                                    {
+                                        if (i==0)
+                                        statementString += " WHERE " + parameters[i] + " LIKE ?";
+                                        else
+                                        statementString += " OR " + parameters[i] + " LIKE ?";
+                                    }
+                            }
                     }
                 if (order.toUpperCase().equals("ASC") || order.toUpperCase().equals("DESC"))
                     {
                         statementString += " ORDER BY " + orderField + " " + order;
                     }
+                
                 PreparedStatement preparedStatement = connection.prepareStatement(statementString);
                 if (!column.equals("") && !value.equals(""))
                     {
+                        if (!column.toUpperCase().equals("LIKE"))
                         preparedStatement.setString(1, value);
+                        else
+                            {
+                                for(int i = 0; i < parameters.length; i++)
+                                    {
+                                        preparedStatement.setString(i + 1, value);
+                                    }
+                            }
                     }
                 
     

@@ -121,7 +121,7 @@ public class ViewAd extends JPanel
             {
                 DatabaseManager.deleteEntry("advertisements","AdvertisementId" , "" + adID + "");
                 JOptionPane.showMessageDialog(null, "Your Advertisement has been deleted");
-                GUIManager.changeMarketplace(ViewAd.this);
+                GUIManager.changeMarketplace(ViewAd.this, "");
             } 
             else 
             {

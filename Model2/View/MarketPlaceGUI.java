@@ -59,7 +59,7 @@ public class MarketPlaceGUI extends JPanel
                 {
                     ads[i] = new AdPreview(MarketPlaceGUI.this);
                 } 
-            generateAds();
+            generateAds("");
             setLayout(new BorderLayout());                                                 // Creates a JPanel instance called mainPanel  
             setBackground(grey);     
             placeAdButton = new JButton("Place Ad");                                                    // Creates a JButton instance called loginButton
@@ -73,7 +73,8 @@ public class MarketPlaceGUI extends JPanel
             {
                 public void actionPerformed(ActionEvent searchButtonClicked)
                 {
-                    System.out.println("SearchButton clicked");                                       // Search button method stub
+                    String search = "%" + searchField.getText() + "%";                                       // Search button method stub
+                    GUIManager.changeMarketplace(MarketPlaceGUI.this, search);
                 }
             }); 
             accountButton = new JButton("Your Account");
@@ -136,14 +137,20 @@ public class MarketPlaceGUI extends JPanel
             add(scrollPane, BorderLayout.CENTER);
             add(topPanel, BorderLayout.NORTH);                                                // Adds the top panel to the main panel using the border layout to position it to the top of the screen
         }
-    public void generateAds()
+    public void generateAds(String search)
         {
             try
             {
                 adCount = 0;
                 error.setVisible(false);
-                adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Make", "Model", "Year", "Price", "Image"}, "advertisements", "", "", "", "");
-                adRSMD = adResultSet.getMetaData();
+                if (search.equals(""))
+                {
+                    adResultSet = DatabaseManager.executeQuery(DatabaseManager.ADVERTISEMENTS, "advertisements", "", "", "", "");
+                }
+                else
+                {
+                    adResultSet = DatabaseManager.executeQuery(DatabaseManager.ADVERTISEMENTS, "advertisements", "LIKE", search, "", "");
+                }
                 if (adResultSet.next() == false)
                     {
                         System.out.println("oops");
@@ -157,9 +164,8 @@ public class MarketPlaceGUI extends JPanel
                             ads[adCount].setPrice(adResultSet.getInt("Price"));
                             ads[adCount].setImage(adResultSet.getBlob("Image"));
                             adCount++;
-                        } while (adResultSet.next() && adCount < 15);
+                        } while (adResultSet.next() && adCount < 45);
                     }
-                while(adResultSet.next() && adCount < 45);
                 
             }
             catch (SQLException databaseError)
@@ -167,20 +173,33 @@ public class MarketPlaceGUI extends JPanel
                 error.setVisible(true);
                 databaseError.printStackTrace();
             }
+            finally
+            {
+                populateAdDisplay();
+                revalidate();
+                repaint();
+            }
         }
     public void populateAdDisplay()
         {
-            for (int index = 0; index < adCount; index++)
+            for (int index = 0; index < 45; index++)
                 {
-                    ads[index].setVisible(false);
-                    error.setVisible(true);
+                    if (index < adCount)
+                    {
+                        ads[index].setVisible(true);
+                    }
+                    else
+                    {
+                        ads[index].setVisible(false);
+                    }
+                    
                 }
-            if (adCount != 0)
+            if (adCount == 0)
                 {
-                    error.setVisible(false);
-                    for (int index = 0; index < adCount; index++)
+                    error.setVisible(true);
+                    for (int index = 0; index < 45; index++)
                         {
-                            ads[index].setVisible(getFocusTraversalKeysEnabled());
+                            ads[index].setVisible(false);
                         }
                 }
             
