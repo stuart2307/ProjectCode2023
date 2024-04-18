@@ -183,6 +183,7 @@ public class ViewAccount extends JPanel
         editDeletePanel.setBackground(MarketPlaceGUI.green);
         editDeletePanel.add(editDetails);
         editDeletePanel.add(deleteAccount);
+        editDeletePanel.setVisible(false);
         bottomPanel.add(editDeletePanel);
         add(bottomPanel, BorderLayout.SOUTH);
         editDetails.addActionListener(new ActionListener()
@@ -212,7 +213,7 @@ public class ViewAccount extends JPanel
             }
         }); 
 } 
-    public void populatePage()
+    public void populatePage(int id)
     {
         //Code to access the account information
         accountInformation[0] = "Name";
@@ -221,7 +222,17 @@ public class ViewAccount extends JPanel
         accountInformation[3] = "ProfilePic";
         profilePicture.setText("IMAGE GOES HERE");
         try{
-            accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
+            if (id==CurrentSession.getUserID()) 
+            {
+                accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
+                editDeletePanel.setVisible(true);
+            }
+            else 
+            {
+                accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + id, "", "");
+                editDeletePanel.setVisible(false);
+            }
+
             if (accountDetails.next()) 
             {
                 nameLabel2.setText(accountDetails.getString("Name"));
@@ -251,7 +262,6 @@ public class ViewAccount extends JPanel
                 adCount = 0;
                 error.setVisible(false);
                 adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Make", "Model", "Year", "Price", "Image"}, "advertisements", "AccountID", "" + CurrentSession.getUserID() + "", "", "");
-                //adRSMD = adResultSet.getMetaData();
                 if (adResultSet.next() == false)
                     {
                         System.out.println("oops");

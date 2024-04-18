@@ -10,6 +10,8 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -261,6 +263,30 @@ public class ViewAd extends JPanel
 
         gbc.gridy++;
         sellerInfoPanel.add(county, gbc);
+
+        sellerInfoPanel.addMouseListener(new MouseListener() 
+        {
+            public void mouseClicked(MouseEvent e) 
+            {
+                GUIManager.changeAccount(ViewAd.this, adAccountId);
+            }
+            public void mouseEntered(MouseEvent e) 
+            {
+
+            }
+            public void mouseExited(MouseEvent e)
+            {
+
+            }
+            public void mousePressed(MouseEvent e) 
+            {
+            
+            }
+            public void mouseReleased(MouseEvent e) 
+            {
+
+            }
+        });
 
         add(bottomPanel, BorderLayout.CENTER);
 

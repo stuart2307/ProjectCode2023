@@ -75,9 +75,9 @@ public class GUIManager
             createAd.setVisible(true);                              //Sets the ad creation panel to be visible
             frame.add(createAd);                                    //Adds the ad creation panel to the Frame
         }
-        public static void changeAccount(JPanel switchFrom)
+        public static void changeAccount(JPanel switchFrom, int id)
         {
-            viewAccount.populatePage();
+            viewAccount.populatePage(id);
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
             lastScreen = switchFrom;
