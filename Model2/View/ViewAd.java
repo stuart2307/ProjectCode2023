@@ -43,6 +43,7 @@ public class ViewAd extends JPanel
     protected JButton logoutButton = new JButton("Log Out");
     protected JButton placeAdButton = new JButton("Place Advertisement");
     protected JButton viewMarketplaceButton = new JButton("View MarketPlace");
+    protected JButton prelogMarketplaceButton = new JButton("View Marketplace");
     protected JButton accountButton = new JButton("Account");
     protected JButton deleteButton = new JButton("Delete Advertisement");
     private ResultSet adResultSet;
@@ -111,9 +112,10 @@ public class ViewAd extends JPanel
         logoutButton.addActionListener(new logoutButtonAL());
         accountButton.addActionListener(new accountButtonAL(ViewAd.this));
         viewMarketplaceButton.addActionListener(new marketplaceButtonAL(ViewAd.this));
+        prelogMarketplaceButton.addActionListener(new marketplaceButtonAL(ViewAd.this));
         // deleteButton.addActionListener(new deleteAdvertisementAL(ViewAd.this));
 
-        preLoginButtonPanel.add(viewMarketplaceButton);
+        preLoginButtonPanel.add(prelogMarketplaceButton);
         preLoginButtonPanel.add(loginButton); 
         preLoginButtonPanel.add(signUpButton);
 
