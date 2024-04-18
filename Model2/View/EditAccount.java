@@ -88,13 +88,7 @@ public class EditAccount extends JPanel{
         GridBagConstraints gbc = new GridBagConstraints();
 
         backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent backButtonPressed)
-            {
-                GUIManager.changeAccount(EditAccount.this);                                     // Search button method stub
-            }
-        }); 
+        backButton.addActionListener(new accountButtonAL(EditAccount.this));
         gbc.gridx = 0; 
         gbc.gridy = 0; // Place at the first row
         gbc.insets = new Insets(10, 10, 10, 10); 
@@ -119,7 +113,7 @@ public class EditAccount extends JPanel{
                     if (getFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
                         {
                             filePath = getFile.getSelectedFile().getAbsolutePath();
-                            DatabaseManager.executeUpdate("accounts", "ProfilePic", filePath, "AccountID", "" + CurrentSession.getUserID() + "");
+                            DatabaseManager.executeUpdate("accounts", "ProfilePic", filePath, "AccountID", "6");
                         }
                     try
                         {
@@ -385,7 +379,7 @@ public class EditAccount extends JPanel{
         }
             
         try{
-        ResultSet accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
+        ResultSet accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID() + "", "", "");
         if(username != accountDetails.getString("Username"))
             {
                 try

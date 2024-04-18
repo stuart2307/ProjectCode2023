@@ -89,6 +89,7 @@ public class GUIManager
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
             lastScreen = switchFrom;
+            editAccount.populateEditPage();
             editAccount.setVisible(true);
             frame.add(editAccount);
         }

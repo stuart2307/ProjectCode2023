@@ -12,11 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
 public class ViewAccount extends JPanel
 {
@@ -51,14 +54,17 @@ public class ViewAccount extends JPanel
     private JLabel nameLabel2 = new JLabel();
     private JLabel eircodeLabel2 = new JLabel();
     private JLabel phoneLabel2 = new JLabel();
-    private JLabel adsPlacedLabel = new JLabel("Recent Advertisements:");
-    private JLabel fillerLabel1 = new JLabel("Filler");
-    private JLabel fillerLabel2 = new JLabel("Filler");
-    private JLabel fillerLabel3 = new JLabel("Filler");
+    private JLabel adsPlacedLabel = new JLabel("Advertisements Placed:");
+    private JLabel error = new JLabel("No ads available!");
 
     private String[] accountInformation = new String[4];
     private ResultSet accountDetails;
     private int userChoice;
+    private AdPreview ads[] = new AdPreview[15];
+
+    private ResultSet adResultSet;
+    private ResultSetMetaData adRSMD;
+    private int adCount = 0;
     
     public static Color black = new Color(000,000,000);
 
@@ -154,10 +160,15 @@ public class ViewAccount extends JPanel
 
         adsPlacedLabel.setFont(informationFont);
         advertisementPanel.setBorder(BorderFactory.createLineBorder(black, 2));
+        advertisementPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         advertisementPanel.add(adsPlacedLabel);
-        advertisementPanel.add(fillerLabel1);
-        advertisementPanel.add(fillerLabel2);
-        advertisementPanel.add(fillerLabel3);
+        advertisementPanel.setLayout(new BoxLayout(advertisementPanel, BoxLayout.Y_AXIS));
+//            for (int i = 0; i < 15; i++)
+//                {
+//                    advertisementPanel.add(ads[i]);
+//                    ads[i].setVisible(false);
+//                }
+//                advertisementPanel.add(error); 
 
         informationPanel.add(accountPanel);
         informationPanel.add(advertisementPanel);
@@ -212,14 +223,14 @@ public class ViewAccount extends JPanel
         try{
             accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
             if (accountDetails.next()) 
-        {
-        nameLabel2.setText(accountDetails.getString("Name"));
-        eircodeLabel2.setText(accountDetails.getString("Eircode"));
-        phoneLabel2.setText(accountDetails.getString("Phone"));
+            {
+                nameLabel2.setText(accountDetails.getString("Name"));
+                eircodeLabel2.setText(accountDetails.getString("Eircode"));
+                phoneLabel2.setText(accountDetails.getString("Phone"));
                 Blob image = accountDetails.getBlob("ProfilePic");
                 profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
                 profilePicture.setText("");
-        }
+            }
             else throw new UserNotFoundException("User not found in database!");
         }
         catch(SQLException sqlException)
@@ -232,4 +243,58 @@ public class ViewAccount extends JPanel
                 unfe.printStackTrace();
             }
     }
+
+    public void generateUserAds()
+        {
+            try
+            {
+                adCount = 0;
+                error.setVisible(false);
+                adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Make", "Model", "Year", "Price", "Image"}, "advertisements", "AccountID", "" + CurrentSession.getUserID() + "", "", "");
+                //adRSMD = adResultSet.getMetaData();
+                if (adResultSet.next() == false)
+                    {
+                        System.out.println("oops");
+                    }
+                else
+                    {
+                        do
+                        {
+                            ads[adCount].setAdID(adResultSet.getInt("AdvertisementID"));
+                            ads[adCount].setTitle(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model"));
+                            ads[adCount].setPrice(adResultSet.getInt("Price"));
+                            ads[adCount].setImage(adResultSet.getBlob("Image"));
+                            adCount++;
+                        } while (adResultSet.next() && adCount < 15);
+                    }
+                while(adResultSet.next() && adCount < 15);
+                
+            }
+            catch (SQLException databaseError)
+            {
+                error.setVisible(true);
+                databaseError.printStackTrace();
+            }
+        }
+        public void populateAdDisplay()
+        {
+            for (int index = 0; index < adCount; index++)
+                {
+                    ads[index].setVisible(false);
+                    error.setVisible(true);
+                }
+            if (adCount != 0)
+                {
+                    error.setVisible(false);
+                    for (int index = 0; index < adCount; index++)
+                        {
+                            ads[index].setVisible(getFocusTraversalKeysEnabled());
+                        }
+                }
+            
+        }
+        
 }
+/* 
+            
+ */
