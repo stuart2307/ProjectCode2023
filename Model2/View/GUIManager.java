@@ -106,10 +106,7 @@ public class GUIManager
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
-            if (lastScreen == marketplace)
-                {
-                    marketplace.generateAds();
-                }
+            marketplace.generateAds();
             lastScreen.setVisible(true);
             frame.add(lastScreen);
         }
