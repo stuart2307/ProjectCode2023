@@ -108,8 +108,7 @@ public class EditAccount extends JPanel{
                     if (getFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
                         {
                             filePath = getFile.getSelectedFile().getAbsolutePath();
-                            DatabaseManager.executeUpdate("accounts", "ProfilePic", filePath, "AccountID", "6");
-                        }
+                        } 
                     try
                         {
                             UIManager.setLookAndFeel(laf);
@@ -333,6 +332,7 @@ public class EditAccount extends JPanel{
         String eircode = eirCodeInput.getText();
         String email = emailInput.getText();
         String phone = phoneInput.getText();
+        String profilePicPath = filePath;
 
         //Inserting values to the values array
         valueParameter[0] = username; 
@@ -352,7 +352,7 @@ public class EditAccount extends JPanel{
         valueParameter[7] = eircode;
         valueParameter[8] = email;
         valueParameter[9] = phone;
-        valueParameter[10] = "View/Crocodefault.jpg";
+        valueParameter[10]= profilePicPath;
         try{
             Verifiers.VerifyEntries(valueParameter);
             if(blankEntryFlag == true)
