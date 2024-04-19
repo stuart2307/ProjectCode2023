@@ -219,7 +219,25 @@ public class DatabaseManager {
                 //Create a prepared statement
                 PreparedStatement prepStatement = connection.prepareStatement("UPDATE " + table + " SET " + setParameter + "=? WHERE " + locationParameter + "=?");
     
-                prepStatement.setString (1, setValue);
+                if (setParameter.equals("Image") || setParameter.equals("ProfilePic"))
+                {
+                    try
+                        {
+                            File image = new File(setValue);
+                            FileInputStream fis = new FileInputStream(image); 
+                            prepStatement.setBinaryStream((1), fis, (int) image.length());
+                        }
+                    catch (FileNotFoundException fnfe)
+                        {
+                            fnfe.printStackTrace();
+                            System.out.println("oops");
+                        }
+                    
+                }
+            else
+                {
+                    prepStatement.setString(1, setValue);
+                }
                 prepStatement.setString (2, locationValue );
     
                 //Execute the update and return the number of affected rows
