@@ -36,11 +36,11 @@ public class ViewAccount extends JPanel
     private JPanel namePanel = new JPanel(new GridLayout(1,2));
     private JPanel eircodePanel = new JPanel(new GridLayout(1,2));
     private JPanel phonePanel = new JPanel(new GridLayout(1,2));
+    private JPanel usernamePanel = new JPanel(new GridLayout(1,2));
+    private JPanel emailPanel = new JPanel(new GridLayout(1,2));
     private JButton placeAdButton = new JButton("Place Advertisement");
     private JButton viewMarketplaceButton = new JButton("View MarketPlace");
     private JButton backButton = new JButton("Back");
-    private JButton likeButton = new JButton("Like");
-    private JButton dislikeButton = new JButton("Dislike");
     private JButton editDetails = new JButton("Edit Account");
     private JButton deleteAccount = new JButton("Delete Account");
 
@@ -51,13 +51,17 @@ public class ViewAccount extends JPanel
     private JLabel nameLabel = new JLabel("Name:");
     private JLabel eircodeLabel = new JLabel("Eircode:");
     private JLabel phoneLabel = new JLabel("Phone:");
+    private JLabel usernameLabel = new JLabel("Username:");
+    private JLabel emailLabel = new JLabel("Email:");
     private JLabel nameLabel2 = new JLabel();
     private JLabel eircodeLabel2 = new JLabel();
     private JLabel phoneLabel2 = new JLabel();
+    private JLabel usernameLabel2 = new JLabel();
+    private JLabel emailLabel2 = new JLabel();
     private JLabel adsPlacedLabel = new JLabel("Advertisements Placed:");
     private JLabel error = new JLabel("No ads available!");
 
-    private String[] accountInformation = new String[4];
+    private String[] accountInformation = new String[6];
     private ResultSet accountDetails;
     private int userChoice;
     private AdPreview ads[] = new AdPreview[15];
@@ -130,10 +134,14 @@ public class ViewAccount extends JPanel
         nameLabel.setFont(informationFont);
         eircodeLabel.setFont(informationFont);
         phoneLabel.setFont(informationFont);
+        usernameLabel.setFont(informationFont);
+        emailLabel.setFont(informationFont);
         
         nameLabel2.setFont(informationFont);
         eircodeLabel2.setFont(informationFont);
         phoneLabel2.setFont(informationFont);
+        usernameLabel2.setFont(informationFont);
+        emailLabel2.setFont(informationFont);
 
         profilePicPanel.add(profilePicture);
         profilePicPanel.setBorder(BorderFactory.createMatteBorder(1,1,1,1, black));
@@ -150,13 +158,19 @@ public class ViewAccount extends JPanel
         phonePanel.add(phoneLabel2);
         phonePanel.setBorder(BorderFactory.createMatteBorder(0,0,1,0, black)); //bottom
 
+        usernamePanel.add(usernameLabel);
+        usernamePanel.add(usernameLabel2);
+
+        emailPanel.add(emailLabel);
+        emailPanel.add(emailLabel2);
+
         accountPanel.setBorder(BorderFactory.createLineBorder(black, 2));
         accountPanel.add(profilePicture);
+        accountPanel.add(usernamePanel);
+        accountPanel.add(phonePanel);
         accountPanel.add(namePanel);
         accountPanel.add(eircodePanel);
-        accountPanel.add(phonePanel);
-        accountPanel.add(likeButton);
-        accountPanel.add(dislikeButton);
+        accountPanel.add(emailPanel);
 
         adsPlacedLabel.setFont(informationFont);
         advertisementPanel.setBorder(BorderFactory.createLineBorder(black, 2));
@@ -219,7 +233,9 @@ public class ViewAccount extends JPanel
         accountInformation[0] = "Name";
         accountInformation[1] = "Eircode";
         accountInformation[2] = "Phone";
-        accountInformation[3] = "ProfilePic";
+        accountInformation[3] = "County";
+        accountInformation[4] = "Username";
+        accountInformation[5] = "ProfilePic";
         profilePicture.setText("IMAGE GOES HERE");
         try{
             if (id==CurrentSession.getUserID()) 
@@ -238,6 +254,8 @@ public class ViewAccount extends JPanel
                 nameLabel2.setText(accountDetails.getString("Name"));
                 eircodeLabel2.setText(accountDetails.getString("Eircode"));
                 phoneLabel2.setText(accountDetails.getString("Phone"));
+                emailLabel2.setText(accountDetails.getString("County"));
+                usernameLabel2.setText(accountDetails.getString("Username"));
                 Blob image = accountDetails.getBlob("ProfilePic");
                 profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
                 profilePicture.setText("");

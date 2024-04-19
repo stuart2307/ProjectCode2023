@@ -305,7 +305,7 @@ public class SignUp extends JPanel {
         valueParameter[7] = eircode;
         valueParameter[8] = email;
         valueParameter[9] = phone;
-        File imagePathFile = new File("Model2/View/Crocodefault.jpg");
+        File imagePathFile = new File("View/Crocodefault.jpg");
         valueParameter[10] = imagePathFile.getAbsolutePath().replace("\\", "/");
         try{
             Verifiers.VerifyEntries(valueParameter);

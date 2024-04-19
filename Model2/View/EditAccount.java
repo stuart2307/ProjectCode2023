@@ -2,12 +2,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -348,7 +352,7 @@ public class EditAccount extends JPanel{
         valueParameter[7] = eircode;
         valueParameter[8] = email;
         valueParameter[9] = phone;
-        valueParameter[10] = "../View/Crocodefault.jpg";
+        valueParameter[10] = "View/Crocodefault.jpg";
         try{
             Verifiers.VerifyEntries(valueParameter);
             if(blankEntryFlag == true)
@@ -371,7 +375,13 @@ public class EditAccount extends JPanel{
             
         try{
         ResultSet accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID() + "", "", "");
-        if(username != accountDetails.getString("Username"))
+        if(accountDetails.next())
+        {
+            if(username.equals(userNameInput.getText()))
+            {
+                
+            }
+            else
             {
                 try
                 {
@@ -387,9 +397,10 @@ public class EditAccount extends JPanel{
                 {
                     invalidUsernameWarning.revalidate();
                     invalidUsernameWarning.repaint();
-                }   
-
-            }
+                } 
+            }  
+    }
+        
         }
         catch(SQLException sqlException)
         {
@@ -505,7 +516,7 @@ public void populateEditPage()
     accountInformation[7] = "Eircode";
     accountInformation[8] = "Email";
     accountInformation[9] = "Phone";
-    //profilePicture.setText("IMAGE GOES HERE");
+    accountInformation[10] = "ProfilePic";
     try{
         ResultSet accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
         if (accountDetails.next()) 
@@ -519,9 +530,12 @@ public void populateEditPage()
         eirCodeInput.setText(accountDetails.getString("Eircode"));
         emailInput.setText(accountDetails.getString("Email"));    
         phoneInput.setText(accountDetails.getString("Phone"));
-        //Blob image = accountDetails.getBlob("ProfilePic");
-        //profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
-        //profilePicture.setText("");
+   //     Blob image = accountDetails.getBlob("ProfilePic");
+   //     if(this.profilePicture != null)
+   //     {
+   //     profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
+   //     profilePicture.setText("");
+   //     }
     }
         else throw new UserNotFoundException("User not found in database!");
     }
