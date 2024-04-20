@@ -145,7 +145,7 @@ public class MarketPlaceGUI extends JPanel
                 error.setVisible(false);
                 if (search.equals(""))
                 {
-                    adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Year", "Price", "Image"}, "advertisements", "", "", "", "");
+                    adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Year", "Price", "Image", "Make", "Model"}, "advertisements", "", "", "", "");
                 }
                 else
                 {

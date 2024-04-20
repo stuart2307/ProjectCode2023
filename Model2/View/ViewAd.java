@@ -40,6 +40,7 @@ public class ViewAd extends JPanel
     private JPanel sellerInfoPanel;
     private JPanel vehicleInfoPanel;
     private JPanel imagePanel;
+    private JPanel likeDislikePanel = new JPanel(new GridLayout(1, 2));
     protected JButton loginButton = new JButton("Log In");
     protected JButton signUpButton = new JButton("Sign Up");
     protected JButton logoutButton = new JButton("Log Out");
@@ -48,6 +49,8 @@ public class ViewAd extends JPanel
     protected JButton prelogMarketplaceButton = new JButton("View Marketplace");
     protected JButton accountButton = new JButton("Account");
     protected JButton deleteButton = new JButton("Delete Advertisement");
+    protected JButton likeButton = new JButton("Like");
+    protected JButton dislikeButton = new JButton("Dislike");
     private ResultSet adResultSet;
     private GridBagConstraints gbc = new GridBagConstraints();
     protected int adID;
@@ -72,6 +75,9 @@ public class ViewAd extends JPanel
     private JLabel phone = new JLabel();
     private JLabel email = new JLabel();
     private JLabel county = new JLabel();
+    private JPanel userRatingPanel = new JPanel(new GridLayout(1,2));
+    private JLabel userRatingLabel = new JLabel("Rating:");
+    private JLabel userRatingLabel2 = new JLabel();
 
     private int adAccountId;
 
@@ -107,6 +113,12 @@ public class ViewAd extends JPanel
         postLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         postLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         postLoginButtonPanel.setBackground(MarketPlaceGUI.green);
+
+        likeDislikePanel.add(likeButton);
+        likeDislikePanel.add(dislikeButton);
+
+        userRatingPanel.add(userRatingLabel);
+        userRatingPanel.add(userRatingLabel2);
 
         loginButton.addActionListener(new loginButtonAL(ViewAd.this));
         signUpButton.addActionListener(new signupButtonAL(ViewAd.this));
@@ -263,6 +275,12 @@ public class ViewAd extends JPanel
 
         gbc.gridy++;
         sellerInfoPanel.add(county, gbc);
+
+        gbc.gridy++;
+        sellerInfoPanel.add(likeDislikePanel, gbc);
+
+        gbc.gridy++;
+        sellerInfoPanel.add(userRatingPanel, gbc);
 
         sellerInfoPanel.addMouseListener(new MouseListener() 
         {

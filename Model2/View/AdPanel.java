@@ -75,6 +75,7 @@ public class AdPanel extends JPanel
     private JButton returnButton;
 
     private String detailsArray[] = new String[12];
+    private String reviewDetailsArray[] = new String[4];
     private String make;
     private String model;
     private String year;

@@ -15,8 +15,8 @@ public class DatabaseManager {
     private static final String PASSWORD = "";
     static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "ProfilePic"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
-    static final String ADVERTISEMENTS[] = {"AdvertisementID", "AccountID", "Make", "Model", "FuelType", "GearBox", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
-    static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "ReviewContents", "StarRating"};
+    static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "GearBox", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
+    static final String REVIEWS[] = {"ReviewerID", "RevieweeID", "PositiveReview"};
     static final String CHATLOG[] = {"ChatID", "MessageID"};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
 
@@ -318,6 +318,32 @@ public static boolean checkPassword(String username, String password)
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Username =?" + " AND Password =?");
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
+        ResultSet rs = preparedStatement.executeQuery();
+        rs.next();
+        int rowCount = rs.getInt(1);
+        if(rowCount >= 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    catch (SQLException e)
+    {
+        e.printStackTrace();
+        return false;
+    }
+    
+}
+
+public static boolean checkReviews(String userID)
+{
+    try
+    {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM reviews WHERE RevieweeID =?");
+        preparedStatement.setString(1, userID);
         ResultSet rs = preparedStatement.executeQuery();
         rs.next();
         int rowCount = rs.getInt(1);
