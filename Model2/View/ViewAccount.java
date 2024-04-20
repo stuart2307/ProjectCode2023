@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
@@ -64,7 +66,7 @@ public class ViewAccount extends JPanel
     private String[] accountInformation = new String[6];
     private ResultSet accountDetails;
     private int userChoice;
-    private AdPreview ads[] = new AdPreview[15];
+    private AdPreview ads[] = new AdPreview[10];
 
     private ResultSet adResultSet;
     private ResultSetMetaData adRSMD;
@@ -177,15 +179,23 @@ public class ViewAccount extends JPanel
         advertisementPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         advertisementPanel.add(adsPlacedLabel);
         advertisementPanel.setLayout(new BoxLayout(advertisementPanel, BoxLayout.Y_AXIS));
-//            for (int i = 0; i < 15; i++)
-//                {
-//                    advertisementPanel.add(ads[i]);
-//                    ads[i].setVisible(false);
-//                }
-//                advertisementPanel.add(error); 
+
+        JScrollPane scrollPane = new JScrollPane(advertisementPanel);
+        scrollPane.setBackground(MarketPlaceGUI.grey);
+        scrollPane.setPreferredSize(new Dimension(100, 100));
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        for (int i = 0; i < 10; i++)
+            {
+                ads[i] = new AdPreview(ViewAccount.this);
+                advertisementPanel.add(ads[i]);
+                ads[i].setVisible(false);
+            }
+        advertisementPanel.add(error);
+        error.setVisible(false); 
 
         informationPanel.add(accountPanel);
-        informationPanel.add(advertisementPanel);
+        informationPanel.add(scrollPane);
 
         add(informationPanel, BorderLayout.CENTER);
 
@@ -229,6 +239,7 @@ public class ViewAccount extends JPanel
 } 
     public void populatePage(int id)
     {
+        adCount = 0;
         //Code to access the account information
         accountInformation[0] = "Name";
         accountInformation[1] = "Eircode";
@@ -240,15 +251,13 @@ public class ViewAccount extends JPanel
         try{
             if (id==CurrentSession.getUserID()) 
             {
-                accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID(), "", "");
                 editDeletePanel.setVisible(true);
             }
             else 
             {
-                accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + id, "", "");
                 editDeletePanel.setVisible(false);
             }
-
+            accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + id, "", "");
             if (accountDetails.next()) 
             {
                 nameLabel2.setText(accountDetails.getString("Name"));
@@ -259,6 +268,35 @@ public class ViewAccount extends JPanel
                 Blob image = accountDetails.getBlob("ProfilePic");
                 profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
                 profilePicture.setText("");
+                ResultSet adResultSet = DatabaseManager.executeQuery(DatabaseManager.ADVERTISEMENTS, "advertisements", "AccountID", "" + id, "DESC", "AdvertisementID");
+                while (adResultSet.next() && adCount < 10)
+                    {
+                        ads[adCount].setAdID(adResultSet.getInt("AdvertisementID"));
+                        ads[adCount].setTitle(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model"));
+                        ads[adCount].setPrice(adResultSet.getInt("Price"));
+                        ads[adCount].setImage(adResultSet.getBlob("Image"));
+                        adCount++;
+                    }
+                for (int index = 0; index < 10; index++)
+                    {
+                        if (index < adCount)
+                        {
+                            ads[index].setVisible(true);
+                        }
+                        else
+                        {
+                            ads[index].setVisible(false);
+                        }
+                        
+                    }
+                if (adCount == 0)
+                    {
+                        error.setVisible(true);
+                        for (int index = 0; index < 10; index++)
+                            {
+                                ads[index].setVisible(false);
+                            }
+                    } 
             }
             else throw new UserNotFoundException("User not found in database!");
         }
