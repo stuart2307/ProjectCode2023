@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class PlaceAdButtonAL implements ActionListener
 {
-    JPanel from;
+    private JPanel from;
     public PlaceAdButtonAL(JPanel switchFrom)
         {
             from = switchFrom;

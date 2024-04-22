@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 public class BackButtonAL implements ActionListener
 {
-    JPanel fromPanel;
+    private JPanel fromPanel;
     public BackButtonAL(JPanel from)
         {   
             fromPanel = from;

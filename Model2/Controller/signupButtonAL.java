@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class SignupButtonAL implements ActionListener
 {
-    JPanel from;
+    private JPanel from;
     public SignupButtonAL(JPanel switchFrom)
         {
             from = switchFrom;

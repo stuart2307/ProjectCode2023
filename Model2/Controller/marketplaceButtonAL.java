@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class MarketplaceButtonAL implements ActionListener
 {
-    JPanel from;
+    private JPanel from;
     public MarketplaceButtonAL(JPanel switchFrom)
         {
             from = switchFrom;
