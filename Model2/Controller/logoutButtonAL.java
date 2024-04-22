@@ -1,9 +1,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class logoutButtonAL implements ActionListener
+public class LogoutButtonAL implements ActionListener
 {
-    public logoutButtonAL()
+    public LogoutButtonAL()
         {
 
         }    

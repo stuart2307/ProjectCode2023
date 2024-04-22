@@ -2,10 +2,10 @@ import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class backButtonAL implements ActionListener
+public class BackButtonAL implements ActionListener
 {
     JPanel fromPanel;
-    public backButtonAL(JPanel from)
+    public BackButtonAL(JPanel from)
         {   
             fromPanel = from;
         }

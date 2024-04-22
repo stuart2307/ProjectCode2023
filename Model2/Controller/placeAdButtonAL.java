@@ -3,10 +3,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-public class placeAdButtonAL implements ActionListener
+public class PlaceAdButtonAL implements ActionListener
 {
     JPanel from;
-    public placeAdButtonAL(JPanel switchFrom)
+    public PlaceAdButtonAL(JPanel switchFrom)
         {
             from = switchFrom;
         }   

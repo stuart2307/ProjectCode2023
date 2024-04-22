@@ -69,7 +69,7 @@ public class SignUp extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
 
         backButton = new JButton("Back");
-        backButton.addActionListener(new backButtonAL(SignUp.this));
+        backButton.addActionListener(new BackButtonAL(SignUp.this));
         gbc.gridx = 0; 
         gbc.gridy = 0; // Place at the first row
         gbc.insets = new Insets(10, 10, 10, 10); 
