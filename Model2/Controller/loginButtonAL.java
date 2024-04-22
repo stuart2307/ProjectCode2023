@@ -10,7 +10,7 @@ public class LoginButtonAL implements ActionListener
         {
             from = switchFrom;
         }   
-    public void actionPerformed(ActionEvent market)
+    public void actionPerformed(ActionEvent loginClicked)
         {
             GUIManager.changeLogin(from);
         }

@@ -10,7 +10,7 @@ public class MarketplaceButtonAL implements ActionListener
         {
             from = switchFrom;
         }   
-    public void actionPerformed(ActionEvent market)
+    public void actionPerformed(ActionEvent marketClicked)
         {
             GUIManager.changeMarketplace(from, "");
         }

@@ -7,7 +7,7 @@ public class LogoutButtonAL implements ActionListener
         {
 
         }    
-    public void actionPerformed(ActionEvent logOut)
+    public void actionPerformed(ActionEvent logoutClicked)
         {
             CurrentSession.logUserOut();
             GUIManager.loggedOut();

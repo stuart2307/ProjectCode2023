@@ -10,7 +10,7 @@ public class PlaceAdButtonAL implements ActionListener
         {
             from = switchFrom;
         }   
-    public void actionPerformed(ActionEvent market)
+    public void actionPerformed(ActionEvent placeAdClicked)
         {
             GUIManager.changeCreateAd(from);
         }
