@@ -3,14 +3,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-public class signupButtonAL implements ActionListener
+public class SignupButtonAL implements ActionListener
 {
-    JPanel from;
-    public signupButtonAL(JPanel switchFrom)
+    private JPanel from;
+    public SignupButtonAL(JPanel switchFrom)
         {
             from = switchFrom;
         }   
-    public void actionPerformed(ActionEvent market)
+    public void actionPerformed(ActionEvent signup)
         {
             GUIManager.changeSignup(from);
         }    

@@ -120,13 +120,13 @@ public class ViewAd extends JPanel
         userRatingPanel.add(userRatingLabel);
         userRatingPanel.add(userRatingLabel2);
 
-        loginButton.addActionListener(new loginButtonAL(ViewAd.this));
-        signUpButton.addActionListener(new signupButtonAL(ViewAd.this));
-        placeAdButton.addActionListener(new placeAdButtonAL(ViewAd.this));
-        logoutButton.addActionListener(new logoutButtonAL());
-        accountButton.addActionListener(new accountButtonAL(ViewAd.this));
-        viewMarketplaceButton.addActionListener(new marketplaceButtonAL(ViewAd.this));
-        prelogMarketplaceButton.addActionListener(new marketplaceButtonAL(ViewAd.this));
+        loginButton.addActionListener(new LoginButtonAL(ViewAd.this));
+        signUpButton.addActionListener(new SignupButtonAL(ViewAd.this));
+        placeAdButton.addActionListener(new PlaceAdButtonAL(ViewAd.this));
+        logoutButton.addActionListener(new LogoutButtonAL());
+        accountButton.addActionListener(new AccountButtonAL(ViewAd.this));
+        viewMarketplaceButton.addActionListener(new MarketplaceButtonAL(ViewAd.this));
+        prelogMarketplaceButton.addActionListener(new MarketplaceButtonAL(ViewAd.this));
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent clicked)
             {
