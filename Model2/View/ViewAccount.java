@@ -154,14 +154,15 @@ public class ViewAccount extends JPanel
 
         eircodePanel.add(eircodeLabel);
         eircodePanel.add(eircodeLabel2);
-        eircodePanel.setBorder(BorderFactory.createMatteBorder(1,0,1,1, black)); //right,up,down
+        eircodePanel.setBorder(BorderFactory.createMatteBorder(0,0,0,1, black)); //right,up,down
 
         phonePanel.add(phoneLabel);
         phonePanel.add(phoneLabel2);
-        phonePanel.setBorder(BorderFactory.createMatteBorder(0,0,1,0, black)); //bottom
+        phonePanel.setBorder(BorderFactory.createMatteBorder(1,0,1,0, black)); //bottom
 
         usernamePanel.add(usernameLabel);
         usernamePanel.add(usernameLabel2);
+        usernamePanel.setBorder(BorderFactory.createMatteBorder(0,1,1,0, black));
 
         emailPanel.add(emailLabel);
         emailPanel.add(emailLabel2);

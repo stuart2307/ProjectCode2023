@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 public class DatabaseManager {
 
@@ -131,6 +132,10 @@ public class DatabaseManager {
                 // Execute update and return the number of rows affected
                 return pstat.executeUpdate();
             }
+            catch(SQLIntegrityConstraintViolationException SQLICVE)
+            {
+                return 1;
+            }
             catch (SQLException e)
             {
                 e.printStackTrace();
@@ -138,9 +143,6 @@ public class DatabaseManager {
                 return -1;
             }
         }
-
-
-
 
     public static ResultSet executeQuery(String parameters[], String table, String column, String value, String order, String orderField) 
         {
@@ -338,30 +340,112 @@ public static boolean checkPassword(String username, String password)
     
 }
 
-public static boolean checkReviews(String userID)
+public static ResultSet checkReviews(String reviewerID, String revieweeID)
 {
     try
     {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM reviews WHERE RevieweeID =?");
-        preparedStatement.setString(1, userID);
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT PositiveReview FROM reviews WHERE ReviewerID =? AND RevieweeID =?"); //execute query method didn't support the AND clause
+        preparedStatement.setString(1, reviewerID);
+        preparedStatement.setString(2, revieweeID);
         ResultSet rs = preparedStatement.executeQuery();
         rs.next();
-        int rowCount = rs.getInt(1);
-        if(rowCount >= 1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return rs;
     }
     catch (SQLException e)
     {
         e.printStackTrace();
-        return false;
+        return null;
     }
-    
+}
+
+public static void updateReviews(String reviewerID, String revieweeID, String reviewType)
+{
+    try
+    {
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE reviews SET PositiveReview =? WHERE ReviewerID =? AND RevieweeID =?");
+        preparedStatement.setString(1, reviewType);
+        preparedStatement.setString(2, reviewerID);
+        preparedStatement.setString(3, revieweeID);
+        preparedStatement.executeUpdate();
+    }
+    catch(SQLException sqle)
+    {
+
+    }    
+}
+
+public static void addReview(String reviewerID, String revieweeID, String reviewType)
+{
+    try
+    {
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO reviews (ReviewerID, RevieweeID, PositiveReview) VALUES (?,?,?)");
+        preparedStatement.setString(1, reviewerID);
+        preparedStatement.setString(2, revieweeID);
+        preparedStatement.setString(3, reviewType);
+        preparedStatement.executeUpdate();
+        
+        Verifiers.VerifyReviewType(reviewType, reviewerID, revieweeID);
+    }
+    catch(SQLIntegrityConstraintViolationException SQLICVE) //Exception that takes place upon a duplicate entry due to keys
+    {
+        System.out.println("sqlicve triggered");    
+        try
+        {
+            ResultSet rs = DatabaseManager.checkReviews(reviewerID, revieweeID);
+            String currentReview = rs.getString("PositiveReview"); 
+            if(!currentReview.equals(reviewType))
+            {
+                DatabaseManager.updateReviews(reviewerID, revieweeID, reviewType); //handles case by which the user inputs the same review
+            }
+        }
+        catch(SQLException sqle)
+        {
+
+        }
+    }
+    catch(SQLException sqle)
+    {
+        System.out.println("sqle triggered");
+    } 
+    catch(SameReviewException sre)
+    {
+        System.out.println("sre triggered");
+    }            
+            
+}
+
+public static int countPositiveReviews(String revieweeID)
+{
+    try
+    {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM reviews WHERE RevieweeID =? AND PositiveReview = '1'"); //
+        preparedStatement.setString(1, revieweeID); 
+        ResultSet rs = preparedStatement.executeQuery(); //Taking in the results to a ResultSet variable
+        rs.next(); //Moving the pointer of the resultset to the next row which is the first one
+        int rowCount = rs.getInt(1); //Getting the result of the first column
+        return rowCount;
+    }
+    catch(SQLException sqle)
+    {
+        return -1;
+    }    
+}
+
+public static int countAllReviews(String revieweeID)
+{
+    try
+    {
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM reviews WHERE RevieweeID =?"); //
+        preparedStatement.setString(1, revieweeID);  
+        ResultSet rs = preparedStatement.executeQuery(); //Taking in the results to a ResultSet variable
+        rs.next(); //Moving the pointer of the resultset to the next row which is the first one
+        int rowCount = rs.getInt(1); //Getting the result of the first column
+        return rowCount;
+    }
+    catch(SQLException sqle)
+    {
+        return -1;
+    }    
 }
 
 }

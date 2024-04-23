@@ -15,6 +15,7 @@ import java.awt.event.MouseListener;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -40,7 +41,7 @@ public class ViewAd extends JPanel
     private JPanel sellerInfoPanel;
     private JPanel vehicleInfoPanel;
     private JPanel imagePanel;
-    private JPanel likeDislikePanel = new JPanel(new GridLayout(1, 2));
+    protected JPanel likeDislikePanel = new JPanel(new GridLayout(1, 2));
     protected JButton loginButton = new JButton("Log In");
     protected JButton signUpButton = new JButton("Sign Up");
     protected JButton logoutButton = new JButton("Log Out");
@@ -75,9 +76,9 @@ public class ViewAd extends JPanel
     private JLabel phone = new JLabel();
     private JLabel email = new JLabel();
     private JLabel county = new JLabel();
-    private JPanel userRatingPanel = new JPanel(new GridLayout(1,2));
-    private JLabel userRatingLabel = new JLabel("Rating:");
-    private JLabel userRatingLabel2 = new JLabel();
+    private JPanel userRatingPanel = new JPanel(new FlowLayout());
+    private JLabel userRatingLabel = new JLabel();
+    private String[] reviewDetails = new String[3];
 
     private int adAccountId;
 
@@ -114,11 +115,11 @@ public class ViewAd extends JPanel
         postLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         postLoginButtonPanel.setBackground(MarketPlaceGUI.green);
 
+        likeDislikePanel.setVisible(false);
         likeDislikePanel.add(likeButton);
         likeDislikePanel.add(dislikeButton);
-
+        
         userRatingPanel.add(userRatingLabel);
-        userRatingPanel.add(userRatingLabel2);
 
         loginButton.addActionListener(new loginButtonAL(ViewAd.this));
         signUpButton.addActionListener(new signupButtonAL(ViewAd.this));
@@ -342,7 +343,6 @@ public class ViewAd extends JPanel
                     engineSize.setText("Engine Size: " + adResultSet.getDouble("EngineSize"));
                     gearBox.setText("Gearbox: " + adResultSet.getString("GearBox"));
                     adAccountId = adResultSet.getInt("AccountID");
-                    
 
                     userResultSet = DatabaseManager.executeQuery(DatabaseManager.ACCOUNTS, "accounts", "AccountID", "" + adResultSet.getInt("AccountID"), "", "");
                     userResultSet.next();
@@ -352,7 +352,46 @@ public class ViewAd extends JPanel
                     county.setText("County: " + userResultSet.getString("County"));
                     image = userResultSet.getBlob("ProfilePic");
                     sellerPic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+                    int positiveReviews = DatabaseManager.countPositiveReviews( "" + adAccountId + "");
+                    int allReviews = DatabaseManager.countAllReviews( "" + adAccountId + "");
+                    Double userReviewScore = ((double)positiveReviews/allReviews) * 100.0;   
+                    System.out.println(userReviewScore);
+                    // Round to two decimal places
+                    double roundedUserReviewScore = Math.round(userReviewScore * 100.0)/100.0;
+                    userRatingLabel.setText("Rating: " + roundedUserReviewScore);
+                    if(CurrentSession.getLoginStatus())
+                    {
+
+                        int revieweeID = adAccountId;
+                        int reviewerID = CurrentSession.getUserID();
+
+                        String revieweeIDString = String.valueOf(revieweeID);
+                        String reviewerIDString = String.valueOf(reviewerID);
+                        reviewDetails[0] = reviewerIDString;
+                        reviewDetails[1] = revieweeIDString;
+
+                        likeButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent likeUser)
+                            {
+                                int reviewChoice = 1;
+                                String reviewChoiceString = String.valueOf(reviewChoice); 
+                                reviewDetails[2] = reviewChoiceString;
+                                DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);                                 
+                            }
+                        });
                     
+                        likeDislikePanel.add(dislikeButton);
+                        dislikeButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent dislikeUser)
+                            {
+                                int reviewChoice = 0;
+                                String reviewChoiceString = String.valueOf(reviewChoice);
+                                reviewDetails[2] = reviewChoiceString;
+                                DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);
+                            }
+                        });
+                                                
+                    }
                     return true;
                 }
             catch (SQLException sqlException)
@@ -369,5 +408,6 @@ public class ViewAd extends JPanel
     {
         return adAccountId;
     }
+
 }
 
