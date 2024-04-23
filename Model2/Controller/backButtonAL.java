@@ -4,13 +4,13 @@ import java.awt.event.ActionListener;
 
 public class BackButtonAL implements ActionListener
 {
-    private JPanel fromPanel;
-    public BackButtonAL(JPanel from)
+    private JPanel from;
+    public BackButtonAL(JPanel switchFrom)
         {   
-            fromPanel = from;
+            from = switchFrom;
         }
     public void actionPerformed(ActionEvent backClicked)
         {
-            GUIManager.backButton(fromPanel);
+            GUIManager.backButton(from);
         }
 }
