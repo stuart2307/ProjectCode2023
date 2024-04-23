@@ -273,7 +273,20 @@ public class DatabaseManager {
         }
 
 
+public static ResultSet innerJoinQuery(String tableOne, String tableTwo, String constraintOne, String constraintTwo, String parameter, String value)
+        {
+            try 
+            {
+                PreparedStatement pstat = connection.prepareStatement("SELECT * FROM " + tableOne + " INNER JOIN " + tableTwo + " ON " + tableOne + "." + constraintOne +" = " + tableTwo + "." + constraintTwo + " WHERE " + parameter + " = ?");     
+                pstat.setString(1, value);
+                return pstat.executeQuery();
+            } 
+            catch (SQLException e) 
+            {
+                return null;
+            }
 
+        }
 
 public static int deleteEntry(String table, String column, String parameter)
     {

@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 
 public class ViewAd extends JPanel
 {
+    //Divides the screen up for convenience when placing components and setting their sizes
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private int xBlock = (int) screenSize.getWidth() / 10;
     private int yBlock = (int) screenSize.getHeight() / 6;
@@ -54,8 +55,6 @@ public class ViewAd extends JPanel
     private ResultSet adResultSet;
     private GridBagConstraints gbc = new GridBagConstraints();
     protected int adID;
-
-    private ResultSet userResultSet;
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
     private Font informationFont = new Font("Arial", Font.BOLD, 20);
@@ -95,39 +94,39 @@ public class ViewAd extends JPanel
         logoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));             // Sets a custom border around the contents 
         logoPanel.setBackground(MarketPlaceGUI.green);                                                          // Sets the background to green                                                                        
         title.setFont(titleFont);                                                                               // Sets the title font, bold and size
-        title.setForeground(MarketPlaceGUI.white); 
-        logoPanel.add(title, BorderLayout.CENTER);      
-        topPanel.add(logoPanel);                                                        // Adds the title to the logoPanel and positions it to the centre
+        title.setForeground(MarketPlaceGUI.white);                                                              // Sets the foreground colour to white
+        logoPanel.add(title, BorderLayout.CENTER);                                                              // Adds the title to the logoPanel and positions it to the centre
+        topPanel.add(logoPanel);                                                                                // Adds the logoPanel to the topPanel
 
-        titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
-        titlePanel.setBackground(MarketPlaceGUI.green);
-        adTitle.setFont(titleFont);
-        adTitle.setForeground(MarketPlaceGUI.white);
-        titlePanel.add(adTitle);
-        topPanel.add(titlePanel);
+        titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));                                             // Creates a JPanel called titlePanel and positions its contents to the centre using flow layout
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));            // Sets a custom border around the contents 
+        titlePanel.setBackground(MarketPlaceGUI.green);                                                         // Sets the background to green   
+        adTitle.setFont(titleFont);                                                                             // Sets the ad title font, bold and size
+        adTitle.setForeground(MarketPlaceGUI.white);                                                            // Sets the foreground colour to white       
+        titlePanel.add(adTitle);                                                                                // Adds the ad title to the title panel
+        topPanel.add(titlePanel);       
 
-        preLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        preLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        preLoginButtonPanel.setBackground(MarketPlaceGUI.green);
-        postLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        postLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        postLoginButtonPanel.setBackground(MarketPlaceGUI.green);
+        preLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                     // Creates a JPanel called preLoginButtonPannel and positions its contents to the right using flow layout
+        preLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));   // Sets a custom border around the contents
+        preLoginButtonPanel.setBackground(MarketPlaceGUI.green);                                                // Sets the background to green
+        postLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                    // Creates a JPanel called postLoginButtonPannel and positions its contents to the right using flow layout
+        postLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));  // Sets a custom border around the contents
+        postLoginButtonPanel.setBackground(MarketPlaceGUI.green);                                               // Sets the background to green
 
-        likeDislikePanel.add(likeButton);
-        likeDislikePanel.add(dislikeButton);
+        likeDislikePanel.add(likeButton);                                                                       // Adds the likeButton to the likeDislikePanel
+        likeDislikePanel.add(dislikeButton);                                                                    // Adds the dislikeButton to the likeDislikePanel
 
-        userRatingPanel.add(userRatingLabel);
-        userRatingPanel.add(userRatingLabel2);
+        userRatingPanel.add(userRatingLabel);                                                                   // Adds the userRatingLabel JLabel to the userRatingPanel
+        userRatingPanel.add(userRatingLabel2);                                                                  // Adds the userRatingLabel2 JLabel to the userRatingPanel
 
-        loginButton.addActionListener(new LoginButtonAL(ViewAd.this));
-        signUpButton.addActionListener(new SignupButtonAL(ViewAd.this));
-        placeAdButton.addActionListener(new PlaceAdButtonAL(ViewAd.this));
-        logoutButton.addActionListener(new LogoutButtonAL());
-        accountButton.addActionListener(new AccountButtonAL(ViewAd.this));
-        viewMarketplaceButton.addActionListener(new MarketplaceButtonAL(ViewAd.this));
-        prelogMarketplaceButton.addActionListener(new MarketplaceButtonAL(ViewAd.this));
-        deleteButton.addActionListener(new ActionListener() {
+        loginButton.addActionListener(new LoginButtonAL(ViewAd.this));                                          // Adds named action listeners to the buttons
+        signUpButton.addActionListener(new SignupButtonAL(ViewAd.this));                                        
+        placeAdButton.addActionListener(new PlaceAdButtonAL(ViewAd.this));                                      
+        logoutButton.addActionListener(new LogoutButtonAL());                                                   
+        accountButton.addActionListener(new AccountButtonAL(ViewAd.this));                                      
+        viewMarketplaceButton.addActionListener(new MarketplaceButtonAL(ViewAd.this));                          
+        prelogMarketplaceButton.addActionListener(new MarketplaceButtonAL(ViewAd.this));                        
+        deleteButton.addActionListener(new ActionListener() {                                                   // Adds anonymous inner class for the "Delete Ad" button
             public void actionPerformed(ActionEvent clicked)
             {
                 if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this Advertisement?", "WARNING",
@@ -144,65 +143,63 @@ public class ViewAd extends JPanel
             }
         });
 
-        preLoginButtonPanel.add(prelogMarketplaceButton);
-        preLoginButtonPanel.add(loginButton); 
-        preLoginButtonPanel.add(signUpButton);
+        preLoginButtonPanel.add(prelogMarketplaceButton);                                                       // Adds buttons to the pre login button panel
+        preLoginButtonPanel.add(loginButton);                                                                   // Adds buttons to the pre login button panel
+        preLoginButtonPanel.add(signUpButton);                                                                  // Adds buttons to the pre login button panel
 
-        postLoginButtonPanel.add(viewMarketplaceButton);
-        postLoginButtonPanel.add(placeAdButton);
-        postLoginButtonPanel.add(accountButton);
-        postLoginButtonPanel.add(logoutButton);
+        postLoginButtonPanel.add(viewMarketplaceButton);                                                        // Adds buttons to the post login button panel
+        postLoginButtonPanel.add(placeAdButton);                                                                // Adds buttons to the post login button panel
+        postLoginButtonPanel.add(accountButton);                                                                // Adds buttons to the post login button panel
+        postLoginButtonPanel.add(logoutButton);                                                                 // Adds buttons to the post login button panel
 
-        topPanel.add(preLoginButtonPanel, BorderLayout.CENTER);
+        topPanel.add(preLoginButtonPanel, BorderLayout.CENTER);                                                 // Adds prelogin button panel to the top panel
 
         //Bottom Panel Code
+        bottomPanel = new JPanel(new GridBagLayout());                                                          // Creates a new panel with GridBagLayout
+        bottomPanel.setBackground(MarketPlaceGUI.grey);                                                         // Sets the background to grey   
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));           // Sets a custom border around the contents
 
-        bottomPanel = new JPanel(new GridBagLayout());
-        bottomPanel.setBackground(MarketPlaceGUI.grey);
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        price.setFont(informationFont);                                                                         // Sets the font for various labels
+        fuelType.setFont(informationFont);                                                                      
+        gearBox.setFont(informationFont);                                                                       
+        mileage.setFont(informationFont);                                                                       
+        engineSize.setFont(informationFont);                                                                    
+        previousOwners.setFont(informationFont);                                                                
+        adDescription.setFont(informationFont);                                                                 
+        sellerUsername.setFont(informationFont);                                                                
+        phone.setFont(informationFont);                                                                         
+        email.setFont(informationFont);                                                                         
+        county.setFont(informationFont);                                                                        
 
-        price.setFont(informationFont);
-        fuelType.setFont(informationFont);
-        gearBox.setFont(informationFont);
-        mileage.setFont(informationFont);
-        engineSize.setFont(informationFont);
-        previousOwners.setFont(informationFont);
-        adDescription.setFont(informationFont);
-        sellerUsername.setFont(informationFont);
-        phone.setFont(informationFont);
-        email.setFont(informationFont);
-        county.setFont(informationFont);
-
-
-        imagePanel = new JPanel();
-        imagePanel.add(adImage, BorderLayout.CENTER);
-        imagePanel.setPreferredSize(new Dimension(xBlock * 3, yBlock * 3));
-        imagePanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.gridx = gbc.gridy = 0;
-        gbc.gridheight = gbc.gridwidth = 3;
-        gbc.weightx = gbc.gridwidth / 10;
-        gbc.weighty = gbc.gridheight / 10;
-        bottomPanel.add(imagePanel, gbc);
+        imagePanel = new JPanel();                                                                              // Creates a new JPanel
+        imagePanel.add(adImage, BorderLayout.CENTER);                                                           // Adds the adImage Label to the imagePanel
+        imagePanel.setPreferredSize(new Dimension(xBlock * 3, yBlock * 3));                                     // Sets a size for the imagePanel using the blocks defined above
+        imagePanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));  // Creates a green line border for the imagePanel
+        gbc.anchor = GridBagConstraints.CENTER;                                                                 // Sets the GridBagConstraints Anchor
+        gbc.insets = new Insets(10, 10, 10, 10);                                          // Sets the GridBagConstraints Insets
+        gbc.gridx = gbc.gridy = 0;                                                                              // Sets gridx and gridy to 0
+        gbc.gridheight = gbc.gridwidth = 3;                                                                     // Sets gridwidth and gridheight to 3
+        gbc.weightx = gbc.gridwidth / 10;                                                                       // Sets the gridweightx to 0.3
+        gbc.weighty = gbc.gridheight / 10;                                                                      // Sets the gridweighty to 0.3
+        bottomPanel.add(imagePanel, gbc);                                                                       // Adds the imagePanel to the bottomPanel using the defined GridBagConstraints
         
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        priceDescPanel = new JPanel(new GridBagLayout());
+        gbc.anchor = GridBagConstraints.NORTHWEST;                                                              
+        priceDescPanel = new JPanel(new GridBagLayout());                                                       
         priceDescPanel.setPreferredSize(new Dimension(xBlock * 3, yBlock * 3));
         priceDescPanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
         gbc.gridx = 3;
-        bottomPanel.add(priceDescPanel, gbc);
+        bottomPanel.add(priceDescPanel, gbc);                                                                   // Adds priceDescPanel to bottomPanel with altered GridBagConstraints
 
         vehicleInfoPanel = new JPanel(new GridBagLayout());
         vehicleInfoPanel.setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, true));
         vehicleInfoPanel.setPreferredSize(new Dimension(xBlock * 6, yBlock * 2));
-        gbc.gridx = 0;
+        gbc.gridx = 0;                                                                                          // Changes GridBagConstraints to suit the vehicleInfoPanel
         gbc.gridy = 3;
         gbc.gridheight = 2;
         gbc.gridwidth = 6;
         gbc.weightx = gbc.gridwidth / 10;
         gbc.weighty = gbc.gridheight / 10;
-        bottomPanel.add(vehicleInfoPanel, gbc);
+        bottomPanel.add(vehicleInfoPanel, gbc);                                                                 // Adds vehicleInfoPanel to bottomPanel with altered GridBagConstraints
 
         gbc.anchor = GridBagConstraints.NORTHEAST;
         sellerInfoPanel = new JPanel(new GridBagLayout());
@@ -211,7 +208,7 @@ public class ViewAd extends JPanel
         gbc.gridx = 7;
         gbc.gridheight = 5;
         gbc.weighty = gbc.gridheight / 10;
-        bottomPanel.add(sellerInfoPanel);
+        bottomPanel.add(sellerInfoPanel);                                                                       // Adds sellerInfoPanel to bottomPanel with altered GridBagConstraints
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridx = gbc.gridy = 0;
@@ -219,13 +216,13 @@ public class ViewAd extends JPanel
         gbc.gridwidth = 3;
         gbc.weightx = gbc.gridwidth / 10;
         gbc.weighty = gbc.gridheight / 10;
-        priceDescPanel.add(price, gbc);
+        priceDescPanel.add(price, gbc);                                                                         // Adds price to priceDescPanel with altered GridBagConstraints
 
         gbc.anchor = GridBagConstraints.SOUTHWEST;
         gbc.gridy = GridBagConstraints.RELATIVE;
         gbc.gridheight++;
         gbc.weighty = gbc.gridheight / 10;
-        priceDescPanel.add(adDescription, gbc);
+        priceDescPanel.add(adDescription, gbc);                                                                 // Adds adDescription to priceDescPanel with altered GridBagConstraints
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridy = 0;
@@ -233,56 +230,56 @@ public class ViewAd extends JPanel
         gbc.gridwidth = 2;
         gbc.weightx = gbc.gridwidth / 10;
         gbc.weighty = gbc.gridheight / 10;
-        vehicleInfoPanel.add(fuelType, gbc);
+        vehicleInfoPanel.add(fuelType, gbc);                                                                    // Adds fuelType to vehicleInfoPanel with altered GridBagConstraints
         
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridx = 2;
-        vehicleInfoPanel.add(mileage, gbc);
+        vehicleInfoPanel.add(mileage, gbc);                                                                     // Adds mileage to vehicleInfoPanel with altered GridBagConstraints
 
         gbc.anchor = GridBagConstraints.NORTHEAST;
         gbc.gridx = 4;
-        vehicleInfoPanel.add(previousOwners, gbc);
+        vehicleInfoPanel.add(previousOwners, gbc);                                                              // Adds previousOwners to vehicleInfoPanel with altered GridBagConstraints
 
         gbc.anchor = GridBagConstraints.SOUTHWEST;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        vehicleInfoPanel.add(gearBox, gbc);
+        vehicleInfoPanel.add(gearBox, gbc);                                                                     // Adds gearBox to vehicleInfoPanel with altered GridBagConstraints
 
         gbc.anchor = GridBagConstraints.SOUTH;
         gbc.gridx = 2;
-        vehicleInfoPanel.add(engineSize, gbc);
+        vehicleInfoPanel.add(engineSize, gbc);                                                                  // Adds engineSize to vehicleInfoPanel with altered GridBagConstraints
         
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridx = gbc.gridy = 0;
         gbc.gridheight = gbc.gridwidth = 1;
         gbc.weightx = gbc.gridwidth / 10;
         gbc.weighty = gbc.gridheight / 10;
-        sellerInfoPanel.add(sellerPic, gbc);
+        sellerInfoPanel.add(sellerPic, gbc);                                                                    // Adds sellerPic to sellerInfoPanel with altered GridBagConstraints
 
         gbc.anchor = GridBagConstraints.NORTHEAST;
         gbc.weightx = gbc.gridwidth = 2;
         gbc.gridx++;
-        sellerInfoPanel.add(sellerUsername, gbc);
+        sellerInfoPanel.add(sellerUsername, gbc);                                                               // Adds sellerUsername to sellerInfoPanel with altered GridBagConstraints
         
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = gbc.gridwidth = 3;
-        sellerInfoPanel.add(phone, gbc);
+        sellerInfoPanel.add(phone, gbc);                                                                        // Adds phone to sellerInfoPanel with altered GridBagConstraints
 
         gbc.gridy++;
-        sellerInfoPanel.add(email, gbc);
+        sellerInfoPanel.add(email, gbc);                                                                        // Adds email to sellerInfoPanel with altered GridBagConstraints
 
         gbc.gridy++;
-        sellerInfoPanel.add(county, gbc);
+        sellerInfoPanel.add(county, gbc);                                                                       // Adds county to sellerInfoPanel with altered GridBagConstraints
 
         gbc.gridy++;
-        sellerInfoPanel.add(likeDislikePanel, gbc);
+        sellerInfoPanel.add(likeDislikePanel, gbc);                                                             // Adds likeDislikePanel to sellerInfoPanel with altered GridBagConstraints
 
         gbc.gridy++;
-        sellerInfoPanel.add(userRatingPanel, gbc);
+        sellerInfoPanel.add(userRatingPanel, gbc);                                                              // Adds userRatingPanel to sellerInfoPanel with altered GridBagConstraints
 
-        sellerInfoPanel.addMouseListener(new MouseListener() 
+        sellerInfoPanel.addMouseListener(new MouseListener()                                                    // Adds an anonymous inner class / Mouse Listener for  the sellerInfoPanel
         {
             public void mouseClicked(MouseEvent e) 
             {
@@ -306,52 +303,49 @@ public class ViewAd extends JPanel
             }
         });
 
-        add(bottomPanel, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.CENTER);                                                                  // Adds the bottomPanel to the center of the bottomPanel
 
         // Footer Panel Code
 
-        footerPanel = new JPanel();
-        footerPanel.setBackground(MarketPlaceGUI.green);
-        footerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        footerPanel = new JPanel();                                                                             // Creates a new JPanel called footerPanel
+        footerPanel.setBackground(MarketPlaceGUI.green);                                                        // Sets the background colour to green
+        footerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));                                                // Sets the layout to FlowLayout
         
-        footerButtonPanel = new JPanel();
-        footerButtonPanel.setBackground(MarketPlaceGUI.green);
-        footerButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        footerButtonPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 5, 20));
+        footerButtonPanel = new JPanel();                                                                       // Creates a new JPanel called footerButtonPanel
+        footerButtonPanel.setBackground(MarketPlaceGUI.green);                                                  // Sets the background colour to green
+        footerButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));                                          // Sets the layout to FlowLayout
+        footerButtonPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 5, 20));      // Creates a custom border for the footerButtonPanel
 
-        footerPanel.add(footerButtonPanel);
-        add(footerPanel, BorderLayout.SOUTH);
+        footerPanel.add(footerButtonPanel);                                                                     // Adds the footerButtonPanel to the footerPanel
+        add(footerPanel, BorderLayout.SOUTH);                                                                   // Adds the footerPanel to the viewAd Panel
 
     } 
     public Boolean populateScreen(int advertisementID)
         {
             try 
                 {
-                    adResultSet = DatabaseManager.executeQuery(DatabaseManager.ADVERTISEMENTS, "advertisements", "AdvertisementID", "" + advertisementID, "", "");
-                    adResultSet.next();
-                    adID = advertisementID;
-                    Blob image = adResultSet.getBlob("Image");
-                    adImage.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(450, 450, Image.SCALE_SMOOTH)));
-                    adImage.setText("");
-                    adTitle.setText(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model"));
+                    adResultSet = DatabaseManager.innerJoinQuery("advertisements", "accounts", "AccountID", "AccountID", "AdvertisementID", "" + advertisementID); // Search for advertisement in database with given ID
+                    adResultSet.next(); // Moves to the first row
+                    adID = advertisementID; // Sets the adID variable to the provided Ad ID
+                    Blob image = adResultSet.getBlob("Image");  // Gets the ad image blob
+                    adImage.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(450, 450, Image.SCALE_SMOOTH))); // Create image from the blob, scale it to 450 x 450, and set it as the icon for adImage
+                    adImage.setText(""); // Make sure the text for the adImage Label is empty
+                    adTitle.setText(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model")); // Set the title to be the year + make + model, e.g. 2017 Ford Mondeo
                     adDescription.setText("Description: " + adResultSet.getString("Description"));
-                    price.setText("$" + adResultSet.getInt("Price"));
-                    fuelType.setText("Fuel Type: " + adResultSet.getString("FuelType"));
-                    mileage.setText("Mileage: " + adResultSet.getString("Mileage"));
-                    previousOwners.setText("Previous Owners: " + adResultSet.getInt("PreviousOwners"));
-                    engineSize.setText("Engine Size: " + adResultSet.getDouble("EngineSize"));
-                    gearBox.setText("Gearbox: " + adResultSet.getString("GearBox"));
-                    adAccountId = adResultSet.getInt("AccountID");
+                    price.setText("$" + adResultSet.getInt("Price")); // Sets the price of the ad
+                    fuelType.setText("Fuel Type: " + adResultSet.getString("FuelType")); // Sets the fuelType of the ad
+                    mileage.setText("Mileage: " + adResultSet.getString("Mileage")); // Sets the mileage of the ad
+                    previousOwners.setText("Previous Owners: " + adResultSet.getInt("PreviousOwners")); // Sets the previousOwners of the ad
+                    engineSize.setText("Engine Size: " + adResultSet.getDouble("EngineSize")); // Sets the engineSize of the ad
+                    gearBox.setText("Gearbox: " + adResultSet.getString("GearBox")); // Sets the gearBox of the ad
+                    adAccountId = adResultSet.getInt("AccountID"); // sets the adAccountID of the ad
                     
-
-                    userResultSet = DatabaseManager.executeQuery(DatabaseManager.ACCOUNTS, "accounts", "AccountID", "" + adResultSet.getInt("AccountID"), "", "");
-                    userResultSet.next();
-                    sellerUsername.setText(userResultSet.getString("Username"));
-                    phone.setText("Phone: " + userResultSet.getString("Phone"));
-                    email.setText("Email: " + userResultSet.getString("Email"));
-                    county.setText("County: " + userResultSet.getString("County"));
-                    image = userResultSet.getBlob("ProfilePic");
-                    sellerPic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+                    sellerUsername.setText(adResultSet.getString("Username"));    // Sets the sellers username in the ad
+                    phone.setText("Phone: " + adResultSet.getString("Phone"));    // Sets the sellers phone number in the ad
+                    email.setText("Email: " + adResultSet.getString("Email"));    // Sets the sellers email in the ad
+                    county.setText("County: " + adResultSet.getString("County")); // Sets the sellers county in the ad
+                    image = adResultSet.getBlob("ProfilePic");                    // Gets the blob for the sellers profile pic
+                    sellerPic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(150, 150, Image.SCALE_SMOOTH))); // Converts the image blob to an image, scales it, and sets the sellers profile pic in the ad
                     
                     return true;
                 }
