@@ -72,11 +72,11 @@ public class MarketPlaceGUI extends JPanel
             setLayout(new BorderLayout());                                                                   
             setBackground(grey);      
             placeAdButton = new JButton("Place Ad");                                                              // Creates a JButton instance called placeAdButton
-            placeAdButton.addActionListener(new placeAdButtonAL(MarketPlaceGUI.this));                                 // Adds an action listener to the placeAdButton to take the user to the place ad page           
+            placeAdButton.addActionListener(new PlaceAdButtonAL(MarketPlaceGUI.this));                                 // Adds an action listener to the placeAdButton to take the user to the place ad page           
             loginButton = new JButton("Login");                                                                   // Creates a JButton instance called loginButton
-            loginButton.addActionListener(new loginButtonAL(MarketPlaceGUI.this));                                     // Adds an action listener to the loginButton to take the user to the login page
+            loginButton.addActionListener(new LoginButtonAL(MarketPlaceGUI.this));                                     // Adds an action listener to the loginButton to take the user to the login page
             signUpButton = new JButton("Sign Up");                                                                // Creates a JButton instance called signUpButton
-            signUpButton.addActionListener(new signupButtonAL(MarketPlaceGUI.this));                                   // Adds an action listener to the signupButton to take the user to the sign up page
+            signUpButton.addActionListener(new SignupButtonAL(MarketPlaceGUI.this));                                   // Adds an action listener to the signupButton to take the user to the sign up page
             searchButton = new JButton("Search");                                                                 // Creates a JButton instance called searchButton
             searchButton.addActionListener(new ActionListener()
             {
@@ -90,9 +90,9 @@ public class MarketPlaceGUI extends JPanel
                 }
             }); 
             accountButton = new JButton("Your Account");                                                          // Creates a JButton instance called accountButton
-            accountButton.addActionListener(new accountButtonAL(MarketPlaceGUI.this));                                 // Adds an action listener to take the user to their account
+            accountButton.addActionListener(new AccountButtonAL(MarketPlaceGUI.this));                                 // Adds an action listener to take the user to their account
             logoutButton = new JButton("Log Out");                                                                // Adds a log out button to allow the user to log out
-            logoutButton.addActionListener(new logoutButtonAL());                                                      // Adds action listener to allow the user to log out 
+            logoutButton.addActionListener(new LogoutButtonAL());                                                      // Adds action listener to allow the user to log out 
             searchField = new JTextField(20);                                                                  // Creates a JTextField instance called searchField
             
             topPanel = new JPanel(new GridLayout(1, 3));                                                     // Creates a top panel using Grid layout (1 row, 3 columns) to hold the button panels
