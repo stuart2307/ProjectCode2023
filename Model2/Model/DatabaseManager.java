@@ -8,12 +8,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
+//
+// Class Name : DatabaseManager
+//
+// Author     : Stuart Rossiter, Diarmuid O'Neill, Isaiah Andres
+//
+// Purpose    : This class handles database connections and provides methods for CRUD operations
+//
+
 public class DatabaseManager {
 
     static Connection connection = null;
     private static final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
+
+    // Paramater arrays for database tables
+
     static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "ProfilePic"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
     static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "GearBox", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
@@ -23,7 +34,10 @@ public class DatabaseManager {
 
     public static void establishConnection()
     {
-               try 
+
+        // This method establishes a connection to the database
+
+        try 
         {
             //Establish the connection
 
@@ -56,20 +70,22 @@ public class DatabaseManager {
         }
     }
 
-
-
-
     public static int createEntry(String table, String parameters[], String values[])
         {
+
+            // This method allows the creation of an entry in the database
+
             try
             {
                 int index;
                 String valueString = "";
 
                 // Creates a New Entry for a Table
+
                 PreparedStatement pstat = null;
 
                 // Makes a string for the values placeholders
+
                 for (index = 0; index < parameters.length; index++)
                     {
                         if(parameters[index].equals("AdvertisementID"))
@@ -86,6 +102,9 @@ public class DatabaseManager {
                             }
                     }
                 String parametersString ="";
+
+                // Makes a string for parameters
+
                 for (index = 0; index < parameters.length; index++)
                     {
                         if (parameters[index].equals("AdvertisementID"))
@@ -103,6 +122,7 @@ public class DatabaseManager {
                     }
                     
                 // Create a prepared statement using the supplied parameters
+
                 pstat = connection.prepareStatement("INSERT INTO " + table + " (" + parametersString + ") VALUES (" + valueString + ")");
 
                 for(int i=0; i<parameters.length;i++)
@@ -255,48 +275,61 @@ public class DatabaseManager {
         }
 
 
+public static ResultSet innerJoinQuery(String tableOne, String tableTwo, String constraintOne, String constraintTwo, String parameter, String value)
+        {
+            try 
+            {
+                PreparedStatement pstat = connection.prepareStatement("SELECT * FROM " + tableOne + " INNER JOIN " + tableTwo + " ON " + tableOne + "." + constraintOne +" = " + tableTwo + "." + constraintTwo + " WHERE " + parameter + " = ?");     
+                pstat.setString(1, value);
+                return pstat.executeQuery();
+            } 
+            catch (SQLException e) 
+            {
+                return null;
+            }
 
+        }
 
-public static int deleteEntry(String table, String column, String parameter) //working on this one
+public static int deleteEntry(String table, String column, String parameter)
     {
+
+        // This method allows the deletion of entries in a table
+
         try 
         {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM " + table + " WHERE " + column + "=?");
             preparedStatement.setString(1, parameter);
 
             //Execute the deletion, and return the number of affected rows
+
             return preparedStatement.executeUpdate();
         }
         catch (SQLException e)
         {
             e.printStackTrace();
+
             //Handle exceptions appropriately
+
             return -1;
         }
     }
 
-
-
-
-public static void clearArray(String array[])
-    {
-        int index;
-        for (index = 0; index < array.length; index++)
-            {
-                array[index] = null;
-            }
-    }
-
 public static boolean countRows(String table, String column, String parameter)
 {
+
+    // 
+
     try
     {
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM " + table + " WHERE BINARY " + column +"=?"); //WHERE BINARY converts the where clause to a binary string to make the input case sensitive
+
+        //WHERE BINARY converts the where clause to a binary string to make the input case sensitive
+
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM " + table + " WHERE BINARY " + column +"=?"); 
         preparedStatement.setString(1, parameter); 
-        ResultSet rs = preparedStatement.executeQuery(); //Taking in the results to a ResultSet variable
-        rs.next(); //Moving the pointer of the resultset to the next row which is the first one
-        int rowCount = rs.getInt(1); //Getting the result of the first column
-        if(rowCount >= 1) //If there exists a column then the input for the where clause exists eg. a username already exists
+        ResultSet rs = preparedStatement.executeQuery();                //Taking in the results to a ResultSet variable
+        rs.next();                                                      //Moving the pointer of the resultset to the next row which is the first one
+        int rowCount = rs.getInt(1);                        //Getting the result of the first column
+        if(rowCount >= 1)                                               //If there exists a column then the input for the where clause exists eg. a username already exists
         {
             return true;
         }
@@ -315,6 +348,9 @@ public static boolean countRows(String table, String column, String parameter)
 
 public static boolean checkPassword(String username, String password)
 {
+
+    // 
+    
     try
     {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Username =?" + " AND Password =?");

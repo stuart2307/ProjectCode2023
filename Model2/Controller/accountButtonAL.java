@@ -2,10 +2,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
-public class accountButtonAL implements ActionListener 
+public class AccountButtonAL implements ActionListener 
 {
-    JPanel from;
-    public accountButtonAL(JPanel switchFrom)
+    private JPanel from;
+    public AccountButtonAL(JPanel switchFrom)
         {
             from = switchFrom;
         }

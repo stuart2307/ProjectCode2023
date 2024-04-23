@@ -3,14 +3,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-public class marketplaceButtonAL implements ActionListener
+public class MarketplaceButtonAL implements ActionListener
 {
-    JPanel from;
-    public marketplaceButtonAL(JPanel switchFrom)
+    private JPanel from;
+    public MarketplaceButtonAL(JPanel switchFrom)
         {
             from = switchFrom;
         }   
-    public void actionPerformed(ActionEvent market)
+    public void actionPerformed(ActionEvent marketClicked)
         {
             GUIManager.changeMarketplace(from, "");
         }

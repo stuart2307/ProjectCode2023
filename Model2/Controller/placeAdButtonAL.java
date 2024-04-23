@@ -3,14 +3,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-public class placeAdButtonAL implements ActionListener
+public class PlaceAdButtonAL implements ActionListener
 {
-    JPanel from;
-    public placeAdButtonAL(JPanel switchFrom)
+    private JPanel from;
+    public PlaceAdButtonAL(JPanel switchFrom)
         {
             from = switchFrom;
         }   
-    public void actionPerformed(ActionEvent market)
+    public void actionPerformed(ActionEvent placeAdClicked)
         {
             GUIManager.changeCreateAd(from);
         }

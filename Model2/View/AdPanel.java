@@ -22,6 +22,14 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+//
+// Class Name : AdPanel
+//
+// Author     : Diarmuid O'Neill
+//
+// Purpose    : This GUI provides the user with a form like interface to allow them to create a new advertisement.
+//
+
 public class AdPanel extends JPanel
 {
     private JPanel placeAdPanel;
@@ -90,54 +98,57 @@ public class AdPanel extends JPanel
 
     public AdPanel()
     {
-        placeAdPanel = new JPanel();                                                // Creates a main panel for elements relating to placing an ad
-        placeAdPanel.setLayout(new BoxLayout(placeAdPanel, BoxLayout.Y_AXIS));      // Sets the layout of the placeAdPanel to boxLayout along the Y_Axis
-        placeAdPanel.setBackground(MarketPlaceGUI.green);
+        placeAdPanel = new JPanel();                                                            // Creates a main panel for elements relating to placing an ad
+        placeAdPanel.setLayout(new BoxLayout(placeAdPanel, BoxLayout.Y_AXIS));                  // Sets the layout of the placeAdPanel to boxLayout along the Y_Axis
+        placeAdPanel.setBackground(MarketPlaceGUI.green);                                       // Sets background colour to green
 
-        titlePanel = new JPanel();                                                  // Creates panel for the title
-        titlePanel.setLayout(new BorderLayout());                                   // Sets the titlePanel to BorderLayout
-        titlePanel.setPreferredSize(new Dimension(660, 100));          // Sets the preferred size of title panel
-        titlePanel.setBackground(MarketPlaceGUI.green);                             // Sets the colour of the title panel to green 
+        titlePanel = new JPanel();                                                              // Creates panel for the title
+        titlePanel.setLayout(new BorderLayout());                                               // Sets the titlePanel to BorderLayout
+        titlePanel.setPreferredSize(new Dimension(660, 100));                      // Sets the preferred size of title panel
+        titlePanel.setBackground(MarketPlaceGUI.green);                                         // Sets the colour of the title panel to green 
 
-        pageTitle = new JLabel("Create Advertisement ");                        // Creates the text for the title of the page 
-        pageTitle.setHorizontalAlignment(JLabel.RIGHT);                             // Positions the text to the center of the JLabel
-        pageTitle.setFont(MarketPlaceGUI.titleFont);                                // Sets the font, size and text decoration
-        pageTitle.setForeground(MarketPlaceGUI.white);                              // Sets title colour to white
+        pageTitle = new JLabel("Create Advertisement ");                                   // Creates the text for the title of the page 
+        pageTitle.setHorizontalAlignment(JLabel.RIGHT);                                         // Positions the text to the center of the JLabel
+        pageTitle.setFont(MarketPlaceGUI.titleFont);                                            // Sets the font, size and text decoration
+        pageTitle.setForeground(MarketPlaceGUI.white);                                          // Sets title colour to white
 
-        bottomPanel = new JPanel();                                                 // Creates the topPanel
-        returnButton = new JButton("Back");                                    // Creates the returnButton
+        bottomPanel = new JPanel();                                                             // Creates the bottomPanel
+        returnButton = new JButton("Back");                                                // Creates the returnButton
         returnButton.addActionListener(new ActionListener() 
         {
+
+            // This anonymous inner class allows the user to return to the marketplace
+
             public void actionPerformed(ActionEvent back)
             {
-                blankEntryWarning.setVisible(false);
-                numberWarning.setVisible(false);
+                blankEntryWarning.setVisible(false);                                     // Resets error message
+                numberWarning.setVisible(false);                                         // Resets error message
                 GUIManager.changeMarketplace(AdPanel.this, "");                         // Switches to MarketPlaceGUI when clicking the back button
             }
         });
-        bottomPanel.setLayout(new GridLayout(1,2, 0, 40));      // Sets bottomPanel to borderLayout
+        bottomPanel.setLayout(new GridLayout(1,2, 0, 40));                 // Sets bottomPanel to grid layout (1 row 2 columns)
 
-        bottomPanel.setBackground(MarketPlaceGUI.green);                            // Sets the colour of bottomPanel to green
+        bottomPanel.setBackground(MarketPlaceGUI.green);                                       // Sets the colour of bottomPanel to green
+ 
+        leftPanel = new JPanel();                                                              // Creates a new JPanel called leftpanel
+        leftPanel.setLayout(new FlowLayout(FlowLayout.CENTER));                                // Sets it to flow layout center
+        leftPanel.setBackground(MarketPlaceGUI.green);                                         // Sets the background colour to green
+        leftPanel.add(returnButton);                                                           // Adds the return button to the left panel
 
-        leftPanel = new JPanel();
-        leftPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        leftPanel.setBackground(MarketPlaceGUI.green);
-        leftPanel.add(returnButton);
+        rightPanel = new JPanel();                                                             // Creates a new JPanel called rightPanel
+        rightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));                                // Sets it to be flow layout right
+        rightPanel.setBackground(MarketPlaceGUI.green);                                        // Sets its background colour to be green
+        rightPanel.add(pageTitle);                                                             // Adds the page title to this panel
+ 
+        bottomPanel.add(leftPanel);                                                            // The right and left panels are added to the bottom panel in order to align the 
+        bottomPanel.add(rightPanel);                                                           // title of the page and the back button in the correct areas on the screen
 
-        rightPanel = new JPanel();
-        rightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        rightPanel.setBackground(MarketPlaceGUI.green);
-        rightPanel.add(pageTitle);
-
-        bottomPanel.add(leftPanel);
-        bottomPanel.add(rightPanel);
-
-        titlePanel.add(bottomPanel, BorderLayout.SOUTH);                            // Adds the bottomPanel to the South region of titlePanel using borderLayout
+        titlePanel.add(bottomPanel, BorderLayout.SOUTH);                                              // Adds the bottomPanel to the South region of titlePanel using borderLayout
         
-        placeAdPanel.add(titlePanel);                                               // Adds title panel to the placeAdPanel
+        placeAdPanel.add(titlePanel);                                                                 // Adds title panel to the placeAdPanel
 
-        formPanel = new JPanel(new GridLayout(11, 2, 0, 20));   // Creates a form panel using grid layout with two columns
-        formPanel.setBackground(MarketPlaceGUI.green);                              // Sets colour of formPanel
+        formPanel = new JPanel(new GridLayout(11, 2, 0, 20));                     // Creates a form panel using grid layout with two columns
+        formPanel.setBackground(MarketPlaceGUI.green);                                                // Sets colour of formPanel
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));     // Sets an empty top and bottom border to formpanel
 
         // Create labels and text fields
@@ -155,7 +166,7 @@ public class AdPanel extends JPanel
         {
             public void actionPerformed(ActionEvent choicePicked)
             {
-                fuelSelection = (String) fuelType.getSelectedItem();                  // Method for selecting fuelType when using combobox
+                fuelSelection = (String) fuelType.getSelectedItem();                            // Method for selecting fuelType when using combobox
             }
         });
         transmissionLabel = new JLabel("Transmission Type : ");
@@ -165,7 +176,7 @@ public class AdPanel extends JPanel
         {
             public void actionPerformed(ActionEvent choicePicked)
             {
-                transmissionSelection = (String) transmissionType.getSelectedItem();          // Method for selecting transmissionType when using combobox
+                transmissionSelection = (String) transmissionType.getSelectedItem();            // Method for selecting transmissionType when using combobox
             }
         });
         yearLabel = new JLabel("Car Year : ");
@@ -194,6 +205,9 @@ public class AdPanel extends JPanel
         uploadImage = new JButton("Upload Image");
         uploadImage.addActionListener(new ActionListener() 
         {
+ 
+            // This anonymous inner class is for uploading an image using a file selector
+
             public void actionPerformed(ActionEvent selectFile)
                 {
                     LookAndFeel laf = UIManager.getLookAndFeel();
@@ -251,6 +265,9 @@ public class AdPanel extends JPanel
 
                 try 
                 {
+
+                    // Checks to make sure there are no blank entries
+
                     Verifiers.VerifyEntries(detailsArray);
                     if(blankEntryFlag==true)
                     {
@@ -261,18 +278,27 @@ public class AdPanel extends JPanel
                 }
                 catch(BlankEntryException blankEntryException)
                 {
+
+                    // Display warning message
+
                     blankEntryFlag = true;
                     blankEntryWarning.setVisible(true);
                     blankEntryException.printStackTrace();
                 }
                 finally
                 {
+ 
+                    // Refreshes warning message
+
                     blankEntryWarning.revalidate();
                     blankEntryWarning.repaint();
                 }
 
                 try
                 {
+
+                    // Checks that the entered year is an int 
+
                     Verifiers.VerifyInt(year);
                     if(yearFlag==true)
                     {
@@ -282,18 +308,27 @@ public class AdPanel extends JPanel
                 }
                 catch(InputMismatchException IntException)
                 {
+
+                    // Displays warning message
+
                     yearFlag = true;
                     numberWarning.setVisible(true);
                     IntException.printStackTrace();
                 }
                 finally
                 {
+
+                    // Refreshes warning message
+
                     numberWarning.revalidate();
                     numberWarning.repaint();
                 }
 
                 try
                 {
+
+                    // Checks that the entered mileage is an int 
+
                     Verifiers.VerifyInt(mileage);
                     if(mileageFlag==true)
                     {
@@ -303,18 +338,27 @@ public class AdPanel extends JPanel
                 }
                 catch(InputMismatchException IntException)
                 {
+
+                    // Display warning message 
+
                     mileageFlag = true;
                     numberWarning.setVisible(true);
                     IntException.printStackTrace();
                 }
                 finally
                 {
+
+                    // Refreshes warning message
+
                     numberWarning.revalidate();
                     numberWarning.repaint();
                 }
 
                 try
                 {
+
+                    // Checks the entered number of previous owners is an int
+
                     Verifiers.VerifyInt(previousOwners);
                     if(ownerFlag==true)
                     {
@@ -324,18 +368,27 @@ public class AdPanel extends JPanel
                 }
                 catch(InputMismatchException IntException)
                 {
+
+                    // Displays a warning message 
+
                     ownerFlag = true;
                     numberWarning.setVisible(true);
                     IntException.printStackTrace();
                 }
                 finally
                 {
+
+                    // Refreshes warning message
+
                     numberWarning.revalidate();
                     numberWarning.repaint();
                 }
 
                 try
                 {
+
+                    // Checks to make sure the entered engine size is a double
+
                     Verifiers.VerifyDouble(engineSize);
                     if(engineFlag==true)
                     {
@@ -345,54 +398,73 @@ public class AdPanel extends JPanel
                 }
                 catch(InputMismatchException DoubleException)
                 {
+
+                    // Displays warning message
+
                     engineFlag = true;
                     numberWarning.setVisible(true);
                     DoubleException.printStackTrace();
                 }
                 finally
                 {
+
+                    // Refreshes warning message
+
                     numberWarning.revalidate();
                     numberWarning.repaint();
                 }
 
                 if (blankEntryFlag || yearFlag || mileageFlag || ownerFlag || engineFlag)
                 {
+
+                    // If any error was encountered print this message to the console
+
                     System.out.println("oops, account not created!");
                 }
                 else
                 {
 
+                    // If no errors were encountered then create an advertisement record
+
                     DatabaseManager.createEntry("advertisements", DatabaseManager.ADVERTISEMENTS, detailsArray);
 
                     try 
                     {
+
+                        // SQL statement to retrieve advertisementID of the ad we just created
+
                         ResultSet results = DatabaseManager.executeQuery(new String[]{"AdvertisementID"}, "advertisements", "", "", "DESC", "AdvertisementID");
 
                         results.next();
+
+                        // Upon creating an ad successfully the user is taken to the ad they just created
 
                         GUIManager.changeViewAd(AdPanel.this, results.getInt(1));
                     }
                     catch (SQLException e)
                     {
+
+                        // Catch the potential SQL exception
+
                         System.err.println("Error processing sql results...");
                     }
                 }
             }
         });
 
-        warningPanel = new JPanel(new GridLayout(2, 1, 10, 10));
-        warningPanel.setBackground(MarketPlaceGUI.green);
-        numberWarning.setVisible(false);
+        warningPanel = new JPanel(new GridLayout(2, 1, 10, 10));                    // Creates a warningPanel using grid layout (2 rows 1 column)
+        warningPanel.setBackground(MarketPlaceGUI.green);                                               // Sets background to green
+        numberWarning.setVisible(false);                                                          // Sets warnings to be invisible at the start
         blankEntryWarning.setVisible(false);
-        warning1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        warning1 = new JPanel(new FlowLayout(FlowLayout.CENTER));                                       // Creates and lays out individual warnings 
         warning1.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
         warning1.setBackground(MarketPlaceGUI.green);
         warning2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         warning2.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         warning2.setBackground(MarketPlaceGUI.green);
-        warning1.add(blankEntryWarning);
+        warning1.add(blankEntryWarning);                                                                // Adds warnings to warning panels
         warning2.add(numberWarning);
-        warningPanel.add(warning1);
+        warningPanel.add(warning1);                                                                     // Adds individual warning panels to the main warning panel
         warningPanel.add(warning2);
 
         // Add labels and text fields to the panel
