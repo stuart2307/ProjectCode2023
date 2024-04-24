@@ -419,8 +419,6 @@ public static void addReview(String reviewerID, String revieweeID, String review
         preparedStatement.setString(2, revieweeID);
         preparedStatement.setString(3, reviewType);
         preparedStatement.executeUpdate();
-        
-        Verifiers.VerifyReviewType(reviewType, reviewerID, revieweeID);
     }
     catch(SQLIntegrityConstraintViolationException SQLICVE) //Exception that takes place upon a duplicate entry due to keys
     {
@@ -442,11 +440,7 @@ public static void addReview(String reviewerID, String revieweeID, String review
     catch(SQLException sqle)
     {
         System.out.println("sqle triggered");
-    } 
-    catch(SameReviewException sre)
-    {
-        System.out.println("sre triggered");
-    }            
+    }     
             
 }
 
