@@ -128,6 +128,7 @@ public class GUIManager
                 {
                     viewAd.deleteButton.setVisible(true);
                     viewAd.footerButtonPanel.add(viewAd.deleteButton);
+                    viewAd.likeDislikePanel.setVisible(false);
                 }
                 else
                 {
@@ -160,6 +161,8 @@ public class GUIManager
             viewAd.topPanel.remove(viewAd.preLoginButtonPanel);
             viewAd.postLoginButtonPanel.setVisible(true);
             viewAd.topPanel.add(viewAd.postLoginButtonPanel);
+            viewAd.likeDislikePanel.setVisible(true);
+            
         }
         public static void loggedOut()
         {
@@ -174,7 +177,9 @@ public class GUIManager
             viewAd.topPanel.add(viewAd.preLoginButtonPanel);
             viewAd.deleteButton.setVisible(false);
             viewAd.footerButtonPanel.remove(viewAd.deleteButton);
+            viewAd.likeDislikePanel.setVisible(false);
         }
+
     public static Boolean checkConnection()
         {
             try{

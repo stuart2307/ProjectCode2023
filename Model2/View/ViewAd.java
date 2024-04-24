@@ -15,6 +15,7 @@ import java.awt.event.MouseListener;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -41,7 +42,7 @@ public class ViewAd extends JPanel
     private JPanel sellerInfoPanel;
     private JPanel vehicleInfoPanel;
     private JPanel imagePanel;
-    private JPanel likeDislikePanel = new JPanel(new GridLayout(1, 2));
+    protected JPanel likeDislikePanel = new JPanel(new GridLayout(1, 2));
     protected JButton loginButton = new JButton("Log In");
     protected JButton signUpButton = new JButton("Sign Up");
     protected JButton logoutButton = new JButton("Log Out");
@@ -74,9 +75,9 @@ public class ViewAd extends JPanel
     private JLabel phone = new JLabel();
     private JLabel email = new JLabel();
     private JLabel county = new JLabel();
-    private JPanel userRatingPanel = new JPanel(new GridLayout(1,2));
-    private JLabel userRatingLabel = new JLabel("Rating:");
-    private JLabel userRatingLabel2 = new JLabel();
+    private JPanel userRatingPanel = new JPanel(new FlowLayout());
+    private JLabel userRatingLabel = new JLabel();
+    private String[] reviewDetails = new String[3];
 
     private int adAccountId;
 
@@ -113,11 +114,11 @@ public class ViewAd extends JPanel
         postLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));  // Sets a custom border around the contents
         postLoginButtonPanel.setBackground(MarketPlaceGUI.green);                                               // Sets the background to green
 
-        likeDislikePanel.add(likeButton);                                                                       // Adds the likeButton to the likeDislikePanel
-        likeDislikePanel.add(dislikeButton);                                                                    // Adds the dislikeButton to the likeDislikePanel
-
-        userRatingPanel.add(userRatingLabel);                                                                   // Adds the userRatingLabel JLabel to the userRatingPanel
-        userRatingPanel.add(userRatingLabel2);                                                                  // Adds the userRatingLabel2 JLabel to the userRatingPanel
+        likeDislikePanel.setVisible(false);
+        likeDislikePanel.add(likeButton);
+        likeDislikePanel.add(dislikeButton);
+        
+        userRatingPanel.add(userRatingLabel);
 
         loginButton.addActionListener(new LoginButtonAL(ViewAd.this));                                          // Adds named action listeners to the buttons
         signUpButton.addActionListener(new SignupButtonAL(ViewAd.this));                                        
@@ -332,6 +333,50 @@ public class ViewAd extends JPanel
                     adImage.setText(""); // Make sure the text for the adImage Label is empty
                     adTitle.setText(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model")); // Set the title to be the year + make + model, e.g. 2017 Ford Mondeo
                     adDescription.setText("Description: " + adResultSet.getString("Description"));
+                    price.setText("$" + adResultSet.getInt("Price"));
+                    fuelType.setText("Fuel Type: " + adResultSet.getString("FuelType"));
+                    mileage.setText("Mileage: " + adResultSet.getString("Mileage"));
+                    previousOwners.setText("Previous Owners: " + adResultSet.getInt("PreviousOwners"));
+                    engineSize.setText("Engine Size: " + adResultSet.getDouble("EngineSize"));
+                    gearBox.setText("Gearbox: " + adResultSet.getString("GearBox"));
+                    adAccountId = adResultSet.getInt("AccountID");
+
+                    ResultSet userResultSet;
+                    userResultSet = DatabaseManager.executeQuery(DatabaseManager.ACCOUNTS, "accounts", "AccountID", "" + adResultSet.getInt("AccountID"), "", "");
+                    userResultSet.next();
+                    sellerUsername.setText(userResultSet.getString("Username"));
+                    phone.setText("Phone: " + userResultSet.getString("Phone"));
+                    email.setText("Email: " + userResultSet.getString("Email"));
+                    county.setText("County: " + userResultSet.getString("County"));
+                    image = userResultSet.getBlob("ProfilePic");
+                    sellerPic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+                    int positiveReviews = DatabaseManager.countPositiveReviews( "" + adAccountId + "");
+                    int allReviews = DatabaseManager.countAllReviews( "" + adAccountId + "");
+                    Double userReviewScore = ((double)positiveReviews/allReviews) * 100.0;   
+                    System.out.println(userReviewScore);
+                    // Round to two decimal places
+                    double roundedUserReviewScore = Math.round(userReviewScore * 100.0)/100.0;
+                    userRatingLabel.setText("Rating: " + roundedUserReviewScore);
+                    if(CurrentSession.getLoginStatus())
+                    {
+
+                        int revieweeID = adAccountId;
+                        int reviewerID = CurrentSession.getUserID();
+
+                        String revieweeIDString = String.valueOf(revieweeID);
+                        String reviewerIDString = String.valueOf(reviewerID);
+                        reviewDetails[0] = reviewerIDString;
+                        reviewDetails[1] = revieweeIDString;
+
+                        likeButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent likeUser)
+                            {
+                                int reviewChoice = 1;
+                                String reviewChoiceString = String.valueOf(reviewChoice); 
+                                reviewDetails[2] = reviewChoiceString;
+                                DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);                                 
+                            }
+                        });
                     price.setText("$" + adResultSet.getInt("Price")); // Sets the price of the ad
                     fuelType.setText("Fuel Type: " + adResultSet.getString("FuelType")); // Sets the fuelType of the ad
                     mileage.setText("Mileage: " + adResultSet.getString("Mileage")); // Sets the mileage of the ad
@@ -346,6 +391,18 @@ public class ViewAd extends JPanel
                     county.setText("County: " + adResultSet.getString("County")); // Sets the sellers county in the ad
                     image = adResultSet.getBlob("ProfilePic");                    // Gets the blob for the sellers profile pic
                     sellerPic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(150, 150, Image.SCALE_SMOOTH))); // Converts the image blob to an image, scales it, and sets the sellers profile pic in the ad
+                        likeDislikePanel.add(dislikeButton);
+                        dislikeButton.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent dislikeUser)
+                            {
+                                int reviewChoice = 0;
+                                String reviewChoiceString = String.valueOf(reviewChoice);
+                                reviewDetails[2] = reviewChoiceString;
+                                DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);
+                            }
+                        });
+                                                
+                    }
                 }
             catch (SQLException sqlException)
                 {
@@ -360,5 +417,6 @@ public class ViewAd extends JPanel
     {
         return adAccountId;
     }
+
 }
 

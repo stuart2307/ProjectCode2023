@@ -497,6 +497,7 @@ public class EditAccount extends JPanel{
                 for(int i=0;i<valueParameter.length;i++)
                 {
                     DatabaseManager.executeUpdate("accounts",DatabaseManager.ACCOUNTS[i] ,valueParameter[i] ,"AccountId" ,"" + CurrentSession.getUserID() + "");
+                    GUIManager.changeAccount(EditAccount.this, CurrentSession.getUserID());
                 }
             }
         }

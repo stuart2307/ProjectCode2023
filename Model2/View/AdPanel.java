@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
@@ -77,7 +78,7 @@ public class AdPanel extends JPanel
     private JTextField priceField;
     private JTextField engineField;
     private JTextField ownersField;
-    private JTextField descriptionField;
+    private JTextArea descriptionField;
 
     private JButton submitButton;
     private JButton returnButton;
@@ -195,7 +196,10 @@ public class AdPanel extends JPanel
         ownersField = new JTextField(20);
         descriptionLabel = new JLabel("Description : ");
         descriptionLabel.setHorizontalAlignment(JLabel.CENTER);
-        descriptionField = new JTextField(20);
+        descriptionField = new JTextArea();
+        descriptionField.setLineWrap(true);
+        descriptionField.setWrapStyleWord(true);
+        descriptionField.setPreferredSize(new Dimension(30, 10));
         uploadImageLabel = new JLabel("Upload Image : ");
         uploadImageLabel.setHorizontalAlignment(JLabel.CENTER);
         uploadImage = new JButton("Upload Image");
@@ -483,7 +487,6 @@ public class AdPanel extends JPanel
         formPanel.add(engineField);
         formPanel.add(ownersLabel);
         formPanel.add(ownersField);
-        formPanel.add(descriptionLabel);
         formPanel.add(descriptionField);
         formPanel.add(uploadImageLabel);
         formPanel.add(uploadImage);
