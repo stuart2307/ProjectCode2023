@@ -18,6 +18,9 @@ public class GUIManager
     private static ViewAd viewAd;
     private static NoConnection errorPanel;
 
+    private GUIManager()
+    {}
+
     public static void prepareManager()
         {
             errorPanel = new NoConnection();
