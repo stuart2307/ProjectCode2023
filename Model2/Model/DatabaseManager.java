@@ -32,6 +32,8 @@ public class DatabaseManager {
     static final String CHATLOG[] = {"ChatID", "MessageID"};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
 
+    private DatabaseManager(){}
+    
     public static void establishConnection()
     {
 
@@ -440,8 +442,8 @@ public static void addReview(String reviewerID, String revieweeID, String review
     catch(SQLException sqle)
     {
         System.out.println("sqle triggered");
-    }     
-            
+    }   
+          
 }
 
 public static int countPositiveReviews(String revieweeID)
