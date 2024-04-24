@@ -1,4 +1,6 @@
 import java.awt.Dimension;
+import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -14,13 +16,15 @@ public class GUIManager
     private static ViewAccount viewAccount;
     private static EditAccount editAccount;
     private static ViewAd viewAd;
+    private static NoConnection errorPanel;
 
     public static void prepareManager()
         {
+            errorPanel = new NoConnection();
             if (DatabaseManager.connection == null)
                 {
-                    NoConnection errorPanel = new NoConnection();
-                    frame.add(errorPanel, "Center");
+                    
+                    frame.add(errorPanel);
                 }
             else
                 {
@@ -47,78 +51,103 @@ public class GUIManager
             switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            marketplace.generateAds(search);
-            marketplace.setVisible(true);                           //Sets the marketplace's panel to be visible
-            frame.add(marketplace);                                 //Adds the marketplace's panel to the Frame
+            if (checkConnection())
+            {
+                marketplace.generateAds(search);
+                marketplace.setVisible(true);                           //Sets the marketplace's panel to be visible
+                frame.add(marketplace);                                 //Adds the marketplace's panel to the Frame                
+            }
         }
         public static void changeLogin(JPanel switchFrom)
         {
             switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            login.setVisible(true);                                 //Sets the login screen's panel to be visible
-            frame.add(login);                                       //Adds the login screen's panel to the Frame
+            if (checkConnection())
+            {
+                login.setVisible(true);                                 //Sets the login screen's panel to be visible
+                frame.add(login);                                       //Adds the login screen's panel to the Frame                
+            }
         }
         public static void changeSignup(JPanel switchFrom)
         {
             switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            signup.setVisible(true);                                //Sets the sign up screen's panel to be visible
-            frame.add(signup);                                      //Adds the sign up screen's panel to the Frame
+            if (checkConnection())
+            {
+                signup.setVisible(true);                                //Sets the sign up screen's panel to be visible
+                frame.add(signup);                                      //Adds the sign up screen's panel to the Frame  
+            }
         }
         public static void changeCreateAd(JPanel switchFrom)
         {
             switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            createAd.setVisible(true);                              //Sets the ad creation panel to be visible
-            frame.add(createAd);                                    //Adds the ad creation panel to the Frame
+            if (checkConnection())
+            {
+                createAd.setVisible(true);                              //Sets the ad creation panel to be visible
+                frame.add(createAd);                                    //Adds the ad creation panel to the Frame
+            }   
         }
         public static void changeAccount(JPanel switchFrom, int id)
         {
-            viewAccount.populatePage(id);
+            
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
             lastScreen = switchFrom;
-            viewAccount.setVisible(true);
-            frame.add(viewAccount);
+            if (checkConnection())
+            {
+                viewAccount.populatePage(id);
+                viewAccount.setVisible(true);
+                frame.add(viewAccount);
+            } 
         }
         public static void changeEditAccount(JPanel switchFrom)
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
             lastScreen = switchFrom;
-            editAccount.populateEditPage();
-            editAccount.setVisible(true);
-            frame.add(editAccount);
+            if (checkConnection())
+            {
+                editAccount.populateEditPage();
+                editAccount.setVisible(true);
+                frame.add(editAccount);
+            }
         }
         public static void changeViewAd(JPanel switchFrom, int adId)
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
             lastScreen = switchFrom;
-            viewAd.populateScreen(adId);
-            if(viewAd.getAdAccountId()==CurrentSession.getUserID())
+            if (checkConnection())
             {
-                viewAd.deleteButton.setVisible(true);
-                viewAd.footerButtonPanel.add(viewAd.deleteButton);
+                viewAd.populateScreen(adId);
+                if(viewAd.getAdAccountId()==CurrentSession.getUserID())
+                {
+                    viewAd.deleteButton.setVisible(true);
+                    viewAd.footerButtonPanel.add(viewAd.deleteButton);
+                }
+                else
+                {
+                    viewAd.deleteButton.setVisible(false);
+                    viewAd.footerButtonPanel.remove(viewAd.deleteButton);
+                }
+                viewAd.setVisible(true);
+                frame.add(viewAd);
             }
-            else
-            {
-                viewAd.deleteButton.setVisible(false);
-                viewAd.footerButtonPanel.remove(viewAd.deleteButton);
-            }
-            viewAd.setVisible(true);
-            frame.add(viewAd);
         }
         public static void backButton(JPanel switchFrom)
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
-            marketplace.generateAds("");
-            lastScreen.setVisible(true);
-            frame.add(lastScreen);
+            if (checkConnection())
+            {
+                marketplace.generateAds("");
+                lastScreen.setVisible(true);
+                frame.add(lastScreen);
+            }
         }
         public static void loggedIn()
         {
@@ -145,5 +174,24 @@ public class GUIManager
             viewAd.topPanel.add(viewAd.preLoginButtonPanel);
             viewAd.deleteButton.setVisible(false);
             viewAd.footerButtonPanel.remove(viewAd.deleteButton);
+        }
+    public static Boolean checkConnection()
+        {
+            try{
+            if (DatabaseManager.connection.isValid(1) == false)
+                {
+                    errorPanel.setVisible(true);
+                    frame.add(errorPanel);
+                    return false;
+                }
+            else
+                {
+                    return true;
+                }
+            }
+            catch (SQLException e)
+                {
+                    return false;
+                }
         }
 }

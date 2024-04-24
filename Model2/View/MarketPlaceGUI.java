@@ -43,11 +43,10 @@ public class MarketPlaceGUI extends JPanel
     protected JButton accountButton;
     protected JButton logoutButton;
     private JButton searchButton;
-    private JButton viewAccount = new JButton("Account");
     private JTextField searchField;
     private AdPreview ads[] = new AdPreview[45]; 
     private ResultSet adResultSet;
-    private ResultSetMetaData adRSMD;
+    private ResultSet accountResultSet;
     private int adCount = 0;
 
     public static Font titleFont = new Font("Arial", Font.BOLD, 30);
@@ -161,12 +160,12 @@ public class MarketPlaceGUI extends JPanel
                 if (search.equals(""))                                                                        // If search is blank
                 {
                     // This case deals with blank searches
-                    adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Year", "Make", "Model", "Price", "Image"}, "advertisements", "", "", "", "");
+                    adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "AccountID", "Year", "Make", "Model", "Price", "Image"}, "advertisements", "", "", "", "");
                 }
                 else
                 { 
                     // This case handles when a search has been inputted
-                    adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Year", "Make", "Model", "Price", "Image"}, "advertisements", "LIKE", search, "", "");
+                    adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "AccountID", "Year", "Make", "Model", "Price", "Image"}, "advertisements", "LIKE", search, "", "");
                 }
                 if (adResultSet.next() == false)
                     {
@@ -174,12 +173,16 @@ public class MarketPlaceGUI extends JPanel
                     }
                 else
                     {
+                        
                         do
                         {   
 
                             // This loop sets the details of the ad previews to be displayed on the page
 
                             ads[adCount].setAdID(adResultSet.getInt("AdvertisementID"));
+                            accountResultSet = DatabaseManager.executeQuery(new String[]{"Username"}, "accounts", "AccountID", "" + adResultSet.getInt("AccountID"), "", "");
+                            accountResultSet.next();
+                            ads[adCount].setSeller(accountResultSet.getString("Username"));
                             ads[adCount].setTitle(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model"));
                             ads[adCount].setPrice(adResultSet.getInt("Price"));
                             ads[adCount].setImage(adResultSet.getBlob("Image"));

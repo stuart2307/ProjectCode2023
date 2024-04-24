@@ -268,7 +268,7 @@ public class ViewAccount extends JPanel
                 Blob image = accountDetails.getBlob("ProfilePic");
                 profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
                 profilePicture.setText("");
-                ResultSet adResultSet = DatabaseManager.executeQuery(DatabaseManager.ADVERTISEMENTS, "advertisements", "AccountID", "" + id, "DESC", "AdvertisementID");
+                ResultSet adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Year", "Make", "Model", "Price", "Image"}, "advertisements", "AccountID", "" + id, "DESC", "AdvertisementID");
                 while (adResultSet.next() && adCount < 10)
                     {
                         ads[adCount].setAdID(adResultSet.getInt("AdvertisementID"));

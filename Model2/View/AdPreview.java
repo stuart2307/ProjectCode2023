@@ -103,8 +103,8 @@ public class AdPreview extends JPanel
         titleLabel.setText("Title: " + title);
     }
 
-    public void setDescription(String description) {
-        descriptionLabel.setText("Description: " + description);
+    public void setSeller(String seller) {
+        descriptionLabel.setText("Seller: " + seller);
     }
 
     public void setPrice(int price) {

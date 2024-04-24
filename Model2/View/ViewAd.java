@@ -320,7 +320,7 @@ public class ViewAd extends JPanel
         add(footerPanel, BorderLayout.SOUTH);                                                                   // Adds the footerPanel to the viewAd Panel
 
     } 
-    public Boolean populateScreen(int advertisementID)
+    public void populateScreen(int advertisementID)
         {
             try 
                 {
@@ -346,14 +346,11 @@ public class ViewAd extends JPanel
                     county.setText("County: " + adResultSet.getString("County")); // Sets the sellers county in the ad
                     image = adResultSet.getBlob("ProfilePic");                    // Gets the blob for the sellers profile pic
                     sellerPic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(150, 150, Image.SCALE_SMOOTH))); // Converts the image blob to an image, scales it, and sets the sellers profile pic in the ad
-                    
-                    return true;
                 }
             catch (SQLException sqlException)
                 {
                     sqlException.printStackTrace();
                     adImage.setText("No image found!");
-                    return false;
                 }
             
             

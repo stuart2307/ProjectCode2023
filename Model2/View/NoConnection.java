@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class NoConnection extends JPanel
 {
@@ -11,6 +12,7 @@ public class NoConnection extends JPanel
             setBackground(MarketPlaceGUI.green);
             setLayout(new BorderLayout());
             error.setFont(MarketPlaceGUI.titleFont);
+            error.setHorizontalAlignment(SwingConstants.CENTER);
             add(error, BorderLayout.CENTER);
         }
 }
