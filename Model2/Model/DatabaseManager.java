@@ -33,7 +33,7 @@ public class DatabaseManager {
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
 
     private DatabaseManager(){}
-    
+
     public static void establishConnection()
     {
 
@@ -72,7 +72,7 @@ public class DatabaseManager {
         }
     }
 
-    public static int createEntry(String table, String parameters[], String values[])
+    public static void createEntry(String table, String parameters[], String values[])
         {
 
             // This method allows the creation of an entry in the database
@@ -90,11 +90,7 @@ public class DatabaseManager {
 
                 for (index = 0; index < parameters.length; index++)
                     {
-                        if(parameters[index].equals("AdvertisementID"))
-                        {
-
-                        }
-                        else if (index == 0)
+                        if (index == 0)
                             {
                                 valueString = "?";
                             }
@@ -109,11 +105,7 @@ public class DatabaseManager {
 
                 for (index = 0; index < parameters.length; index++)
                     {
-                        if (parameters[index].equals("AdvertisementID"))
-                            {
-
-                            }
-                        else if (index == 0)
+                        if (index == 0)
                             {
                                 parametersString = parameters[index];
                             }
@@ -152,17 +144,15 @@ public class DatabaseManager {
                 }
 
                 // Execute update and return the number of rows affected
-                return pstat.executeUpdate();
+                pstat.executeUpdate();
             }
             catch(SQLIntegrityConstraintViolationException SQLICVE)
             {
-                return 1;
             }
             catch (SQLException e)
             {
                 e.printStackTrace();
                 // Handle exceptions appropriately
-                return -1;
             }
         }
 
@@ -236,7 +226,7 @@ public class DatabaseManager {
 
 
 
-    public static int executeUpdate(String table, String setParameter, String setValue, String locationParameter, String locationValue) 
+    public static void executeUpdate(String table, String setParameter, String setValue, String locationParameter, String locationValue) 
         {
             try 
             {
@@ -256,23 +246,20 @@ public class DatabaseManager {
                                 fnfe.printStackTrace();
                                 System.out.println("oops");
                             }
-                        
                     }
                 else
                     {
                         prepStatement.setString(1, setValue);
                     }
-                prepStatement.setString (2, locationValue );
-    
+                prepStatement.setString (2, locationValue);
                 //Execute the update and return the number of affected rows
-                return prepStatement.executeUpdate();
+                prepStatement.executeUpdate();
             } 
     
             catch (SQLException failedConnection) 
             {
                 failedConnection.printStackTrace();
                 //Handle exceptions appropriately
-                return -1;
             }
         }
 
@@ -292,7 +279,7 @@ public static ResultSet innerJoinQuery(String tableOne, String tableTwo, String 
 
         }
 
-public static int deleteEntry(String table, String column, String parameter)
+public static void deleteEntry(String table, String column, String parameter)
     {
 
         // This method allows the deletion of entries in a table
@@ -302,17 +289,11 @@ public static int deleteEntry(String table, String column, String parameter)
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM " + table + " WHERE " + column + "=?");
             preparedStatement.setString(1, parameter);
 
-            //Execute the deletion, and return the number of affected rows
-
-            return preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         }
         catch (SQLException e)
         {
             e.printStackTrace();
-
-            //Handle exceptions appropriately
-
-            return -1;
         }
     }
 
