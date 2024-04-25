@@ -10,7 +10,7 @@ import java.util.InputMismatchException;
 //
 
 public class Verifiers {
-    public static void VerifyEntries(String[] Entries) throws BlankEntryException
+    public static void VerifyEntries(String[] Entries) throws BlankEntryException 
     {
  
         // This method throws a BlankEntryException if not all fields have been filled out in a particular form

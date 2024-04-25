@@ -15,7 +15,7 @@ import javax.swing.JPasswordField;
 
 public class Login extends JPanel
 {
-    private JLabel usernameLabel;
+    private JLabel usernameLabel; //Declaring variables
     private JLabel usernameWarning;
     private JLabel passwordWarning;
     private JLabel blankEntryWarning;
@@ -33,19 +33,19 @@ public class Login extends JPanel
     public Color white = new Color(255,255,255);                                               // Title text colour
     public Color grey = new Color(220,220,220);                                                // Primary background colour
     private Font titleFont = new Font("Arial", Font.BOLD, 30);
-    private JLabel title = new JLabel("Log In");
+    private JLabel title = new JLabel("Log In"); //Setting the label's text
 
     public Login()
     {
-        setLayout(new GridBagLayout());
+        setLayout(new GridBagLayout()); //Setting the layout and background colour
         setBackground(green);
         GridBagConstraints gbc = new GridBagConstraints();
 
-        backButton = new JButton("Back");
-        backButton.addActionListener(new BackButtonAL(Login.this));
+        backButton = new JButton("Back"); //Placing the back button, and adding an action listener to it
+        backButton.addActionListener(new BackButtonAL(Login.this)); 
         gbc.gridx = 0; 
         gbc.gridy = 0; // Place at the first row
-        gbc.insets = new Insets(10, 10, 10, 10); 
+        gbc.insets = new Insets(10, 10, 10, 10); //Specifying the padding for this element
         add(backButton, gbc);
 
 
@@ -53,28 +53,28 @@ public class Login extends JPanel
         title.setForeground(white);                                                                             // Sets the title text colour to white
         title.setBackground(green);
 
-        title.setOpaque(true);
+        title.setOpaque(true); //Setting the title to be visible
         gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(0, 0, 10, 0);
+        gbc.gridy = 0; // Place the title next to the back button
+        gbc.insets = new Insets(0, 0, 10, 0); //Specifying the padding for this element
         add(title,gbc);
 
-        usernameLabel = new JLabel("Enter Username:");
-        gbc.insets = new Insets(0, 0, 0, 10);
+        usernameLabel = new JLabel("Enter Username:"); //Setting the label's text
+        gbc.insets = new Insets(0, 0, 0, 10); //Specifying the padding for this element
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 1; //Placing the label below the title and corresponding field below the title
         add(usernameLabel, gbc);
 
         usernameInput = new JTextField();
         usernameInput.setColumns(30);
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 1; 
         add(usernameInput, gbc);
 
-        passwordLabel = new JLabel("Enter Password:");
-        gbc.insets = new Insets(0, 0, 0, 10);
+        passwordLabel = new JLabel("Enter Password:"); //Setting the label's text
+        gbc.insets = new Insets(0, 0, 0, 10); //Specifying the padding for this element
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 2; //PLacing the password label and corresponding field below the username field
         add(passwordLabel, gbc);
 
         passwordInput = new JPasswordField();
@@ -82,11 +82,11 @@ public class Login extends JPanel
         gbc.gridx = 1;
         gbc.gridy = 2;
         add(passwordInput, gbc);
-
-        loginButton = new JButton("Log In");
+ 
+        loginButton = new JButton("Log In"); //Setting the label's text
         gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.insets = new Insets(10, 0, 0, 15);
+        gbc.gridy = 4; //Placing the log in button at the bottom 
+        gbc.insets = new Insets(10, 0, 0, 15); //Specifying the padding for this element
         add(loginButton,gbc);
 
         loginButton.addActionListener(new ActionListener() { //Anonymous inner class to handle the sign up event since this will probably be it's only use
@@ -103,66 +103,66 @@ public class Login extends JPanel
         valueParameter[1] = password;
         try
         {
-            Verifiers.VerifyEntries(valueParameter);
-            if(blankEntryFlag == true)
+            Verifiers.VerifyEntries(valueParameter); //Verifying that the entries are not blank
+            if(blankEntryFlag == true) 
             {
-                blankEntryWarning.setVisible(false);
+                blankEntryWarning.setVisible(false); //Setting the entry to be invisible once the verifier has been passed
             }
         }
         catch(BlankEntryException e)
         {
-            blankEntryFlag = true;
+            blankEntryFlag = true; //Sets the boolean to show the warning if the exception is caught
             blankEntryWarning = new JLabel("All Entries Must Be Filled Out");
             gbc.gridx = 1;
-            gbc.gridy = 5;
-            add(blankEntryWarning, gbc);
-            blankEntryWarning.revalidate();
+            gbc.gridy = 5; //Placing the label at the bottom
+            add(blankEntryWarning, gbc); 
+            blankEntryWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
             blankEntryWarning.repaint();
-            e.printStackTrace();
+            e.printStackTrace(); //Shows details about the exception
         }
-        
+
         try
         {
-            Verifiers.VerifyUsernameNotFound(username, "Username", "accounts");
+            Verifiers.VerifyUsernameNotFound(username, "Username", "accounts"); //Verifying that the username exists
             if(invalidUsernameFlag == true)
             {
-                usernameWarning.setVisible(false);
+                usernameWarning.setVisible(false); //Setting the entry to be invisible once the verifier has been passed
             }
         }
         catch(UsernameNotFoundException e)
         {
-            invalidUsernameFlag = true;
+            invalidUsernameFlag = true; //Sets the boolean to show the warning if the exception is caught
             usernameWarning = new JLabel("Username Not Found");
             gbc.gridx = 2;
             gbc.gridy = 1;
             add(usernameWarning, gbc);
-            usernameWarning.revalidate();
-            usernameWarning.repaint();
+            usernameWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
+            usernameWarning.repaint(); //Shows details about the exception might have to be rewritten
             e.printStackTrace();
         }
 
         try
         {
-            Verifiers.VerifyWrongPassword(username, password);
+            Verifiers.VerifyWrongPassword(username, password); //Verify that the password entered is correct
             if(wrongPasswordFlag == true)
             {
-                passwordWarning.setVisible(false);
+                passwordWarning.setVisible(false); //Setting the entry to be invisible once the verifier has been passed
             }
-            ResultSet rs = DatabaseManager.executeQuery(new String[]{"AccountID"}, "accounts", "Username", username, "", "");
+            ResultSet rs = DatabaseManager.executeQuery(new String[]{"AccountID"}, "accounts", "Username", username, "", ""); //Retrieving the user's details
             rs.next();
-            CurrentSession.logUserIn(rs.getInt("AccountID"));
+            CurrentSession.logUserIn(rs.getInt("AccountID")); //Setting the user as logged in in order to unlock additional features 
             System.out.println("Login Successful");
-            GUIManager.loggedIn();
-            GUIManager.changeMarketplace(Login.this, "");
+            GUIManager.loggedIn(); //Unlocking the additional features
+            GUIManager.changeMarketplace(Login.this, ""); //Changing to the marketplace
         }
         catch(WrongPasswordException e){
-            wrongPasswordFlag = true;
+            wrongPasswordFlag = true; //Sets the boolean to show the warning if the exception is caught
             passwordWarning = new JLabel("Incorrect Password");
             gbc.gridx = 2;
             gbc.gridy = 2;
             add(passwordWarning, gbc);
-            passwordWarning.revalidate();
-            passwordWarning.repaint();
+            passwordWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
+            passwordWarning.repaint(); //Shows details about the exception might have to be rewritten
             e.printStackTrace();
         }
         catch(SQLException sqlError)

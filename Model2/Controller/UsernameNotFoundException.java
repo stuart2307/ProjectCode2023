@@ -1,7 +1,7 @@
 public class UsernameNotFoundException extends Exception{
-    public UsernameNotFoundException(String msg)
+    public UsernameNotFoundException(String msg) //Creating an exception specifically for blank entries
     {
-        super(msg);
+        super(msg); //invoking the constructor of the superclass
     }
     
 }
