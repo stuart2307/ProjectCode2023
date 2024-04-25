@@ -2,16 +2,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -23,7 +19,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JPasswordField;
 
-public class EditAccount extends JPanel{
+public class EditAccount extends JPanel
+{
 
     private JLabel userNameLabel; //Declaring labels for input text fields
     private JLabel newPassWordLabel;
@@ -36,7 +33,6 @@ public class EditAccount extends JPanel{
     private JLabel eirCodeLabel;
     private JLabel emailLabel;
     private JLabel phoneLabel;    
-    private JLabel profilePicture;
     private JLabel blankEntryWarning;
     private JLabel invalidPhoneWarning;
     private JLabel invalidEmailWarning;

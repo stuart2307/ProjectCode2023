@@ -64,8 +64,8 @@ public class AdPanel extends JPanel
     private boolean ownerFlag;
     private boolean engineFlag;
 
-    private JComboBox fuelType;
-    private JComboBox transmissionType;
+    private JComboBox<String> fuelType;
+    private JComboBox<String> transmissionType;
     private String[] fuelStrings = {"Petrol", "Diesel", "Electric", "Hybrid"};
     private String[] transmissionStrings = {"Manual", "Automatic"};
     private String fuelSelection;
@@ -439,6 +439,8 @@ public class AdPanel extends JPanel
 
                         makeField.setText("");
                         modelField.setText("");
+                        fuelType.setSelectedIndex(0);
+                        transmissionType.setSelectedIndex(0);
                         yearField.setText("");
                         mileageField.setText("");
                         priceField.setText("");

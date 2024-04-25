@@ -21,8 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.mysql.cj.jdbc.result.ResultSetMetaData;
-
 public class ViewAccount extends JPanel
 {
     private JPanel logoPanel;
@@ -72,11 +70,9 @@ public class ViewAccount extends JPanel
 
     private String[] accountInformation = new String[6];
     private ResultSet accountDetails;
-    private int userChoice;
     private AdPreview ads[] = new AdPreview[10];
 
     private ResultSet adResultSet;
-    private ResultSetMetaData adRSMD;
     private int adCount = 0;
     
     public static Color black = new Color(000,000,000);

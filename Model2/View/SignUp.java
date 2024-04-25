@@ -14,7 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
-public class SignUp extends JPanel {
+public class SignUp extends JPanel 
+{
 
     private JLabel userNameLabel; //Declaring labels for input text fields
     private JLabel passWordLabel;
