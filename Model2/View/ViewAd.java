@@ -356,7 +356,15 @@ public class ViewAd extends JPanel
                     System.out.println(userReviewScore);
                     // Round to two decimal places
                     double roundedUserReviewScore = Math.round(userReviewScore * 100.0)/100.0;
-                    userRatingLabel.setText("Rating: " + roundedUserReviewScore);
+                    if (Double.isNaN(userReviewScore))
+                        {
+                            userRatingLabel.setText("No Reviews Found!");
+                        }
+                    else
+                        {
+                            userRatingLabel.setText("Rating: " + roundedUserReviewScore + "% Positive");
+                        }
+                    
                     if(CurrentSession.getLoginStatus())
                     {
 
