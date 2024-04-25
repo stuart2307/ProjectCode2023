@@ -433,6 +433,18 @@ public class AdPanel extends JPanel
 
                         results.next();
 
+                        // Resets text fields upon creation of an ad for next time
+
+                        makeField.setText("");
+                        modelField.setText("");
+                        yearField.setText("");
+                        mileageField.setText("");
+                        priceField.setText("");
+                        engineField.setText("");
+                        ownersField.setText("");
+                        descriptionField.setText("");
+                        filePath = null;
+
                         // Upon creating an ad successfully the user is taken to the ad they just created
 
                         GUIManager.changeViewAd(AdPanel.this, results.getInt(1));

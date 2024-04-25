@@ -15,7 +15,6 @@ import java.awt.event.MouseListener;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -170,7 +169,7 @@ public class ViewAd extends JPanel
         sellerUsername.setFont(informationFont);                                                                
         phone.setFont(informationFont);                                                                         
         email.setFont(informationFont);                                                                         
-        county.setFont(informationFont);                                                                        
+        county.setFont(informationFont);     
 
         imagePanel = new JPanel();                                                                              // Creates a new JPanel
         imagePanel.add(adImage, BorderLayout.CENTER);                                                           // Adds the adImage Label to the imagePanel
@@ -223,7 +222,9 @@ public class ViewAd extends JPanel
         gbc.gridy = GridBagConstraints.RELATIVE;
         gbc.gridheight++;
         gbc.weighty = gbc.gridheight / 10;
+        adDescription.setPreferredSize(new Dimension(xBlock * 3, yBlock * 3));
         priceDescPanel.add(adDescription, gbc);                                                                 // Adds adDescription to priceDescPanel with altered GridBagConstraints
+
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridy = 0;
@@ -332,7 +333,7 @@ public class ViewAd extends JPanel
                     adImage.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(450, 450, Image.SCALE_SMOOTH))); // Create image from the blob, scale it to 450 x 450, and set it as the icon for adImage
                     adImage.setText(""); // Make sure the text for the adImage Label is empty
                     adTitle.setText(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model")); // Set the title to be the year + make + model, e.g. 2017 Ford Mondeo
-                    adDescription.setText("Description: " + adResultSet.getString("Description"));
+                    adDescription.setText("<html><div style='width: " + (xBlock*3) + "px;'>Description: " + adResultSet.getString("Description") + "</div></html>");
                     price.setText("$" + adResultSet.getInt("Price"));
                     fuelType.setText("Fuel Type: " + adResultSet.getString("FuelType"));
                     mileage.setText("Mileage: " + adResultSet.getString("Mileage"));

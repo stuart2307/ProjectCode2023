@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -72,7 +71,7 @@ public class MarketPlaceGUI extends JPanel
             setBackground(grey);      
             placeAdButton = new JButton("Place Ad");                                                              // Creates a JButton instance called placeAdButton
             placeAdButton.addActionListener(new PlaceAdButtonAL(MarketPlaceGUI.this));                                 // Adds an action listener to the placeAdButton to take the user to the place ad page           
-            loginButton = new JButton("Login");                                                                   // Creates a JButton instance called loginButton
+            loginButton = new JButton("Log In");                                                                   // Creates a JButton instance called loginButton
             loginButton.addActionListener(new LoginButtonAL(MarketPlaceGUI.this));                                     // Adds an action listener to the loginButton to take the user to the login page
             signUpButton = new JButton("Sign Up");                                                                // Creates a JButton instance called signUpButton
             signUpButton.addActionListener(new SignupButtonAL(MarketPlaceGUI.this));                                   // Adds an action listener to the signupButton to take the user to the sign up page

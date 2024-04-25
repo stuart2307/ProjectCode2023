@@ -44,6 +44,9 @@ public class DatabaseManager {
             //Establish the connection
 
             connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
+
+            PreparedStatement pstat = connection.prepareStatement("SET GLOBAL max_allowed_packet=16777216");
+            pstat.executeUpdate();
         } 
         
         catch (SQLException failedConnection) 
