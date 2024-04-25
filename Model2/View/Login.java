@@ -154,6 +154,8 @@ public class Login extends JPanel
             System.out.println("Login Successful");
             GUIManager.loggedIn(); //Unlocking the additional features
             GUIManager.changeMarketplace(Login.this, ""); //Changing to the marketplace
+            usernameInput.setText("");
+            passwordInput.setText(""); //Clearing the inputs so they don't show up after trying to log in again
         }
         catch(WrongPasswordException e){
             wrongPasswordFlag = true; //Sets the boolean to show the warning if the exception is caught
@@ -173,4 +175,7 @@ public class Login extends JPanel
         });
     }
 }
+
+
+
 
