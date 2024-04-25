@@ -369,51 +369,47 @@ public class ViewAd extends JPanel
                         }
                     
                     if(CurrentSession.getLoginStatus())
-                    {
+                        {
 
-                        int revieweeID = adAccountId;
-                        int reviewerID = CurrentSession.getUserID();
+                            int revieweeID = adAccountId;
+                            int reviewerID = CurrentSession.getUserID();
 
-                        String revieweeIDString = String.valueOf(revieweeID);
-                        String reviewerIDString = String.valueOf(reviewerID);
-                        reviewDetails[0] = reviewerIDString;
-                        reviewDetails[1] = revieweeIDString;
+                            String revieweeIDString = String.valueOf(revieweeID);
+                            String reviewerIDString = String.valueOf(reviewerID);
+                            reviewDetails[0] = reviewerIDString;
+                            reviewDetails[1] = revieweeIDString;
 
-                        likeButton.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent likeUser)
-                            {
-                                int reviewChoice = 1;
-                                String reviewChoiceString = String.valueOf(reviewChoice); 
-                                reviewDetails[2] = reviewChoiceString;
-                                DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);                                 
-                            }
-                        });
-                    price.setText("$" + adResultSet.getInt("Price")); // Sets the price of the ad
-                    fuelType.setText("Fuel Type: " + adResultSet.getString("FuelType")); // Sets the fuelType of the ad
-                    mileage.setText("Mileage: " + adResultSet.getString("Mileage")); // Sets the mileage of the ad
-                    previousOwners.setText("Previous Owners: " + adResultSet.getInt("PreviousOwners")); // Sets the previousOwners of the ad
-                    engineSize.setText("Engine Size: " + adResultSet.getDouble("EngineSize")); // Sets the engineSize of the ad
-                    gearBox.setText("Gearbox: " + adResultSet.getString("GearBox")); // Sets the gearBox of the ad
-                    adAccountId = adResultSet.getInt("AccountID"); // sets the adAccountID of the ad
-                    
-                    sellerUsername.setText(adResultSet.getString("Username"));    // Sets the sellers username in the ad
-                    phone.setText("Phone: " + adResultSet.getString("Phone"));    // Sets the sellers phone number in the ad
-                    email.setText("Email: " + adResultSet.getString("Email"));    // Sets the sellers email in the ad
-                    county.setText("County: " + adResultSet.getString("County")); // Sets the sellers county in the ad
-                    image = adResultSet.getBlob("ProfilePic");                    // Gets the blob for the sellers profile pic
-                    sellerPic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(150, 150, Image.SCALE_SMOOTH))); // Converts the image blob to an image, scales it, and sets the sellers profile pic in the ad
-                        likeDislikePanel.add(dislikeButton);
-                        dislikeButton.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent dislikeUser)
-                            {
-                                int reviewChoice = 0;
-                                String reviewChoiceString = String.valueOf(reviewChoice);
-                                reviewDetails[2] = reviewChoiceString;
-                                DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);
-                            }
-                        });
-                                                
-                    }
+                            likeButton.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent likeUser)
+                                {
+                                    int reviewChoice = 1;
+                                    String reviewChoiceString = String.valueOf(reviewChoice); 
+                                    reviewDetails[2] = reviewChoiceString;
+                                    DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);                                 
+                                }
+                            });
+                            dislikeButton.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent dislikeUser)
+                                {
+                                    int reviewChoice = 0;
+                                    String reviewChoiceString = String.valueOf(reviewChoice);
+                                    reviewDetails[2] = reviewChoiceString;
+                                    DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);
+                                }
+                            });
+                            if(adResultSet.getInt("AccountID") == CurrentSession.getUserID())
+                                {
+                                    likeDislikePanel.setVisible(false);
+                                }
+                            else
+                                {
+                                    likeDislikePanel.setVisible(true);
+                                }
+                        }
+                    else
+                        {
+                            likeDislikePanel.setVisible(false);
+                        }
                 }
             catch (SQLException sqlException)
                 {
