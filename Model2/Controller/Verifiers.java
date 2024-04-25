@@ -131,8 +131,7 @@ public class Verifiers
         
         try
         {
-            @SuppressWarnings("unused")
-            Double parsed = Double.parseDouble(item);
+            Double.valueOf(item);
         }
         catch(NumberFormatException e)
         {
