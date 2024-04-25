@@ -160,6 +160,7 @@ public class AdPanel extends JPanel
         fuelLabel = new JLabel("Fuel Type : ");
         fuelLabel.setHorizontalAlignment(JLabel.CENTER);
         fuelType = new JComboBox<>(fuelStrings);
+        fuelType.setSelectedIndex(0);
         fuelType.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent choicePicked)
@@ -170,6 +171,7 @@ public class AdPanel extends JPanel
         transmissionLabel = new JLabel("Transmission Type : ");
         transmissionLabel.setHorizontalAlignment(JLabel.CENTER);
         transmissionType = new JComboBox<>(transmissionStrings);
+        transmissionType.setSelectedIndex(0);
         transmissionType.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent choicePicked)
