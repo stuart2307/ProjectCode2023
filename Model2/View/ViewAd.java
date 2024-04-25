@@ -76,7 +76,6 @@ public class ViewAd extends JPanel
     private JLabel county = new JLabel();
     private JPanel userRatingPanel = new JPanel(new FlowLayout());
     private JLabel userRatingLabel = new JLabel();
-    private String[] reviewDetails = new String[3];
 
     private int adAccountId;
 
@@ -374,27 +373,18 @@ public class ViewAd extends JPanel
                             int revieweeID = adAccountId;
                             int reviewerID = CurrentSession.getUserID();
 
-                            String revieweeIDString = String.valueOf(revieweeID);
-                            String reviewerIDString = String.valueOf(reviewerID);
-                            reviewDetails[0] = reviewerIDString;
-                            reviewDetails[1] = revieweeIDString;
-
                             likeButton.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent likeUser)
                                 {
                                     int reviewChoice = 1;
-                                    String reviewChoiceString = String.valueOf(reviewChoice); 
-                                    reviewDetails[2] = reviewChoiceString;
-                                    DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);                                 
+                                    DatabaseManager.addReview(reviewerID, revieweeID, reviewChoice);                                 
                                 }
                             });
                             dislikeButton.addActionListener(new ActionListener() {
                                 public void actionPerformed(ActionEvent dislikeUser)
                                 {
                                     int reviewChoice = 0;
-                                    String reviewChoiceString = String.valueOf(reviewChoice);
-                                    reviewDetails[2] = reviewChoiceString;
-                                    DatabaseManager.addReview(reviewerIDString, revieweeIDString, reviewChoiceString);
+                                    DatabaseManager.addReview(reviewerID, revieweeID, reviewChoice);
                                 }
                             });
                             if(adResultSet.getInt("AccountID") == CurrentSession.getUserID())

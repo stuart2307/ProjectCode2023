@@ -362,13 +362,13 @@ public static boolean checkPassword(String username, String password)
     
 }
 
-public static ResultSet checkReviews(String reviewerID, String revieweeID)
+public static ResultSet checkReviews(int reviewerID, int revieweeID)
 {
     try
     {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT PositiveReview FROM reviews WHERE ReviewerID =? AND RevieweeID =?"); //execute query method didn't support the AND clause
-        preparedStatement.setString(1, reviewerID);
-        preparedStatement.setString(2, revieweeID);
+        preparedStatement.setInt(1, reviewerID);
+        preparedStatement.setInt(2, revieweeID);
         ResultSet rs = preparedStatement.executeQuery();
         rs.next();
         return rs;
@@ -380,14 +380,14 @@ public static ResultSet checkReviews(String reviewerID, String revieweeID)
     }
 }
 
-public static void updateReviews(String reviewerID, String revieweeID, String reviewType)
+public static void updateReviews(int reviewerID, int revieweeID, int reviewType)
 {
     try
     {
         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE reviews SET PositiveReview =? WHERE ReviewerID =? AND RevieweeID =?");
-        preparedStatement.setString(1, reviewType);
-        preparedStatement.setString(2, reviewerID);
-        preparedStatement.setString(3, revieweeID);
+        preparedStatement.setInt(1, reviewType);
+        preparedStatement.setInt(2, reviewerID);
+        preparedStatement.setInt(3, revieweeID);
         preparedStatement.executeUpdate();
     }
     catch(SQLException sqle)
@@ -396,14 +396,14 @@ public static void updateReviews(String reviewerID, String revieweeID, String re
     }    
 }
 
-public static void addReview(String reviewerID, String revieweeID, String reviewType)
+public static void addReview(int reviewerID, int revieweeID, int reviewType)
 {
     try
     {
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO reviews (ReviewerID, RevieweeID, PositiveReview) VALUES (?,?,?)");
-        preparedStatement.setString(1, reviewerID);
-        preparedStatement.setString(2, revieweeID);
-        preparedStatement.setString(3, reviewType);
+        preparedStatement.setInt(1, reviewerID);
+        preparedStatement.setInt(2, revieweeID);
+        preparedStatement.setInt(3, reviewType);
         preparedStatement.executeUpdate();
     }
     catch(SQLIntegrityConstraintViolationException SQLICVE) //Exception that takes place upon a duplicate entry due to keys
@@ -412,8 +412,8 @@ public static void addReview(String reviewerID, String revieweeID, String review
         try
         {
             ResultSet rs = DatabaseManager.checkReviews(reviewerID, revieweeID);
-            String currentReview = rs.getString("PositiveReview"); 
-            if(!currentReview.equals(reviewType))
+            int currentReview = rs.getInt("PositiveReview"); 
+            if(currentReview != reviewType)
             {
                 DatabaseManager.updateReviews(reviewerID, revieweeID, reviewType); //handles case by which the user inputs the same review
             }
