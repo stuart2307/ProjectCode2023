@@ -26,10 +26,11 @@ import com.mysql.cj.jdbc.result.ResultSetMetaData;
 public class ViewAccount extends JPanel
 {
     private JPanel logoPanel;
-    private JPanel topPanel;
+    protected JPanel topPanel;
     private JPanel bottomPanel;
     private JPanel editDeletePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    private JPanel marketPlaceButtonPanel;
+    protected JPanel postLoginButtonPanel;
+    protected JPanel preLoginButtonPanel;
     private JPanel backPanel;
     private JPanel informationPanel;
     private JPanel advertisementPanel;
@@ -40,8 +41,14 @@ public class ViewAccount extends JPanel
     private JPanel phonePanel = new JPanel(new GridLayout(1,2));
     private JPanel usernamePanel = new JPanel(new GridLayout(1,2));
     private JPanel emailPanel = new JPanel(new GridLayout(1,2));
+
     private JButton placeAdButton = new JButton("Place Advertisement");
-    private JButton viewMarketplaceButton = new JButton("View MarketPlace");
+    private JButton loginButton = new JButton("Log In");
+    private JButton signupButton = new JButton("Sign Up");
+    private JButton logOutButton = new JButton("Log Out");
+    private JButton preLoginMarketplaceButton = new JButton("View MarketPlace");
+    private JButton postLoginMarketplaceButton = new JButton("View Marketplace");
+    private JButton accountButton = new JButton("Your Account");
     private JButton backButton = new JButton("Back");
     private JButton editDetails = new JButton("Edit Account");
     private JButton deleteAccount = new JButton("Delete Account");
@@ -93,12 +100,7 @@ public class ViewAccount extends JPanel
         backPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));        // Adds some borders to make things look nice
         backPanel.setBackground(MarketPlaceGUI.green);                                                      // Sets colour of the searchbar panel to green
         backPanel.add(backButton);
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent goBack)
-            {
-                GUIManager.backButton(ViewAccount.this);
-            }
-        });
+        backButton.addActionListener(new BackButtonAL(ViewAccount.this));
     
         logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));                                              // Creates a JPanel called logoPanel and positions its contents to the centre using flow layout
         logoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));             // Sets a custom border around the contents 
@@ -107,28 +109,32 @@ public class ViewAccount extends JPanel
         title.setForeground(MarketPlaceGUI.white); 
         logoPanel.add(title, BorderLayout.CENTER);                                                              // Adds the title to the logoPanel and positions it to the centre
 
-        marketPlaceButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                        // Creates a panel using the Flow layout and positions it to the right
-        marketPlaceButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
-        marketPlaceButtonPanel.setBackground(MarketPlaceGUI.green);                                                   // Sets the colour of the loginSignup panel to green
-        marketPlaceButtonPanel.add(placeAdButton);
-        placeAdButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent placeAd)
-            {
-                GUIManager.changeCreateAd(ViewAccount.this);
-            }
-        });
+        postLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                        // Creates a panel using the Flow layout and positions it to the right
+        postLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
+        postLoginButtonPanel.setBackground(MarketPlaceGUI.green);                                                   // Sets the colour of the loginSignup panel to green
+        postLoginButtonPanel.add(placeAdButton);
+        placeAdButton.addActionListener(new PlaceAdButtonAL(ViewAccount.this));
+        postLoginButtonPanel.add(postLoginMarketplaceButton);
+        postLoginMarketplaceButton.addActionListener(new MarketplaceButtonAL(ViewAccount.this));
+        postLoginButtonPanel.add(accountButton);
+        accountButton.addActionListener(new AccountButtonAL(ViewAccount.this));
+        accountButton.setVisible(false);
+        postLoginButtonPanel.add(logOutButton);
+        logOutButton.addActionListener(new LogoutButtonAL());
 
-        marketPlaceButtonPanel.add(viewMarketplaceButton);
-        viewMarketplaceButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent viewMarketplace)
-            {
-                GUIManager.changeMarketplace(ViewAccount.this, "");
-            }
-        });
+        preLoginButtonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));                                        // Creates a panel using the Flow layout and positions it to the right
+        preLoginButtonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));      // Adds some borders to make things look nice
+        preLoginButtonPanel.setBackground(MarketPlaceGUI.green);                                                   // Sets the colour of the loginSignup panel to green
+        preLoginButtonPanel.add(preLoginMarketplaceButton);
+        preLoginMarketplaceButton.addActionListener(new MarketplaceButtonAL(ViewAccount.this));
+        preLoginButtonPanel.add(loginButton);
+        loginButton.addActionListener(new LoginButtonAL(ViewAccount.this));
+        preLoginButtonPanel.add(signupButton);
+        signupButton.addActionListener(new SignupButtonAL(ViewAccount.this));
 
         topPanel.add(backPanel);
         topPanel.add(logoPanel);
-        topPanel.add(marketPlaceButtonPanel);
+        topPanel.add(preLoginButtonPanel);
         topPanel.setBackground(MarketPlaceGUI.green);
 
         //Account Information Code
@@ -253,10 +259,12 @@ public class ViewAccount extends JPanel
             if (id==CurrentSession.getUserID()) 
             {
                 editDeletePanel.setVisible(true);
+                accountButton.setVisible(false);
             }
             else 
             {
                 editDeletePanel.setVisible(false);
+                accountButton.setVisible(true);
             }
             accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + id, "", "");
             if (accountDetails.next()) 
