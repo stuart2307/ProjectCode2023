@@ -258,14 +258,16 @@ public class ViewAd extends JPanel
         sellerInfoPanel.add(sellerPic, gbc);                                                                    // Adds sellerPic to sellerInfoPanel with altered GridBagConstraints
 
         gbc.anchor = GridBagConstraints.NORTHEAST;
-        gbc.weightx = gbc.gridwidth = 2;
+        gbc.gridwidth = 2;
+        gbc.weightx = gbc.gridwidth / 10;
         gbc.gridx++;
         sellerInfoPanel.add(sellerUsername, gbc);                                                               // Adds sellerUsername to sellerInfoPanel with altered GridBagConstraints
         
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.weightx = gbc.gridwidth = 3;
+        gbc.gridwidth = 3;
+        gbc.weightx = gbc.gridwidth / 10;
         sellerInfoPanel.add(phone, gbc);                                                                        // Adds phone to sellerInfoPanel with altered GridBagConstraints
 
         gbc.gridy++;
@@ -332,7 +334,7 @@ public class ViewAd extends JPanel
                     adImage.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(450, 450, Image.SCALE_SMOOTH))); // Create image from the blob, scale it to 450 x 450, and set it as the icon for adImage
                     adImage.setText(""); // Make sure the text for the adImage Label is empty
                     adTitle.setText(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model")); // Set the title to be the year + make + model, e.g. 2017 Ford Mondeo
-                    adDescription.setText("Description: " + adResultSet.getString("Description"));
+                    adDescription.setText("<html><div style='width: " + (xBlock*3) + "px;'>Description: " + adResultSet.getString("Description") + "</div></html>");
                     price.setText("$" + adResultSet.getInt("Price"));
                     fuelType.setText("Fuel Type: " + adResultSet.getString("FuelType"));
                     mileage.setText("Mileage: " + adResultSet.getString("Mileage"));
