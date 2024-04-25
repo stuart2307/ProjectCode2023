@@ -15,7 +15,6 @@ import java.awt.event.MouseListener;
 import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -170,7 +169,7 @@ public class ViewAd extends JPanel
         sellerUsername.setFont(informationFont);                                                                
         phone.setFont(informationFont);                                                                         
         email.setFont(informationFont);                                                                         
-        county.setFont(informationFont);                                                                        
+        county.setFont(informationFont);     
 
         imagePanel = new JPanel();                                                                              // Creates a new JPanel
         imagePanel.add(adImage, BorderLayout.CENTER);                                                           // Adds the adImage Label to the imagePanel
@@ -223,7 +222,9 @@ public class ViewAd extends JPanel
         gbc.gridy = GridBagConstraints.RELATIVE;
         gbc.gridheight++;
         gbc.weighty = gbc.gridheight / 10;
+        adDescription.setPreferredSize(new Dimension(xBlock * 3, yBlock * 3));
         priceDescPanel.add(adDescription, gbc);                                                                 // Adds adDescription to priceDescPanel with altered GridBagConstraints
+
 
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridy = 0;

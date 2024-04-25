@@ -9,8 +9,9 @@ import java.util.InputMismatchException;
 //              these methods are used to validate user entered data.
 //
 
-public class Verifiers {
-    public static void VerifyEntries(String[] Entries) throws BlankEntryException
+public class Verifiers 
+{
+    public static void VerifyEntries(String[] Entries) throws BlankEntryException 
     {
  
         // This method throws a BlankEntryException if not all fields have been filled out in a particular form

@@ -14,7 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
-public class SignUp extends JPanel {
+public class SignUp extends JPanel 
+{
 
     private JLabel userNameLabel; //Declaring labels for input text fields
     private JLabel passWordLabel;
@@ -68,9 +69,11 @@ public class SignUp extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
+        //No weight is added to the components so they are automatically placed in the centre of the screen
+
         backButton = new JButton("Back");
         backButton.addActionListener(new BackButtonAL(SignUp.this));
-        gbc.gridx = 0; 
+        gbc.gridx = 0; //Choosing where to place the component using x and y values for the gridbagconstraints
         gbc.gridy = 0; // Place at the first row
         gbc.insets = new Insets(10, 10, 10, 10); 
         add(backButton, gbc);
@@ -223,50 +226,50 @@ public class SignUp extends JPanel {
         title.setForeground(white);                                                                             // Sets the title text colour to white
         title.setBackground(green);
 
-        title.setOpaque(true);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        add(title,gbc);
+        title.setOpaque(true);                                                                         //Allows the title to be visible over other components
+        gbc.gridx = 1;                                                                                          
+        gbc.gridy = 0;                                                                                         
+        add(title,gbc); 
 
-        signUpButton = new JButton("Sign Up");
+        signUpButton = new JButton("Sign Up"); //JButton placed near the bottom of the other components                                                              
         gbc.gridx = 1;
         gbc.gridy = 12;
         add(signUpButton,gbc);
 
-        blankEntryWarning = new JLabel("All Entries must be filled out");
+        blankEntryWarning = new JLabel("All Entries must be filled out"); //JLabel that gives the user a warning
         gbc.gridx = 1;
         gbc.gridy = 13;
-        blankEntryWarning.setVisible(false);
+        blankEntryWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(blankEntryWarning, gbc);
 
-        invalidUsernameWarning = new JLabel("Username Already Exists");
+        invalidUsernameWarning = new JLabel("Username Already Exists"); //JLabel that gives the user a warning
         gbc.gridx = 2;
         gbc.gridy = 1;
-        invalidUsernameWarning.setVisible(false);
+        invalidUsernameWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(invalidUsernameWarning, gbc);
 
-        confirmPasswordWarning = new JLabel("The Password And Confirm Password do not match");
+        confirmPasswordWarning = new JLabel("The Password And Confirm Password do not match"); //JLabel that gives the user a warning
         gbc.gridx = 2;
         gbc.gridy = 3;
-        confirmPasswordWarning.setVisible(false);
+        confirmPasswordWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(confirmPasswordWarning, gbc);
 
-        invalidEircodeWarning = new JLabel("Invalid Eircode Entered");
+        invalidEircodeWarning = new JLabel("Invalid Eircode Entered"); //JLabel that gives the user a warning
         gbc.gridx = 2;
         gbc.gridy = 9;
-        invalidEircodeWarning.setVisible(false);
+        invalidEircodeWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(invalidEircodeWarning, gbc);
 
-        invalidEmailWarning = new JLabel("Invalid Email Entered");
+        invalidEmailWarning = new JLabel("Invalid Email Entered"); //JLabel that gives the user a warning
         gbc.gridx = 2;
         gbc.gridy = 10;
-        invalidEmailWarning.setVisible(false);
+        invalidEmailWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(invalidEmailWarning, gbc);
 
-        invalidPhoneWarning = new JLabel("Invalid Phone Number Entered");
+        invalidPhoneWarning = new JLabel("Invalid Phone Number Entered"); //JLabel that gives the user a warning
         gbc.gridx = 2;
         gbc.gridy = 11;
-        invalidPhoneWarning.setVisible(false);
+        invalidPhoneWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(invalidPhoneWarning, gbc);
 
         signUpButton.addActionListener(new ActionListener() { //Anonymous inner class to handle the sign up event since this will probably be it's only use
@@ -308,127 +311,127 @@ public class SignUp extends JPanel {
         File imagePathFile = new File("View/Crocodefault.jpg");
         valueParameter[10] = imagePathFile.getAbsolutePath().replace("\\", "/");
         try{
-            Verifiers.VerifyEntries(valueParameter);
+            Verifiers.VerifyEntries(valueParameter); //Verifying that the entries are not blank
             if(blankEntryFlag == true)
             {
-                blankEntryWarning.setVisible(false);
-                blankEntryFlag = false;
+                blankEntryWarning.setVisible(false); //Sets the boolean to show the warning to false if the entry is passed
+                blankEntryFlag = false; 
             }
         }
         catch(BlankEntryException blankEntryException)
         {
-            blankEntryFlag = true;
-            blankEntryWarning.setVisible(true);
-            blankEntryException.printStackTrace();
+            blankEntryFlag = true; //Sets the boolean to show the warning if the exception is caught
+            blankEntryWarning.setVisible(true); //Shows the warning
+            blankEntryException.printStackTrace(); //Shows details about the exception
         }
         finally 
             {
-                blankEntryWarning.revalidate();
+                blankEntryWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
                 blankEntryWarning.repaint();  
             }
             
 
         try{
-        Verifiers.VerifyUsernameExists(username, "Username", "accounts");
-        if(usernameFlag == true)
+        Verifiers.VerifyUsernameExists(username, "Username", "accounts"); //Verifying that the username is not taken
+        if(usernameFlag == true) 
         {
-            invalidUsernameWarning.setVisible(false);
+            invalidUsernameWarning.setVisible(false); //Sets the boolean to show the warning to false if the entry is passed
             usernameFlag = false;
         }
         }
         catch(UsernameExistsException usernameException)
         {
-            usernameFlag = true;
-            invalidUsernameWarning.setVisible(true);
-            usernameException.printStackTrace();
+            usernameFlag = true; //Sets the boolean to show the warning if the exception is caught
+            invalidUsernameWarning.setVisible(true); //Shows the warning
+            usernameException.printStackTrace(); //Shows details about the exception
         }
         finally
             {
-                invalidUsernameWarning.revalidate();
+                invalidUsernameWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
                 invalidUsernameWarning.repaint();
             }
             
         try{
-        Verifiers.VerifyConfirmPassword(password, confPassword);
+        Verifiers.VerifyConfirmPassword(password, confPassword); //Verifying that the passwords entered are identical 
         if(passwordFlag == true)
         {
-            confirmPasswordWarning.setVisible(false);
+            confirmPasswordWarning.setVisible(false); //Sets the boolean to show the warning to false if the entry is passed
             passwordFlag = false;
         }
         }
         catch(ConfirmPasswordException passwordException){
-            passwordFlag = true;
-            confirmPasswordWarning.setVisible(true);
-            passwordException.printStackTrace();
+            passwordFlag = true; //Sets the boolean to show the warning if the exception is caught
+            confirmPasswordWarning.setVisible(true); //Shows the warning
+            passwordException.printStackTrace(); //Shows details about the exception
         }
         finally
             {
-                confirmPasswordWarning.revalidate();
+                confirmPasswordWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
                 confirmPasswordWarning.repaint(); 
             }
             
         try{
-        Verifiers.VerifyEircode(eircode);
-        if(eircodeFlag == true)
+        Verifiers.VerifyEircode(eircode); //Verifying that the eircode entered is valid
+        if(eircodeFlag == true) 
         {
-            invalidEircodeWarning.setVisible(false);
+            invalidEircodeWarning.setVisible(false); //Sets the boolean to show the warning to false if the entry is passed
             eircodeFlag = false;
         }
         }
         catch(EircodeException eircodeException){
-            eircodeFlag = true;
-            invalidEircodeWarning.setVisible(true);
-            eircodeException.printStackTrace();
+            eircodeFlag = true; //Sets the boolean to show the warning if the exception is caught
+            invalidEircodeWarning.setVisible(true); //Shows the warning
+            eircodeException.printStackTrace(); //Shows details about the exception
         }
         finally
             {
-                invalidEircodeWarning.revalidate();
+                invalidEircodeWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
                 invalidEircodeWarning.repaint();  
             }
             
 
         try{
-        Verifiers.VerifyEmailAddress(email);
+        Verifiers.VerifyEmailAddress(email); //Verifying that the email entered is valid
         if(emailFlag == true)
         {
-            invalidEmailWarning.setVisible(false);
+            invalidEmailWarning.setVisible(false); //Sets the boolean to show the warning to false if the entry is passed
             emailFlag = false;
         }
         }
         catch(EmailException emailException){
-            emailFlag = true;
-            invalidEmailWarning.setVisible(true);
-            emailException.printStackTrace();
+            emailFlag = true; //Sets the boolean to show the warning if the exception is caught
+            invalidEmailWarning.setVisible(true); //Shows the warning
+            emailException.printStackTrace(); //Shows details about the exception
         }
         finally
             {
-                invalidEmailWarning.revalidate();
+                invalidEmailWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
                 invalidEmailWarning.repaint(); 
             }
             
 
         try{
-        Verifiers.VerifyPhoneNumber(phone);
+        Verifiers.VerifyPhoneNumber(phone); //Verifying that the phone number entered is valid
         if(phoneNoFlag == true)
         {
-            invalidPhoneWarning.setVisible(false);
+            invalidPhoneWarning.setVisible(false); //Sets the boolean to show the warning to false if the entry is passed
             phoneNoFlag = false;
         }
          
         }
         catch(phoneException phoneNoException){
-            phoneNoFlag = true;
-            invalidPhoneWarning.setVisible(true);
-            phoneNoException.printStackTrace();
-        }
+            phoneNoFlag = true; //Sets the boolean to show the warning if the exception is caught
+            invalidPhoneWarning.setVisible(true); //Shows the warning
+            phoneNoException.printStackTrace();//Shows details about the exception
+        } 
         finally
             {
-                invalidPhoneWarning.revalidate();
+                invalidPhoneWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
                 invalidPhoneWarning.repaint();
             }
             
 
-        if (blankEntryFlag || usernameFlag || passwordFlag || eircodeFlag || emailFlag || phoneNoFlag)
+        if (blankEntryFlag || usernameFlag || passwordFlag || eircodeFlag || emailFlag || phoneNoFlag) //If any of the flags are set to true, there will be no entry made in the database
             {
                 System.out.println("oops, account not created!");
             }

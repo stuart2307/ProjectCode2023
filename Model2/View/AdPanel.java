@@ -64,8 +64,8 @@ public class AdPanel extends JPanel
     private boolean ownerFlag;
     private boolean engineFlag;
 
-    private JComboBox fuelType;
-    private JComboBox transmissionType;
+    private JComboBox<String> fuelType;
+    private JComboBox<String> transmissionType;
     private String[] fuelStrings = {"Petrol", "Diesel", "Electric", "Hybrid"};
     private String[] transmissionStrings = {"Manual", "Automatic"};
     private String fuelSelection;
@@ -434,6 +434,20 @@ public class AdPanel extends JPanel
                         ResultSet results = DatabaseManager.executeQuery(new String[]{"AdvertisementID"}, "advertisements", "", "", "DESC", "AdvertisementID");
 
                         results.next();
+
+                        // Resets text fields upon creation of an ad for next time
+
+                        makeField.setText("");
+                        modelField.setText("");
+                        fuelType.setSelectedIndex(0);
+                        transmissionType.setSelectedIndex(0);
+                        yearField.setText("");
+                        mileageField.setText("");
+                        priceField.setText("");
+                        engineField.setText("");
+                        ownersField.setText("");
+                        descriptionField.setText("");
+                        filePath = null;
 
                         // Upon creating an ad successfully the user is taken to the ad they just created
 
