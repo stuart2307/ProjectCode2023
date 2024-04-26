@@ -128,6 +128,7 @@ public class DatabaseManager {
                         {
                             try
                                 {
+                                    // Insert image into the database
                                     File image = new File(values[i]);
                                     FileInputStream fis = new FileInputStream(image); 
                                     pstat.setBinaryStream((i+1), fis, (int) image.length());
@@ -165,6 +166,7 @@ public class DatabaseManager {
             {
                 int index = 0;
                 String parametersString = "";
+                // Creates a string for the parameters to select
                 while (index < parameters.length && parameters[index] != null)
                     {
                         if (index == 0)
@@ -181,6 +183,7 @@ public class DatabaseManager {
                 String statementString = "SELECT " + parametersString + " FROM " + table;
                 if (!column.equals("") && !value.equals(""))
                     {
+                        // If column is set to LIKE, selects from table using the LIKE keyword
                         if(!column.toUpperCase().equals("LIKE"))
                         statementString  += " WHERE " + column + "=?";
                         else
@@ -194,11 +197,12 @@ public class DatabaseManager {
                                     }
                             }
                     }
+                // Orders results, if order string is ASC or DESC
                 if (order.toUpperCase().equals("ASC") || order.toUpperCase().equals("DESC"))
                     {
                         statementString += " ORDER BY " + orderField + " " + order;
                     }
-                
+                // Fills the statement with the necessary parameters
                 PreparedStatement preparedStatement = connection.prepareStatement(statementString);
                 if (!column.equals("") && !value.equals(""))
                     {
@@ -236,13 +240,14 @@ public class DatabaseManager {
                 //Create a prepared statement
                 PreparedStatement prepStatement = connection.prepareStatement("UPDATE " + table + " SET " + setParameter + "=? WHERE " + locationParameter + "=?");
     
+                //If image is to be updated
                 if (setParameter.equals("Image") || setParameter.equals("ProfilePic"))
                     {
                         try
                             {
-                                File image = new File(setValue);
-                                FileInputStream fis = new FileInputStream(image); 
-                                prepStatement.setBinaryStream((1), fis, (int) image.length());
+                                File image = new File(setValue); // Creates new file
+                                FileInputStream fis = new FileInputStream(image);  // Creates new FileInputStream from image file
+                                prepStatement.setBinaryStream((1), fis, (int) image.length()); //Sets binary stream to image FileInputStream
                             }
                         catch (FileNotFoundException fnfe)
                             {
@@ -255,7 +260,7 @@ public class DatabaseManager {
                         prepStatement.setString(1, setValue);
                     }
                 prepStatement.setString (2, locationValue);
-                //Execute the update and return the number of affected rows
+                //Execute the update
                 prepStatement.executeUpdate();
             } 
     
@@ -271,8 +276,11 @@ public static ResultSet innerJoinQuery(String tableOne, String tableTwo, String 
         {
             try 
             {
-                PreparedStatement pstat = connection.prepareStatement("SELECT * FROM " + tableOne + " INNER JOIN " + tableTwo + " ON " + tableOne + "." + constraintOne +" = " + tableTwo + "." + constraintTwo + " WHERE " + parameter + " = ?");     
+                // Prepares a statement using the provided parameters, using an inner join
+                PreparedStatement pstat = connection.prepareStatement("SELECT * FROM " + tableOne + " INNER JOIN " + tableTwo + " ON " + tableOne + "." + constraintOne +" = " + tableTwo + "." + constraintTwo + " WHERE " + parameter + " = ?");  
+                // Sets the value parameter   
                 pstat.setString(1, value);
+                // Executes query and returns ResultSet
                 return pstat.executeQuery();
             } 
             catch (SQLException e) 
@@ -289,9 +297,11 @@ public static void deleteEntry(String table, String column, String parameter)
 
         try 
         {
+            // Creates a prepared statement
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM " + table + " WHERE " + column + "=?");
+            // Sets the parameter for deleting an entry
             preparedStatement.setString(1, parameter);
-
+            // Executes the update
             preparedStatement.executeUpdate();
         }
         catch (SQLException e)
@@ -335,23 +345,26 @@ public static boolean countRows(String table, String column, String parameter)
 public static boolean checkPassword(String username, String password)
 {
 
-    // 
+    // Checks if a username and password match an account in the database
     
     try
     {
+        // Prepares a statement for checking if the username and password exist
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM accounts WHERE BINARY Username =?" + " AND Password =?");
+        // Sets username and password values
         preparedStatement.setString(1, username);
         preparedStatement.setString(2, password);
+        // Execute Query
         ResultSet rs = preparedStatement.executeQuery();
         rs.next();
         int rowCount = rs.getInt(1);
         if(rowCount >= 1)
         {
-            return true;
+            return true; // If account exists return true
         }
         else
         {
-            return false;
+            return false; // If account does not exist return false
         }
     }
     catch (SQLException e)
@@ -366,11 +379,15 @@ public static ResultSet checkReviews(int reviewerID, int revieweeID)
 {
     try
     {
+        // Prepares statement for checking if review exists
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT PositiveReview FROM reviews WHERE ReviewerID =? AND RevieweeID =?"); //execute query method didn't support the AND clause
+        // Sets the ID values
         preparedStatement.setInt(1, reviewerID);
         preparedStatement.setInt(2, revieweeID);
+        // Executes Query
         ResultSet rs = preparedStatement.executeQuery();
         rs.next();
+        // Returns ResultSet
         return rs;
     }
     catch (SQLException e)
@@ -384,10 +401,13 @@ public static void updateReviews(int reviewerID, int revieweeID, int reviewType)
 {
     try
     {
+        // Prepares statement for updating reviews
         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE reviews SET PositiveReview =? WHERE ReviewerID =? AND RevieweeID =?");
+        // Sets parameter values
         preparedStatement.setInt(1, reviewType);
         preparedStatement.setInt(2, reviewerID);
         preparedStatement.setInt(3, revieweeID);
+        // Executes Update
         preparedStatement.executeUpdate();
     }
     catch(SQLException sqle)
@@ -400,10 +420,13 @@ public static void addReview(int reviewerID, int revieweeID, int reviewType)
 {
     try
     {
+        // Prepares a statement to add a review
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO reviews (ReviewerID, RevieweeID, PositiveReview) VALUES (?,?,?)");
+        // Sets parameter values
         preparedStatement.setInt(1, reviewerID);
         preparedStatement.setInt(2, revieweeID);
         preparedStatement.setInt(3, reviewType);
+        // Executes Update
         preparedStatement.executeUpdate();
     }
     catch(SQLIntegrityConstraintViolationException SQLICVE) //Exception that takes place upon a duplicate entry due to keys
@@ -411,8 +434,10 @@ public static void addReview(int reviewerID, int revieweeID, int reviewType)
         System.out.println("sqlicve triggered");    
         try
         {
+            // Fetches the review if one already exists from the reviewer to the reviewee
             ResultSet rs = DatabaseManager.checkReviews(reviewerID, revieweeID);
             int currentReview = rs.getInt("PositiveReview"); 
+            // if the existing review is of the opposite type, update it to match the new choice
             if(currentReview != reviewType)
             {
                 DatabaseManager.updateReviews(reviewerID, revieweeID, reviewType); //handles case by which the user inputs the same review
