@@ -418,10 +418,11 @@ public static void updateReviews(int reviewerID, int revieweeID, int reviewType)
 
 public static void addReview(int reviewerID, int revieweeID, int reviewType)
 {
+    PreparedStatement preparedStatement = null; 
     try
     {
         // Prepares a statement to add a review
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO reviews (ReviewerID, RevieweeID, PositiveReview) VALUES (?,?,?)");
+        preparedStatement = connection.prepareStatement("INSERT INTO reviews (ReviewerID, RevieweeID, PositiveReview) VALUES (?,?,?)");
         // Sets parameter values
         preparedStatement.setInt(1, reviewerID);
         preparedStatement.setInt(2, revieweeID);
@@ -434,6 +435,8 @@ public static void addReview(int reviewerID, int revieweeID, int reviewType)
         System.out.println("sqlicve triggered");    
         try
         {
+            if (preparedStatement != null)
+                preparedStatement.cancel();
             // Fetches the review if one already exists from the reviewer to the reviewee
             ResultSet rs = DatabaseManager.checkReviews(reviewerID, revieweeID);
             int currentReview = rs.getInt("PositiveReview"); 
