@@ -322,6 +322,20 @@ public class ViewAd extends JPanel
         footerPanel.add(footerButtonPanel);                                                                     // Adds the footerButtonPanel to the footerPanel
         add(footerPanel, BorderLayout.SOUTH);                                                                   // Adds the footerPanel to the viewAd Panel
 
+        likeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent likeUser)
+            {
+                int reviewChoice = 1;
+                DatabaseManager.addReview(CurrentSession.getUserID(), getAdAccountId(), reviewChoice);                                 
+            }
+        });
+        dislikeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent dislikeUser)
+            {
+                int reviewChoice = 0;
+                DatabaseManager.addReview(CurrentSession.getUserID(), getAdAccountId(), reviewChoice);
+            }
+        });
     } 
     public void populateScreen(int advertisementID)
         {
@@ -369,24 +383,6 @@ public class ViewAd extends JPanel
                     
                     if(CurrentSession.getLoginStatus())
                         {
-
-                            int revieweeID = adAccountId;
-                            int reviewerID = CurrentSession.getUserID();
-
-                            likeButton.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent likeUser)
-                                {
-                                    int reviewChoice = 1;
-                                    DatabaseManager.addReview(reviewerID, revieweeID, reviewChoice);                                 
-                                }
-                            });
-                            dislikeButton.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent dislikeUser)
-                                {
-                                    int reviewChoice = 0;
-                                    DatabaseManager.addReview(reviewerID, revieweeID, reviewChoice);
-                                }
-                            });
                             if(adResultSet.getInt("AccountID") == CurrentSession.getUserID())
                                 {
                                     likeDislikePanel.setVisible(false);

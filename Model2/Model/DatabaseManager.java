@@ -402,7 +402,7 @@ public static void updateReviews(int reviewerID, int revieweeID, int reviewType)
     try
     {
         // Prepares statement for updating reviews
-        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE reviews SET PositiveReview =? WHERE ReviewerID =? AND RevieweeID =?");
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE reviews SET PositiveReview=? WHERE ReviewerID=? AND RevieweeID=?");
         // Sets parameter values
         preparedStatement.setInt(1, reviewType);
         preparedStatement.setInt(2, reviewerID);
