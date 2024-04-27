@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LookAndFeel;
@@ -103,7 +104,12 @@ public class EditAccount extends JPanel
                     getFile.setFileFilter(new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png"));
                     if (getFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
                         {
-                            filePath = getFile.getSelectedFile().getAbsolutePath();
+                            if (getFile.getSelectedFile().length() > 16777216)
+                                {
+                                   JOptionPane.showConfirmDialog(EditAccount.this, "ERROR: File exceeds 16MB.", "ERROR", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                                }
+                            else
+                                filePath = getFile.getSelectedFile().getAbsolutePath();
                         } 
                     try
                         {

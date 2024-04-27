@@ -378,7 +378,7 @@ public class ViewAd extends JPanel
                         }
                     else
                         {
-                            userRatingLabel.setText("Rating: " + roundedUserReviewScore + "% Positive + (" + + allReviews + ")");
+                            userRatingLabel.setText("Rating: " + roundedUserReviewScore + "% Positive (" + + allReviews + ")");
                         }
                     
                     if(CurrentSession.getLoginStatus())
