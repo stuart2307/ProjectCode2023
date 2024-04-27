@@ -219,9 +219,10 @@ public class AdPanel extends JPanel
                             System.out.println("oops");
                         }
                     JFileChooser getFile = new JFileChooser();
-                    getFile.setFileFilter(new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png"));
+                    getFile.setFileFilter(new FileNameExtensionFilter("Images (.jpg, .jpeg, .png)", "jpg", "jpeg", "png"));
                     if (getFile.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
                         {
+                            //if file is greater than 16MB, display error message
                             if (getFile.getSelectedFile().length() > 16777216)
                                 {
                                    JOptionPane.showConfirmDialog(AdPanel.this, "ERROR: File exceeds 16MB.", "ERROR", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);

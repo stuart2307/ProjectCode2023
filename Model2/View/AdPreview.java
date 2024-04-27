@@ -24,32 +24,42 @@ public class AdPreview extends JPanel
     private JLabel priceLabel;
     private JLabel imageLabel;
     private JPanel infoPanel;
+    private JPanel detailsPanel;
     private ImageIcon adImageIcon = new ImageIcon();
     private int AdID;
     private JPanel fromPanel;
+    private Font labelFont = new Font("Arial", Font.BOLD, 15);
+    private GridBagConstraints gbc;
 
     // Constructor
     public AdPreview(JPanel from)
     {
+        //Specifies which panel the adpreview is coming from. needed for ActionListeners
         fromPanel = from;
+        //Sets some basic styling and layout features of the panel
         setLayout(new BorderLayout());
         setBackground(MarketPlaceGUI.white);
         setMaximumSize(new Dimension(650, 325));
         setBorder(BorderFactory.createLineBorder(MarketPlaceGUI.green, 5, false));
         
+        //Instantiates labels and sets their font
         titleLabel = new JLabel("Title:");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        titleLabel.setFont(labelFont);
         descriptionLabel = new JLabel("Description:");
-        descriptionLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        descriptionLabel.setFont(labelFont);
         priceLabel = new JLabel("Price:");
-        priceLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        priceLabel.setFont(labelFont);
         imageLabel = new JLabel("IMAGE HERE");
-        imageLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        imageLabel.setFont(labelFont);
         imageLabel.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0), 5));
-        JPanel detailsPanel = new JPanel(new GridBagLayout());
+
+        //Instantiates detailsPanel and gives it a gridbag layout
+        detailsPanel = new JPanel(new GridBagLayout());
         detailsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         detailsPanel.setBackground(MarketPlaceGUI.white);
-        GridBagConstraints gbc = new GridBagConstraints();
+
+        //Sets gridbag constraints for individual components in the details and info panels, and adds them to their respective panels.
+        gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -68,29 +78,20 @@ public class AdPreview extends JPanel
         gbc.gridy++;
         infoPanel.add(priceLabel, gbc);
         
+        //Adds detailsPanel to the AdPreview
         add(detailsPanel, BorderLayout.CENTER);
+        //Adds a mouse listener to the ad preview, which switches to the View Ad page of the ad preview when it is clicked
         addMouseListener(new MouseListener() 
         {
             public void mouseClicked(MouseEvent e) 
             {
                 GUIManager.changeViewAd(fromPanel, AdID);
             }
-            public void mouseEntered(MouseEvent e) 
-            {
-
-            }
-            public void mouseExited(MouseEvent e)
-            {
-
-            }
-            public void mousePressed(MouseEvent e) 
-            {
-            
-            }
-            public void mouseReleased(MouseEvent e) 
-            {
-
-            }
+            //All methods must be overridden, even if they don't have a function
+            public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {}
         });
     }
 

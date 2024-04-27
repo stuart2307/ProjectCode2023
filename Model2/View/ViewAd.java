@@ -326,7 +326,13 @@ public class ViewAd extends JPanel
             public void actionPerformed(ActionEvent likeUser)
             {
                 int reviewChoice = 1;
-                DatabaseManager.addReview(CurrentSession.getUserID(), getAdAccountId(), reviewChoice);                                 
+                DatabaseManager.addReview(CurrentSession.getUserID(), getAdAccountId(), reviewChoice);     
+                int positiveReviews = DatabaseManager.countPositiveReviews( "" + adAccountId + "");
+                int allReviews = DatabaseManager.countAllReviews( "" + adAccountId + "");
+                Double userReviewScore = ((double)positiveReviews/allReviews) * 100.0;   
+                // Round to two decimal places
+                double roundedUserReviewScore = Math.round(userReviewScore * 100.0)/100.0;   
+                userRatingLabel.setText("Rating: " + roundedUserReviewScore + "% Positive (" + + allReviews + ")");                         
             }
         });
         dislikeButton.addActionListener(new ActionListener() {
@@ -334,6 +340,12 @@ public class ViewAd extends JPanel
             {
                 int reviewChoice = 0;
                 DatabaseManager.addReview(CurrentSession.getUserID(), getAdAccountId(), reviewChoice);
+                int positiveReviews = DatabaseManager.countPositiveReviews( "" + adAccountId + "");
+                int allReviews = DatabaseManager.countAllReviews( "" + adAccountId + "");
+                Double userReviewScore = ((double)positiveReviews/allReviews) * 100.0;   
+                // Round to two decimal places
+                double roundedUserReviewScore = Math.round(userReviewScore * 100.0)/100.0;
+                userRatingLabel.setText("Rating: " + roundedUserReviewScore + "% Positive (" + + allReviews + ")");
             }
         });
     } 
@@ -348,6 +360,7 @@ public class ViewAd extends JPanel
                     adImage.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(450, 450, Image.SCALE_SMOOTH))); // Create image from the blob, scale it to 450 x 450, and set it as the icon for adImage
                     adImage.setText(""); // Make sure the text for the adImage Label is empty
                     adTitle.setText(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model")); // Set the title to be the year + make + model, e.g. 2017 Ford Mondeo
+                    //Sets text for all labels
                     adDescription.setText("<html><div style='width: " + (xBlock*3) + "px;'>Description: " + adResultSet.getString("Description") + "</div></html>");
                     price.setText("$" + adResultSet.getInt("Price"));
                     fuelType.setText("Fuel Type: " + adResultSet.getString("FuelType"));
@@ -357,19 +370,16 @@ public class ViewAd extends JPanel
                     gearBox.setText("Gearbox: " + adResultSet.getString("GearBox"));
                     adAccountId = adResultSet.getInt("AccountID");
 
-                    ResultSet userResultSet;
-                    userResultSet = DatabaseManager.executeQuery(DatabaseManager.ACCOUNTS, "accounts", "AccountID", "" + adResultSet.getInt("AccountID"), "", "");
-                    userResultSet.next();
-                    sellerUsername.setText(userResultSet.getString("Username"));
-                    phone.setText("Phone: " + userResultSet.getString("Phone"));
-                    email.setText("Email: " + userResultSet.getString("Email"));
-                    county.setText("County: " + userResultSet.getString("County"));
-                    image = userResultSet.getBlob("ProfilePic");
+                    sellerUsername.setText(adResultSet.getString("Username"));
+                    phone.setText("Phone: " + adResultSet.getString("Phone"));
+                    email.setText("Email: " + adResultSet.getString("Email"));
+                    county.setText("County: " + adResultSet.getString("County"));
+                    image = adResultSet.getBlob("ProfilePic");
                     sellerPic.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
+                    //Gets the review rating for the seller
                     int positiveReviews = DatabaseManager.countPositiveReviews( "" + adAccountId + "");
                     int allReviews = DatabaseManager.countAllReviews( "" + adAccountId + "");
                     Double userReviewScore = ((double)positiveReviews/allReviews) * 100.0;   
-                    System.out.println(userReviewScore);
                     // Round to two decimal places
                     double roundedUserReviewScore = Math.round(userReviewScore * 100.0)/100.0;
                     if (Double.isNaN(userReviewScore))
