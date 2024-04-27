@@ -131,7 +131,7 @@ public class Verifiers
         
         try
         {
-            Double.valueOf(item);
+            Double.valueOf(item); //If this throws an exception, the provided string is not a double, or does not contain a parsable double
         }
         catch(NumberFormatException e)
         {

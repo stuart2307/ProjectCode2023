@@ -54,83 +54,83 @@ public class GUIManager
             switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            if (checkConnection())
+            if (checkConnection())                                      //Make sure connection is still valid
             {
                 marketplace.generateAds(search);
                 marketplace.setVisible(true);                           //Sets the marketplace's panel to be visible
-                frame.add(marketplace);                                 //Adds the marketplace's panel to the Frame                
+                frame.add(marketplace);                                 //Adds the marketplace's panel to the Frame
             }
         }
-        public static void changeLogin(JPanel switchFrom)
+    public static void changeLogin(JPanel switchFrom)
         {
             switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            if (checkConnection())
+            if (checkConnection())                                      //Make sure connection is still valid
             {
                 login.setVisible(true);                                 //Sets the login screen's panel to be visible
-                frame.add(login);                                       //Adds the login screen's panel to the Frame                
+                frame.add(login);                                       //Adds the login screen's panel to the Frame
             }
         }
-        public static void changeSignup(JPanel switchFrom)
+    public static void changeSignup(JPanel switchFrom)
         {
             switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            if (checkConnection())
+            if (checkConnection())                                      //Make sure connection is still valid
             {
                 signup.setVisible(true);                                //Sets the sign up screen's panel to be visible
                 frame.add(signup);                                      //Adds the sign up screen's panel to the Frame  
             }
         }
-        public static void changeCreateAd(JPanel switchFrom)
+    public static void changeCreateAd(JPanel switchFrom)
         {
             switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
             frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            if (checkConnection())
+            if (checkConnection())                                      //Make sure connection is still valid
             {
                 createAd.setVisible(true);                              //Sets the ad creation panel to be visible
                 frame.add(createAd);                                    //Adds the ad creation panel to the Frame
             }   
         }
-        public static void changeAccount(JPanel switchFrom, int id)
+    public static void changeAccount(JPanel switchFrom, int id)
         {
-            
-            switchFrom.setVisible(false);
-            frame.remove(switchFrom);
+
+            switchFrom.setVisible(false);                           //Sets the current screen's panel to be invisible
+            frame.remove(switchFrom);                               //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            if (checkConnection())
+            if (checkConnection())                                      //Make sure connection is still valid
             {
-                viewAccount.populatePage(id);
-                viewAccount.setVisible(true);
-                frame.add(viewAccount);
+                viewAccount.populatePage(id);                           //Populates the view account page using the given account id
+                viewAccount.setVisible(true);                           //Sets the view account panel to be visible
+                frame.add(viewAccount);                                 //Adds the view account panel to the Frame
             } 
         }
-        public static void changeEditAccount(JPanel switchFrom)
+    public static void changeEditAccount(JPanel switchFrom)
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
             lastScreen = switchFrom;
-            if (checkConnection())
+            if (checkConnection())                                      //Make sure connection is still valid
             {
-                editAccount.populateEditPage();
-                editAccount.setVisible(true);
-                frame.add(editAccount);
+                editAccount.populateEditPage();                         //Populates the edit account page using the given account id
+                editAccount.setVisible(true);                     //Sets the edit creation panel to be visible
+                frame.add(editAccount);                                 //Adds the edit creation panel to the Frame
             }
         }
-        public static void changeViewAd(JPanel switchFrom, int adId)
+    public static void changeViewAd(JPanel switchFrom, int adId)
         {
-            switchFrom.setVisible(false);
-            frame.remove(switchFrom);
+            switchFrom.setVisible(false);                         //Sets the current screen's panel to be invisible
+            frame.remove(switchFrom);                                   //Removes the current screen's panel from the frame
             lastScreen = switchFrom;
-            if (checkConnection())
+            if (checkConnection())                                      //Make sure connection is still valid
             {
-                viewAd.populateScreen(adId);
-                if(viewAd.getAdAccountId()==CurrentSession.getUserID())
+                viewAd.populateScreen(adId);                            //Populate the view ad screen with the given ad id
+                if(viewAd.getAdAccountId()==CurrentSession.getUserID()) //If ad is owned by current user
                 {
-                    viewAd.deleteButton.setVisible(true);
-                    viewAd.footerButtonPanel.add(viewAd.deleteButton);
+                    viewAd.deleteButton.setVisible(true);         //Make delete ad button visible
+                    viewAd.footerButtonPanel.add(viewAd.deleteButton);  //
                     viewAd.likeDislikePanel.setVisible(false);
                 }
                 else
@@ -142,18 +142,18 @@ public class GUIManager
                 frame.add(viewAd);
             }
         }
-        public static void backButton(JPanel switchFrom)
+    public static void backButton(JPanel switchFrom)
         {
             switchFrom.setVisible(false);
             frame.remove(switchFrom);
-            if (checkConnection())
+            if (checkConnection())                                      //Make sure connection is still valid
             {
                 marketplace.generateAds("");
                 lastScreen.setVisible(true);
                 frame.add(lastScreen);
             }
         }
-        public static void loggedIn()
+    public static void loggedIn()
         {
             marketplace.preLoginButtonPanel.setVisible(false);
             marketplace.topPanel.remove(marketplace.preLoginButtonPanel);
@@ -171,7 +171,7 @@ public class GUIManager
             viewAccount.postLoginButtonPanel.setVisible(true);
             viewAccount.topPanel.add(viewAccount.postLoginButtonPanel);
         }
-        public static void loggedOut()
+    public static void loggedOut()
         {
             marketplace.postLoginButtonPanel.setVisible(false);
             marketplace.topPanel.remove(marketplace.postLoginButtonPanel);

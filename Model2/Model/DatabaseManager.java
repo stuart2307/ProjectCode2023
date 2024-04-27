@@ -18,13 +18,13 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 public class DatabaseManager {
 
+    //Declares the connection, and final strings for connection details
     static Connection connection = null;
     private static final String DATABASE_URL = "jdbc:mysql://localhost/crocodeal";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 
     // Paramater arrays for database tables
-
     static final String ACCOUNTS[] = {"Username", "Password", "Name", "HouseNumber", "StreetName", "City", "County", "Eircode", "Email", "Phone", "ProfilePic"};
     static final String MESSAGES[] = {"SenderID", "RecieverID", "MessageContents"};
     static final String ADVERTISEMENTS[] = {"AccountID", "Make", "Model", "FuelType", "GearBox", "Year", "Mileage", "Price", "EngineSize", "PreviousOwners", "Description", "Image"};
@@ -32,7 +32,7 @@ public class DatabaseManager {
     static final String CHATLOG[] = {"ChatID", "MessageID"};
     static final String ACCOUNTCHATLOG[] = {"ChatID", "AccountID"};
 
-    private DatabaseManager(){}
+    private DatabaseManager(){}     //Private constructor to prevent instantiation
 
     public static void establishConnection()
     {
@@ -45,6 +45,7 @@ public class DatabaseManager {
 
             connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
 
+            //Sets max allowed packet to 16MB - the image size limit
             PreparedStatement pstat = connection.prepareStatement("SET GLOBAL max_allowed_packet=16777216");
             pstat.executeUpdate();
         } 
@@ -147,7 +148,7 @@ public class DatabaseManager {
                     
                 }
 
-                // Execute update and return the number of rows affected
+                // Execute update
                 pstat.executeUpdate();
             }
             catch(SQLIntegrityConstraintViolationException SQLICVE)
