@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 
 public class ViewAccount extends JPanel
 {
-    private JPanel logoPanel;
+    private JPanel logoPanel; //Declaring JPanels
     protected JPanel topPanel;
     private JPanel bottomPanel;
     private JPanel editDeletePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -40,7 +40,7 @@ public class ViewAccount extends JPanel
     private JPanel usernamePanel = new JPanel(new GridLayout(1,2));
     private JPanel emailPanel = new JPanel(new GridLayout(1,2));
 
-    private JButton placeAdButton = new JButton("Place Advertisement");
+    private JButton placeAdButton = new JButton("Place Advertisement"); //Delcaring JButtons
     private JButton loginButton = new JButton("Log In");
     private JButton signupButton = new JButton("Sign Up");
     private JButton logOutButton = new JButton("Log Out");
@@ -51,7 +51,7 @@ public class ViewAccount extends JPanel
     private JButton editDetails = new JButton("Edit Account");
     private JButton deleteAccount = new JButton("Delete Account");
 
-    public static Font titleFont = new Font("Arial", Font.BOLD, 30);
+    public static Font titleFont = new Font("Arial", Font.BOLD, 30); //Declaring Fonts and JLabels
     private Font informationFont = new Font("Arial", Font.BOLD, 30);
     private JLabel title = new JLabel("Crocodeal");
     private JLabel profilePicture = new JLabel("Insert image here");
@@ -66,9 +66,8 @@ public class ViewAccount extends JPanel
     private JLabel usernameLabel2 = new JLabel();
     private JLabel emailLabel2 = new JLabel();
     private JLabel adsPlacedLabel = new JLabel("Advertisements Placed:");
-    private JLabel error = new JLabel("No ads available!");
 
-    private String[] accountInformation = new String[6];
+    private String[] accountInformation = new String[6]; //Array to store the account information needed to be retrieved
     private ResultSet accountDetails;
     private AdPreview ads[] = new AdPreview[10];
 
@@ -76,8 +75,6 @@ public class ViewAccount extends JPanel
     private int adCount = 0;
     
     public static Color black = new Color(000,000,000);
-
-    //Needs To display profile pic and recent ads
 
     public ViewAccount()
     {
@@ -128,14 +125,14 @@ public class ViewAccount extends JPanel
         preLoginButtonPanel.add(signupButton);
         signupButton.addActionListener(new SignupButtonAL(ViewAccount.this));
 
-        topPanel.add(backPanel);
+        topPanel.add(backPanel); //Adding JPanels to the top panel
         topPanel.add(logoPanel);
         topPanel.add(preLoginButtonPanel);
         topPanel.setBackground(MarketPlaceGUI.green);
 
         //Account Information Code
-        accountPanel = new JPanel(new GridLayout(3,1));
-        nameLabel.setFont(informationFont);
+        accountPanel = new JPanel(new GridLayout(3,1)); //Using a gridlayout that has 3 rows and 1 column to store panels for specific information
+        nameLabel.setFont(informationFont); //Setting font for the account information to be retrieved and its corresponding labels
         eircodeLabel.setFont(informationFont);
         phoneLabel.setFont(informationFont);
         usernameLabel.setFont(informationFont);
@@ -147,29 +144,30 @@ public class ViewAccount extends JPanel
         usernameLabel2.setFont(informationFont);
         emailLabel2.setFont(informationFont);
 
-        profilePicPanel.add(profilePicture);
-        profilePicPanel.setBorder(BorderFactory.createMatteBorder(1,1,1,1, black));
+        profilePicPanel.add(profilePicture); //Adding a the profile picture for the panel
+        profilePicPanel.setBorder(BorderFactory.createMatteBorder(1,1,1,1, black)); //Setting a border around it
 
-        namePanel.add(nameLabel);
+        namePanel.add(nameLabel); //Adding the label for the account's name and corresponding label
         namePanel.add(nameLabel2);
-        namePanel.setBorder(BorderFactory.createMatteBorder(0,1,1,0, black)); //left,bottom
+        namePanel.setBorder(BorderFactory.createMatteBorder(0,1,1,0, black)); //Setting a border to the left and bottom of the panel as other sides already have a border
 
-        eircodePanel.add(eircodeLabel);
+        eircodePanel.add(eircodeLabel); //Adding the label for the account's eircode and corresponding label
         eircodePanel.add(eircodeLabel2);
-        eircodePanel.setBorder(BorderFactory.createMatteBorder(0,0,0,1, black)); //right,up,down
+        eircodePanel.setBorder(BorderFactory.createMatteBorder(0,0,0,1, black)); //Setting a border to the right ,top and bottom of the panel as other sides already have a border
 
-        phonePanel.add(phoneLabel);
+        phonePanel.add(phoneLabel);  //Adding the label for the account's phone number and corresponding label
         phonePanel.add(phoneLabel2);
-        phonePanel.setBorder(BorderFactory.createMatteBorder(1,0,1,0, black)); //bottom
+        phonePanel.setBorder(BorderFactory.createMatteBorder(1,0,1,0, black)); //Setting a border to the bottom of the panel as other sides already have a border
 
-        usernamePanel.add(usernameLabel);
+        usernamePanel.add(usernameLabel); //Adding the label for the account's username and corresponding label
         usernamePanel.add(usernameLabel2);
-        usernamePanel.setBorder(BorderFactory.createMatteBorder(0,1,1,0, black));
+        usernamePanel.setBorder(BorderFactory.createMatteBorder(0,1,1,0, black)); //Setting a border to the left and bottom of the panel as other sides already have a border
 
-        emailPanel.add(emailLabel);
+
+        emailPanel.add(emailLabel);//Adding the label for the account's email and corresponding label
         emailPanel.add(emailLabel2);
 
-        accountPanel.setBorder(BorderFactory.createLineBorder(black, 2));
+        accountPanel.setBorder(BorderFactory.createLineBorder(black, 2)); //Adding the border around the account panel and the account's information panels
         accountPanel.add(profilePicture);
         accountPanel.add(usernamePanel);
         accountPanel.add(phonePanel);
@@ -177,13 +175,13 @@ public class ViewAccount extends JPanel
         accountPanel.add(eircodePanel);
         accountPanel.add(emailPanel);
 
-        adsPlacedLabel.setFont(informationFont);
+        adsPlacedLabel.setFont(informationFont); //Setting the font for the advertisements
         advertisementPanel.setBorder(BorderFactory.createLineBorder(black, 2));
         advertisementPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         advertisementPanel.add(adsPlacedLabel);
         advertisementPanel.setLayout(new BoxLayout(advertisementPanel, BoxLayout.Y_AXIS));
 
-        JScrollPane scrollPane = new JScrollPane(advertisementPanel);
+        JScrollPane scrollPane = new JScrollPane(advertisementPanel); //Adding a scrollpane to the advertisement panel
         scrollPane.setBackground(MarketPlaceGUI.grey);
         scrollPane.setPreferredSize(new Dimension(100, 100));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -194,8 +192,6 @@ public class ViewAccount extends JPanel
                 advertisementPanel.add(ads[i]);
                 ads[i].setVisible(false);
             }
-        advertisementPanel.add(error);
-        error.setVisible(false); 
 
         informationPanel.add(accountPanel);
         informationPanel.add(scrollPane);
@@ -204,16 +200,16 @@ public class ViewAccount extends JPanel
 
         //Bottom Panel Code
 
-        bottomPanel = new JPanel(new GridLayout(1,2));
+        bottomPanel = new JPanel(new GridLayout(1,2)); //Bottom panel 
         bottomPanel.setBackground(MarketPlaceGUI.green);
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         editDeletePanel.setBackground(MarketPlaceGUI.green);
-        editDeletePanel.add(editDetails);
+        editDeletePanel.add(editDetails);//Adding the buttons to edit or delete the account
         editDeletePanel.add(deleteAccount);
         editDeletePanel.setVisible(false);
-        bottomPanel.add(editDeletePanel);
+        bottomPanel.add(editDeletePanel); //Adding the panel that stores the edit and delete buttons to the bottom panel
         add(bottomPanel, BorderLayout.SOUTH);
-        editDetails.addActionListener(new ActionListener()
+        editDetails.addActionListener(new ActionListener() //Anonymous inner class for edit account details button
         {
             public void actionPerformed(ActionEvent searchButtonClicked)
             {
@@ -225,15 +221,16 @@ public class ViewAccount extends JPanel
         {
             public void actionPerformed(ActionEvent deleteAccount)
             {
-                if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "WARNING",
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
+                if (JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "WARNING", //Popup that shows a warning if the user wishes to delete their account
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)  //JOptionPane.YES_NO_OPTION gives the user yes or no options
                 {
-                    DatabaseManager.deleteEntry("accounts","AccountID" , "" + CurrentSession.getUserID() + "");
+                    DatabaseManager.deleteEntry("accounts","AccountID" , "" + CurrentSession.getUserID() + ""); //Deletes the accoutn if the user presses the yes option and shows a message then redirects the user to the marketplace
                     JOptionPane.showMessageDialog(null, "Your account has been deleted");
                     GUIManager.changeMarketplace(ViewAccount.this, "");
                     CurrentSession.logUserOut();
+                    GUIManager.loggedOut();
                 } 
-                else 
+                else //Shows the following hit if the user presses no
                 {
                     JOptionPane.showMessageDialog(null, "Your account has not been deleted");
                 }
@@ -252,18 +249,18 @@ public class ViewAccount extends JPanel
         accountInformation[5] = "ProfilePic";
         profilePicture.setText("IMAGE GOES HERE");
         try{
-            if (id==CurrentSession.getUserID()) 
+            if (id==CurrentSession.getUserID()) //Showing the edit delete account panel and hiding the your account button if the current user is viewing their own account
             {
                 editDeletePanel.setVisible(true);
                 accountButton.setVisible(false);
             }
-            else 
+            else //Hiding the edit delete account panel and Showing the your account button if the current user is viewing their someone elses account
             {
                 editDeletePanel.setVisible(false);
                 accountButton.setVisible(true);
             }
             accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + id, "", "");
-            if (accountDetails.next()) 
+            if (accountDetails.next()) //Retrieving the account's information and assigning them to JLabels
             {
                 nameLabel2.setText(accountDetails.getString("Name"));
                 eircodeLabel2.setText(accountDetails.getString("Eircode"));
@@ -271,10 +268,10 @@ public class ViewAccount extends JPanel
                 emailLabel2.setText(accountDetails.getString("County"));
                 usernameLabel2.setText(accountDetails.getString("Username"));
                 Blob image = accountDetails.getBlob("ProfilePic");
-                profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
+                profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH))); 
                 profilePicture.setText("");
                 ResultSet adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Year", "Make", "Model", "Price", "Image"}, "advertisements", "AccountID", "" + id, "DESC", "AdvertisementID");
-                while (adResultSet.next() && adCount < 10)
+                while (adResultSet.next() && adCount < 10) //Setting advertisement information for the advertisement previews
                     {
                         ads[adCount].setAdID(adResultSet.getInt("AdvertisementID"));
                         ads[adCount].setTitle(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model"));
@@ -282,9 +279,9 @@ public class ViewAccount extends JPanel
                         ads[adCount].setImage(adResultSet.getBlob("Image"));
                         adCount++;
                     }
-                for (int index = 0; index < 10; index++)
+                for (int index = 0; index < 10; index++) 
                     {
-                        if (index < adCount)
+                        if (index < adCount) //Sets the ads' visibility depending on the index and adCount
                         {
                             ads[index].setVisible(true);
                         }
@@ -296,7 +293,6 @@ public class ViewAccount extends JPanel
                     }
                 if (adCount == 0)
                     {
-                        error.setVisible(true);
                         for (int index = 0; index < 10; index++)
                             {
                                 ads[index].setVisible(false);
@@ -316,20 +312,19 @@ public class ViewAccount extends JPanel
             }
     }
 
-    public void generateUserAds()
+    public void generateUserAds() //Code to generate ads by users
         {
             try
             {
                 adCount = 0;
-                error.setVisible(false);
-                adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Make", "Model", "Year", "Price", "Image"}, "advertisements", "AccountID", "" + CurrentSession.getUserID() + "", "", "");
-                if (adResultSet.next() == false)
+                adResultSet = DatabaseManager.executeQuery(new String[]{"AdvertisementID", "Make", "Model", "Year", "Price", "Image"}, "advertisements", "AccountID", "" + CurrentSession.getUserID() + "", "", ""); //Retrieving ad information
+                if (adResultSet.next() == false) 
                     {
                         System.out.println("oops");
                     }
                 else
                     {
-                        do
+                        do //Adding advertisement preview information for the user's advertisements
                         {
                             ads[adCount].setAdID(adResultSet.getInt("AdvertisementID"));
                             ads[adCount].setTitle(adResultSet.getInt("Year") + " " + adResultSet.getString("Make") + " " + adResultSet.getString("Model"));
@@ -343,7 +338,6 @@ public class ViewAccount extends JPanel
             }
             catch (SQLException databaseError)
             {
-                error.setVisible(true);
                 databaseError.printStackTrace();
             }
         }
@@ -351,12 +345,10 @@ public class ViewAccount extends JPanel
         {
             for (int index = 0; index < adCount; index++)
                 {
-                    ads[index].setVisible(false);
-                    error.setVisible(true);
+                    ads[index].setVisible(false); //Shows an error if the adcount is 0
                 }
             if (adCount != 0)
                 {
-                    error.setVisible(false);
                     for (int index = 0; index < adCount; index++)
                         {
                             ads[index].setVisible(getFocusTraversalKeysEnabled());

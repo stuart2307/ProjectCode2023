@@ -437,8 +437,19 @@ public class SignUp extends JPanel
             }
         else
             {
-                DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter);
+                DatabaseManager.createEntry("accounts", DatabaseManager.ACCOUNTS, valueParameter); //Adding to database
                 GUIManager.backButton(SignUp.this);
+                userNameInput.setText(""); //Clearing entries
+                passWordInput.setText("");
+                confirmPasswordInput.setText("");
+                nameInput.setText("");
+                houseNumberInput.setText("");
+                streetNameInput.setText("");
+                cityInput.setText("");
+                countyInput.setText("");
+                eirCodeInput.setText("");
+                emailInput.setText("");
+                phoneInput.setText("");
             }
         }
         

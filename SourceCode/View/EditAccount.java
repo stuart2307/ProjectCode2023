@@ -281,40 +281,40 @@ public class EditAccount extends JPanel
         gbc.gridy = 12;
         add(editButton,gbc);
 
-        blankEntryWarning = new JLabel("All Entries must be filled out");
+        blankEntryWarning = new JLabel("All Entries must be filled out"); //JLabel that gives the user a warning
         gbc.gridx = 1;
         gbc.gridy = 13;
-        blankEntryWarning.setVisible(false);
+        blankEntryWarning.setVisible(false);//Visibility of the warning depends on whether or not a boolean variable was set to true
         add(blankEntryWarning, gbc);
 
         invalidUsernameWarning = new JLabel("Username Already Exists");
         gbc.gridx = 2;
         gbc.gridy = 1;
-        invalidUsernameWarning.setVisible(false);
+        invalidUsernameWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(invalidUsernameWarning, gbc);
 
         confirmPasswordWarning = new JLabel("The Password And Confirm Password do not match");
         gbc.gridx = 2;
         gbc.gridy = 3;
-        confirmPasswordWarning.setVisible(false);
+        confirmPasswordWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(confirmPasswordWarning, gbc);
 
         invalidEircodeWarning = new JLabel("Invalid Eircode Entered");
         gbc.gridx = 2;
         gbc.gridy = 9;
-        invalidEircodeWarning.setVisible(false);
+        invalidEircodeWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(invalidEircodeWarning, gbc);
 
         invalidEmailWarning = new JLabel("Invalid Email Entered");
         gbc.gridx = 2;
         gbc.gridy = 10;
-        invalidEmailWarning.setVisible(false);
+        invalidEmailWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(invalidEmailWarning, gbc);
 
         invalidPhoneWarning = new JLabel("Invalid Phone Number Entered");
         gbc.gridx = 2;
         gbc.gridy = 11;
-        invalidPhoneWarning.setVisible(false);
+        invalidPhoneWarning.setVisible(false); //Visibility of the warning depends on whether or not a boolean variable was set to true
         add(invalidPhoneWarning, gbc);
 
         editButton.addActionListener(new ActionListener() { //Anonymous inner class to handle the sign up event since this will probably be it's only use
@@ -356,30 +356,30 @@ public class EditAccount extends JPanel
         valueParameter[9] = phone;
         valueParameter[10]= profilePicPath;
         try{
-            Verifiers.VerifyEntries(valueParameter);
+            Verifiers.VerifyEntries(valueParameter); //Verifying that the entries are not blank
             if(blankEntryFlag == true)
             {
-                blankEntryWarning.setVisible(false);
+                blankEntryWarning.setVisible(false); //Sets the boolean to show the warning to false if the entry is passed
                 blankEntryFlag = false;
             }
         }
         catch(BlankEntryException blankEntryException)
         {
-            blankEntryFlag = true;
+            blankEntryFlag = true; //Sets the boolean to show the warning if the exception is caught and prints the stack trace
             blankEntryWarning.setVisible(true);
             blankEntryException.printStackTrace();
         }
         finally 
         {
-            blankEntryWarning.revalidate();
+            blankEntryWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
             blankEntryWarning.repaint();  
         }
             
-        try{
+        try{ //Rerieving the account's details
         ResultSet accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID() + "", "", "");
         if(accountDetails.next())
         {
-            if(username.equals(userNameInput.getText()))
+            if(username.equals(userNameInput.getText())) //If the username is the same as the username that was retrieved nothing happens otherwise it checks if the new username is already taken
             {
                 
             }
@@ -387,17 +387,17 @@ public class EditAccount extends JPanel
             {
                 try
                 {
-                    Verifiers.VerifyUsernameExists(username, "Username", "accounts");
+                    Verifiers.VerifyUsernameExists(username, "Username", "accounts"); //Verifying that the username is not taken
                 }
                 catch(UsernameExistsException usernameException)
                 {
-                    usernameFlag = true;
+                    usernameFlag = true; //Sets the boolean to show the warning if the exception is caught and prints the stack trace
                     invalidUsernameWarning.setVisible(true);
                     usernameException.printStackTrace();
                 }
                 finally
                 {
-                    invalidUsernameWarning.revalidate();
+                    invalidUsernameWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
                     invalidUsernameWarning.repaint();
                 } 
             }  
@@ -406,39 +406,39 @@ public class EditAccount extends JPanel
         }
         catch(SQLException sqlException)
         {
-            System.out.println("Error");
+            System.out.println("Error"); //Shows error message upon SQLException
             sqlException.printStackTrace();
         }
             
         try{
-        Verifiers.VerifyConfirmPassword(password, confPassword);
+        Verifiers.VerifyConfirmPassword(password, confPassword); //Verifying that the passwords entered are identical 
         if(passwordFlag == true)
         {
-            confirmPasswordWarning.setVisible(false);
+            confirmPasswordWarning.setVisible(false); //Sets the boolean to show the warning if the exception is caught and prints the stack trace
             passwordFlag = false;
         }
         }
         catch(ConfirmPasswordException passwordException){
-            passwordFlag = true;
+            passwordFlag = true; //Sets the boolean to show the warning if the exception is caught
             confirmPasswordWarning.setVisible(true);
             passwordException.printStackTrace();
         }
         finally
             {
-                confirmPasswordWarning.revalidate();
+                confirmPasswordWarning.revalidate(); //Updating the page depending in order to show or hide the warnings
                 confirmPasswordWarning.repaint(); 
             }
             
         try{
-        Verifiers.VerifyEircode(eircode);
+        Verifiers.VerifyEircode(eircode); //Verifying that the eircode entered is valid
         if(eircodeFlag == true)
         {
-            invalidEircodeWarning.setVisible(false);
+            invalidEircodeWarning.setVisible(false); 
             eircodeFlag = false;
         }
         }
         catch(EircodeException eircodeException){
-            eircodeFlag = true;
+            eircodeFlag = true; //Sets the boolean to show the warning if the exception is caught and prints the stack trace
             invalidEircodeWarning.setVisible(true);
             eircodeException.printStackTrace();
         }
@@ -450,7 +450,7 @@ public class EditAccount extends JPanel
             
 
         try{
-        Verifiers.VerifyEmailAddress(email);
+        Verifiers.VerifyEmailAddress(email); //Verifying that the email entered is valid
         if(emailFlag == true)
         {
             invalidEmailWarning.setVisible(false);
@@ -458,7 +458,7 @@ public class EditAccount extends JPanel
         }
         }
         catch(EmailException emailException){
-            emailFlag = true;
+            emailFlag = true; //Sets the boolean to show the warning if the exception is caught and prints the stack trace
             invalidEmailWarning.setVisible(true);
             emailException.printStackTrace();
         }
@@ -470,7 +470,7 @@ public class EditAccount extends JPanel
             
 
         try{
-        Verifiers.VerifyPhoneNumber(phone);
+        Verifiers.VerifyPhoneNumber(phone); //Verifying that the phone number entered is valid
         if(phoneNoFlag == true)
         {
             invalidPhoneWarning.setVisible(false);
@@ -479,7 +479,7 @@ public class EditAccount extends JPanel
          
         }
         catch(phoneException phoneNoException){
-            phoneNoFlag = true;
+            phoneNoFlag = true; //Sets the boolean to show the warning if the exception is caught and prints the stack trace
             invalidPhoneWarning.setVisible(true);
             phoneNoException.printStackTrace();
         }
@@ -492,13 +492,13 @@ public class EditAccount extends JPanel
 
         if (blankEntryFlag || usernameFlag || passwordFlag || eircodeFlag || emailFlag || phoneNoFlag)
             {
-                System.out.println("oops, account not created!");
+                System.out.println("oops, account not updated!"); //If any of the flags are true the account is not updated
             }
         else
             {
                 for(int i=0;i<valueParameter.length;i++)
                 {
-                    DatabaseManager.executeUpdate("accounts",DatabaseManager.ACCOUNTS[i] ,valueParameter[i] ,"AccountId" ,"" + CurrentSession.getUserID() + "");
+                    DatabaseManager.executeUpdate("accounts",DatabaseManager.ACCOUNTS[i] ,valueParameter[i] ,"AccountId" ,"" + CurrentSession.getUserID() + ""); 
                     GUIManager.changeAccount(EditAccount.this, CurrentSession.getUserID());
                 }
             }
@@ -506,7 +506,7 @@ public class EditAccount extends JPanel
         
     });
 }
-public void populateEditPage()
+public void populateEditPage() //Retrieving account informtion to populate the textfields
 {
     //Code to access the account information
     accountInformation[0] = "Username";
@@ -533,12 +533,6 @@ public void populateEditPage()
         eirCodeInput.setText(accountDetails.getString("Eircode"));
         emailInput.setText(accountDetails.getString("Email"));    
         phoneInput.setText(accountDetails.getString("Phone"));
-   //     Blob image = accountDetails.getBlob("ProfilePic");
-   //     if(this.profilePicture != null)
-   //     {
-   //     profilePicture.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(image.getBytes(1, (int) image.length())).getScaledInstance(300, 300 , Image.SCALE_SMOOTH)));
-   //     profilePicture.setText("");
-   //     }
     }
         else throw new UserNotFoundException("User not found in database!");
     }
