@@ -137,7 +137,7 @@ public class ViewAd extends JPanel
             } 
             else 
             {
-                JOptionPane.showMessageDialog(null, "Your account has not been deleted");
+                JOptionPane.showMessageDialog(null, "Your advertisement has not been deleted");
             }
             }
         });
