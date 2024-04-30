@@ -59,7 +59,7 @@ public class ViewAccount extends JPanel
     private JLabel eircodeLabel = new JLabel("Eircode:");
     private JLabel phoneLabel = new JLabel("Phone:");
     private JLabel usernameLabel = new JLabel("Username:");
-    private JLabel emailLabel = new JLabel("Email:");
+    private JLabel countyLabel = new JLabel("County:");
     private JLabel nameLabel2 = new JLabel();
     private JLabel eircodeLabel2 = new JLabel();
     private JLabel phoneLabel2 = new JLabel();
@@ -136,7 +136,7 @@ public class ViewAccount extends JPanel
         eircodeLabel.setFont(informationFont);
         phoneLabel.setFont(informationFont);
         usernameLabel.setFont(informationFont);
-        emailLabel.setFont(informationFont);
+        countyLabel.setFont(informationFont);
         
         nameLabel2.setFont(informationFont);
         eircodeLabel2.setFont(informationFont);
@@ -164,7 +164,7 @@ public class ViewAccount extends JPanel
         usernamePanel.setBorder(BorderFactory.createMatteBorder(0,1,1,0, black)); //Setting a border to the left and bottom of the panel as other sides already have a border
 
 
-        emailPanel.add(emailLabel);//Adding the label for the account's email and corresponding label
+        emailPanel.add(countyLabel);//Adding the label for the account's email and corresponding label
         emailPanel.add(emailLabel2);
 
         accountPanel.setBorder(BorderFactory.createLineBorder(black, 2)); //Adding the border around the account panel and the account's information panels
