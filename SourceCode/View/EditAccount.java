@@ -379,7 +379,8 @@ public class EditAccount extends JPanel
         ResultSet accountDetails = DatabaseManager.executeQuery(accountInformation, "accounts", "AccountID", "" + CurrentSession.getUserID() + "", "", "");
         if(accountDetails.next())
         {
-            if(username.equals(userNameInput.getText())) //If the username is the same as the username that was retrieved nothing happens otherwise it checks if the new username is already taken
+            String currentUsername = accountDetails.getString("Username");
+            if(username.equals(currentUsername)) //If the username is the same as the username that was retrieved nothing happens otherwise it checks if the new username is already taken
             {
                 
             }
