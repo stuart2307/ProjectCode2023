@@ -388,7 +388,13 @@ public class EditAccount extends JPanel
             {
                 try
                 {
+
                     Verifiers.VerifyUsernameExists(username, "Username", "accounts"); //Verifying that the username is not taken
+                    if(usernameFlag == true)
+                    {
+                        invalidUsernameWarning.setVisible(false);
+                        usernameFlag = false; //Sets the boolean to show the warning if the exception is caught and prints the stack trace
+                    }
                 }
                 catch(UsernameExistsException usernameException)
                 {
